@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Terrain_Water
+  m_Shader: {fileID: 4800000, guid: e60ba3a57e57b6b4d8ee9d9910433d64, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ReflMap:
+        m_Texture: {fileID: 8900000, guid: 992a573f9b77fa242bc5302ba03e2f20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Amply: 5.3
+    - _Brightness: 6.11
+    - _CellSize: 79.1
+    - _Cutoff: 0.0261
+    - _Cuttoff: 0
+    - _Depth: 1
+    - _Frequency: 1
+    - _Progress: 65
+    - _ReflectionStrenght: 0.181
+    - _ReflectionStrength: 0.4
+    - _RefractionSpeed: 1
+    - _RefractionStrength: 0.00316
+    - _Scale: 0.49
+    - _Sharpness: 1.25
+    - _Speed: 11.6
+    m_Colors:
+    - _CameraWS: {r: 136, g: 367, b: 436, a: 0}
+    - _Color: {r: 0.31603754, g: 0.65935993, b: 1, a: 0.6392157}
+    - _Direction: {r: -0.23, g: -1, b: 0, a: 0}
+    - _Foam: {r: 19.23, g: 120, b: 0.22, a: 1}
+    - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
+    - _LightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _LightDir: {r: 1, g: 1, b: 1, a: 0}
+    - _ViewDir: {r: 0.7148212, g: -0.6780274, b: -0.17119983, a: 0}
+  m_BuildTextureStacks: []
