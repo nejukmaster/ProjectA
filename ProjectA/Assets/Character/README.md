@@ -12,3 +12,6 @@ Character Shader Part
 To get Illustrative Shadow, I used Diffuse Wraping with normal Dot light and normal Dot view value. For this, I made a Diffuse Ramp. It mapped normal Dot light value at xAxis, and normal dot view value at yAxis. So that, the fragnent be illuminated by standard Lambert, and will brighten up that fragnent is nearer to Main Camera's view direction.
 
 ![Alt text](/ExplainImgs/SkinDiffuseRamp.png)
+
+To use this, we can get smoother shading effect.
+![Alt text](/ExplainImgs/SkinDiffuseWrapping.png) ![Alt text](/ExplainImgs/SkinSingleToonShading.png)
