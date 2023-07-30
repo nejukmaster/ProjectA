@@ -7,12 +7,16 @@ Character Shader Part
 >  4. Hair Shader With Diffuse Wraping and Normal Map
 >  5. Eyeline Shader
 
-### Skin Shaer With Diffuse Wraping
+### Skin Shader With Diffuse Wraping
 
-To get Illustrative Shadow, I used Diffuse Wraping with normal Dot light and normal Dot view value. For this, I made a Diffuse Ramp. It mapped normal Dot light value at xAxis, and normal dot view value at yAxis. So that, the fragnent be illuminated by standard Lambert, and will brighten up that fragnent is nearer to Main Camera's view direction.
+To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and normal Dot view value. For this, I made a Diffuse Ramp. It mapped normal Dot light value at xAxis, and normal dot view value at yAxis. So that, the fragnent be illuminated by standard Lambert, and will brighten up that fragnent is nearer to Main Camera's view direction.
 
 ![Alt text](/ExplainImgs/SkinDiffuseRamp.png)
 
 To use this, we can get smoother shading effect.
 
-![Alt text](/ExplainImgs/SkinDiffuseWrapping.png) ![Alt text](/ExplainImgs/SkinSingleToonShading.png)
+<img src="/ExplainImgs/SkinDiffuseWrapping.png" width="50%" height="30%"> <img src="/ExplainImgs/SkinSingleToonShading.png" width="50%" height="30%">
+
+### Clothes Shader With Normals
+
+The Clothes's Shader use Diffuse Wrapping as above. but, this shader is only use normal Dot light value. because this shader is not necessary to be shown smoothly as much as Skin Shader above. And the clothes should show wrinkles, So that, I apply normal mapping to shader. 
