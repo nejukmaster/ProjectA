@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795c67b741fc0f049ba03df5ab13dda6, type: 3}
   m_Name: CharacterOutlineFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   m_Settings:
     renderPassEvent: 500
     mat: {fileID: 2100000, guid: f9d016e415684a54aa037e423f4d079b, type: 2}

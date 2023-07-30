@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BumpScale: 1270
+    - _BumpScale: 19.41
     - _OutlineCutoff: 0.46
     - _ShadowPos: 1
     - _ShadowPow: 1.3
