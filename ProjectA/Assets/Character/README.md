@@ -15,7 +15,7 @@ To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and no
 
 To use this, we can get smoother shading effect.
 
-<img src="/ExplainImgs/SkinDiffuseWrapping.png" width="50%" height="30%"> <img src="/ExplainImgs/SkinSingleToonShading.png" width="50%" height="30%">
+<img src="/ExplainImgs/SkinDiffuseWrapping.png" width="30%" height="30%"> <img src="/ExplainImgs/SkinSingleToonShading.png" width="30%" height="30%">
 
 ### Clothes Shader With Normals
 
