@@ -13,7 +13,7 @@ To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and no
 
 ![Alt text](/ExplainImgs/SkinDiffuseRamp.png)
 
-To use this, we can get smoother shading effect.
+To use this, we can get smoother shading effect. Left image is Skin Shader with Diffuse Wrapping, and right image is Skin shader with Single Step Toon Shading.
 
 <img src="/ExplainImgs/SkinDiffuseWrapping.png" width="35%" height="30%"> <img src="/ExplainImgs/SkinSingleToonShading.png" width="30%" height="30%">
 
