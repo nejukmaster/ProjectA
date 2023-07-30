@@ -1,4 +1,4 @@
-Shader"Character/Body"
+Shader"Character/Hair"
 {
     Properties
     {
@@ -20,6 +20,8 @@ Shader"Character/Body"
         {
             Name "ForwardLit"
             Tags { "LightMode" = "UniversalForward" }
+            
+            Cull Off
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -114,8 +116,8 @@ Shader"Character/Body"
     
                 //Shadowing & Retouching
                 half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(pow(ndl,_ShadowPow),0));
-                color =  lerp(color,_ShadowColor,shadow);
-                //color = lerp(color,_ShadowColor,1-light.shadowAttenuation);
+                color =  lerp(color,color * _ShadowColor,shadow);
+                color = lerp(color,color * _ShadowColor,1-light.shadowAttenuation);
     
                 return color;
             }

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Character_Body
-  m_Shader: {fileID: 4800000, guid: 22f958d59b0892d4e8a28a9fbf3ca9c0, type: 3}
+  m_Name: PostProcessing_CharacterOutlineShader
+  m_Shader: {fileID: 4800000, guid: 4c93611d09b7f1142bdc52f7f70622f1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,29 +23,24 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 3a3c0acc807e9264ca0b32602a928a9a, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 1, y: 0}
-    - _DiffuseRamp:
-        m_Texture: {fileID: 2800000, guid: f1b15ea10bbc5fd429d3a253991d7d7e, type: 3}
+    - _AddTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f9c6074c5a78e71448f9efd3013cadda, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 3a3c0acc807e9264ca0b32602a928a9a, type: 3}
+    - _Outline:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OutlineBuffer:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _BumpScale: 1270
-    - _OutlineCutoff: 0.46
-    - _ShadowPos: 1
-    - _ShadowPow: 1.3
+    m_Floats: []
     m_Colors:
-    - _OutlineColor: {r: 0.021493427, g: 0.31430513, b: 0.6509434, a: 1}
-    - _ShadowColor: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
+    - _OutlineColor: {r: 0.5, g: 0.17648405, b: 0, a: 1}
   m_BuildTextureStacks: []

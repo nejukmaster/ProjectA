@@ -50,12 +50,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _OutlineCutoff: 0.231
+    - _OutlineScale: 0.01
     - _ShadowStrength: 2.196
     - _TonePow: 0.829
     m_Colors:
     - _LitDir: {r: 0.46874815, g: -0.31085896, b: -0.8268265, a: 0}
-    - _OutlineColor: {r: 1, g: 0.61085975, b: 0, a: 1}
-    - _ShadowColor: {r: 0.7169812, g: 0.47737187, b: 0.41598436, a: 0}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ShadowColor: {r: 1, g: 0.6599485, b: 0.5707547, a: 0}
     - _Tone: {r: 1, g: 0.841685, b: 0.7311321, a: 1}
     - _ViewDir: {r: 0.0017223572, g: -0.25574574, b: -0.9667426, a: 0}
     - _ViewPos: {r: 220.66278, g: 67.467834, b: 690.8194, a: 0}

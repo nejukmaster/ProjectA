@@ -1,4 +1,4 @@
-Shader"Character/SkinDiffuseShader"
+Shader"Character/Skin"
 {
     Properties
     {
@@ -8,8 +8,6 @@ Shader"Character/SkinDiffuseShader"
         _TonePow("Tone Power", Range(0,1)) = 0.5
         _ShadowColor("Shadow Color",Color) = (0,0,0,1)
         _ShadowStrength("Shadow Strength", Range(0,3)) = 0.5
-        _OutlineCutoff("Outline Cutoff", Range(0,1)) = 0.2
-        _OutlineColor("Outline Color",Color) = (0,0,0,1)
     }
 
         SubShader
@@ -52,8 +50,6 @@ Shader"Character/SkinDiffuseShader"
                 float _TonePow;
                 half4 _ShadowColor;
                 float _ShadowStrength;
-                float _OutlineCutoff;
-                half4 _OutlineColor;
             CBUFFER_END
 
             TEXTURE2D(_BaseMap);
@@ -86,10 +82,9 @@ Shader"Character/SkinDiffuseShader"
     
                 //Shadowing & Retouching
                 half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(ndl,ndv));
-                color =  lerp(color,_ShadowColor,shadow);
+                color =  lerp(color,color * _ShadowColor,shadow);
     
-                color = lerp(color,_ShadowColor,1-light.shadowAttenuation);
-    
+                color = lerp(color,color * _ShadowColor,1-light.shadowAttenuation);
                 return color;
             }
             ENDHLSL
@@ -138,8 +133,8 @@ Shader"Character/SkinDiffuseShader"
 
             // -------------------------------------
             // Includes
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitDepthNormalsPass.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/UnlitInput.hlsl"
+            #include "Assets/Utility/Shader/LitDepthNormalsBatchedPass.hlsl"
             ENDHLSL
         }
     }
