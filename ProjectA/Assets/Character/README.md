@@ -3,8 +3,8 @@ Character Shader Part
 #### Character Shader is based on unity-chan, and written with hlsl because this project is on URP. Following is what I made to implement Illustrative NRP Shader
 >  1. Skin Shader With Diffuse Wraping
 >  2. Body Shader With Diffuse Wraping and Normal Map
->  3. Unlit Eye Shader
->  4. Hair Shader With Diffuse Wraping and Normal Map
+>  3. Hair Shader With Diffuse Wraping and Normal Map
+>  4. Unlit Eye Shader
 >  5. Eyeline Shader
 
 ### Skin Shader With Diffuse Wraping
@@ -33,3 +33,14 @@ _Clothes With Normal Mapping_
 
 ![Alt text](/ExplainImgs/ClothesWithNormal.png)
 
+### Unlit Eye Shader
+
+Unlit Eye Shader is very simple unlit shader with one texture. 
+
+![Alt text](/ExplainImgs/EyeShader.png)
+
+### Hair Shader With Diffuse Wraping and Normal Map
+
+Hair Shader use Diffuse Warpping and Normal Mapping like Body Shader, and use Diffuse Ramp which is Body Shader's. But Hair Shader should show shadow more certainly than Body Shader, so, I remapped normal dot light value with cubic function.
+
+<img src="/ExplainImgs/HairShaderRemapped.png" width="35%" height="30%"> <img src="/ExplainImgs/HairShaderWithoutRemaping.png" width="30%" height="30%">
