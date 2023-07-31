@@ -2,9 +2,7 @@ Shader"Character/Eye"
 {
     Properties
     {
-        _Left("Left Eye Tex",2D) = "white"{}
-        _Right("Right Eye Tex",2D) = "white"{}
-        [ToggleOff] _IsLeft("Check if this material is for left eye", Float) = 0.0
+        _MainTex("Main Tex",2D) = "white"{}
     }
 
         SubShader
@@ -19,8 +17,6 @@ Shader"Character/Eye"
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
-            #pragma multi_compile __ _ISLEFT_OFF
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -39,13 +35,8 @@ Shader"Character/Eye"
                 float3 normalWS       : NORMAL;
                 float3 positionWS : TEXCOORD1;
             };
-#if !_ISLEFT_OFF
-            TEXTURE2D(_Left);
-            SAMPLER(sampler_Left);
-#else
-            TEXTURE2D(_Right);
-            SAMPLER(sampler_Right);
-#endif
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
 
             Varyings vert(Attributes IN)
             {
@@ -60,11 +51,7 @@ Shader"Character/Eye"
 
             half4 frag(Varyings IN) : SV_Target
             {
-#if !_ISLEFT_OFF
-                half4 color = SAMPLE_TEXTURE2D(_Left,sampler_Left,IN.uv);
-#else
-                 half4 color = SAMPLE_TEXTURE2D(_Right,sampler_Right,IN.uv);
-#endif
+                half4 color = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,IN.uv);
                 return color;
             }
             ENDHLSL

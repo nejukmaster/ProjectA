@@ -33,6 +33,8 @@ Shader"Character/Hair"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
+            #define PI 3.14159265f
+
             struct Attributes
             {
                 float4 positionOS   : POSITION;
@@ -79,6 +81,11 @@ Shader"Character/Hair"
             #endif
             }
 
+            float f_x(float x)
+            {
+                return -2*pow(x-0.5,3)+1.5*(x-0.5) +0.5;
+            }
+
             inline half3 TangentNormalToWorldNormal(half3 TangnetNormal, half3 T, half3  B, half3 N)
             {
                 float3x3 TBN = float3x3(T, B, N);
@@ -110,13 +117,13 @@ Shader"Character/Hair"
     
                 //Normal Mapping
                 half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,IN.uv));
+                //float3 normal = normalize(IN.normalWS);
                 float3 normal = TangentNormalToWorldNormal(bump, IN.tangentWS, IN.bitangentWS, IN.normalWS);;
                 float ndl = dot(normal, normalize(-1 * light.direction)) * 0.5 + 0.5;
-                float ndv = dot(normal, normalize(-IN.viewDir)) * 0.5 + 0.5;
     
                 //Shadowing & Retouching
-                half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(pow(ndl,_ShadowPow),0));
-                color =  lerp(color,color * _ShadowColor,shadow);
+                half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(f_x(ndl),0));
+                color = lerp(color,color * _ShadowColor,shadow);
                 color = lerp(color,color * _ShadowColor,1-light.shadowAttenuation);
     
                 return color;
