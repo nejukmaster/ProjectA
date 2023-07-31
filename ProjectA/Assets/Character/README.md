@@ -43,4 +43,6 @@ Unlit Eye Shader is very simple unlit shader with one texture.
 
 Hair Shader use Diffuse Warpping and Normal Mapping like Body Shader, and use Diffuse Ramp which is Body Shader's. But Hair Shader should show shadow more certainly than Body Shader, so, I remapped normal dot light value with cubic function.
 
-<img src="/ExplainImgs/HairShaderRemapped.png" width="35%" height="30%"> <img src="/ExplainImgs/HairShaderWithoutRemaping.png" width="30%" height="30%">
+_Left is Shader with remapping, and right is non remapping. After remapping, shadow have been more distinct.
+
+<img src="/ExplainImgs/HairShaderRemapped.png" width="35%" height="30%"> <img src="/ExplainImgs/HairShaderWithoutRemaping.png" width="35%" height="35%">
