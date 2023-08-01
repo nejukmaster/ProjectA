@@ -5,7 +5,7 @@ Character Shader Part
 >  2. Body Shader With Diffuse Wraping and Normal Map
 >  3. Hair Shader With Diffuse Wraping and Normal Map
 >  4. Unlit Eye Shader
->  5. Eyeline Shader
+>  5. Shadow Casting
 
 ### Skin Shader With Diffuse Wraping
 
@@ -33,14 +33,22 @@ _Clothes With Normal Mapping_
 
 ![Alt text](/ExplainImgs/ClothesWithNormal.png)
 
-### Unlit Eye Shader
-
-Unlit Eye Shader is very simple unlit shader with one texture. 
-
-![Alt text](/ExplainImgs/EyeShader.png)
-
-### Hair Shader With Diffuse Wraping and Normal Map
+### Hair Shader With Diffuse Wrapping and Normal Map
 
 Hair Shader use Diffuse Warpping and Normal Mapping like Body Shader, and use Diffuse Ramp which is Body Shader's. But Hair Shader should show shadow more certainly than Body Shader, so, I remapped normal dot light value with cubic function.
 
-<img src="/ExplainImgs/HairShaderRemapped.png" width="35%" height="30%"> <img src="/ExplainImgs/HairShaderWithoutRemaping.png" width="30%" height="30%">
+_Left is Shader with remapping, and right is non remapping. After remapping, shadow have been more distinct._
+
+<img src="/ExplainImgs/HairShaderRemapped.png" width="35%" height="30%"> <img src="/ExplainImgs/HairShaderWithoutRemaping.png" width="37%" height="37%">
+
+### Unlit Eye Shader
+
+Unlit Eye Shader use two material Eye Shader and Eyeline Shader. Both of two are very simple unlit shader with one texture.
+
+![Alt text](/ExplainImgs/EyeShader.png)
+
+### Shadow Casting
+
+Shadow Casting in URP is built by Adding "Shadow Casting Pass" in shader. This is final color of Character.
+
+![Alt text](/ExplainImgs/CharacterShadowCasting.png)
