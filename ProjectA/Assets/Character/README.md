@@ -47,3 +47,8 @@ Unlit Eye Shader use two material Eye Shader and Eyeline Shader. Both of two are
 
 ![Alt text](/ExplainImgs/EyeShader.png)
 
+### Shadow Casting
+
+Shadow Casting in URP is built by Adding "Shadow Casting Pass" in shader. This is final color of Character.
+
+![Alt text](/ExplainImgs/CharacterShadowCasting.png)
