@@ -2,7 +2,8 @@ Shader"Terrain/Water"
 {
     Properties
     {
-        _Color("Color",Color) = (1,1,1,1)
+        _Color("Color 1",Color) = (1,1,1,1)
+        _Color2("Color 2",Color) = (1,1,1,1)
         [Header(Wave)]
         _Amply("Amply",Range(1.0,50.0)) = 1.0
         _Frequency("Frequency",Range(1.0,50.0)) = 1.0
@@ -22,6 +23,10 @@ Shader"Terrain/Water"
         _Scale("Refraction Scale", Range(0,10)) = 1
         _RefractionSpeed("Refraction Speed",Float) = 1
         _RefractionStrength("Refraction Strength",Range(0,0.01)) = 0.002
+
+        [Header(Fog)]
+        _FogIntensity("Fog Intensity",Range(0,0.01)) = 10
+        _FogBias("Fog Bias",Range(1,10)) = 1
     }
 
         SubShader
@@ -67,29 +72,35 @@ Shader"Terrain/Water"
 
                 UNITY_VERTEX_OUTPUT_STEREO
             };
-            half4 _Color;
+            CBUFFER_START(UnityPerMaterial)
+                half4 _Color;
+                half4 _Color2;
             
-            float _Amply;
-            float _Frequency;
-            float4 _Direction;
-            float _Sharpness;
-            float _Speed;
+                float _Amply;
+                float _Frequency;
+                float4 _Direction;
+                float _Sharpness;
+                float _Speed;
             
-            float4 _Foam;
-            half4 _FoamColor;
+                float4 _Foam;
+                half4 _FoamColor;
 
-            float _CellSize;
-            float _Brightness;
-
-            float _Scale;
-            float _RefractionSpeed;
-            float _RefractionStrength;
+                float _CellSize;
+                float _Brightness;
+    
+                float _Scale;
+                float _RefractionSpeed;
+                float _RefractionStrength;
             
-            float _ReflectionStrength;
+                float _ReflectionStrength;
 
-            float3 _LightDir;
-            float3 _CameraWS;
-            half4 _LightColor;
+                float3 _LightDir;
+                float3 _CameraWS;
+                half4 _LightColor;
+
+                float _FogIntensity;
+                float _FogBias;
+            CBUFFER_END
 
             TEXTURECUBE(_ReflMap);
             SAMPLER(sampler_ReflMap);
@@ -112,7 +123,7 @@ Shader"Terrain/Water"
 
             float WaterDepthFade(float Depth, float4 ScreenPosition, float Distance)
             {
-                return saturate((Depth-ScreenPosition.w)/Distance);
+                return (Depth-ScreenPosition.w)/(Distance*2);
             }
 
             float3 VoronoiNoise(float3 value){
@@ -165,7 +176,7 @@ Shader"Terrain/Water"
 
             float random = rand3dTo1d(closestCell);
             return float3(minDistToCell, random, minEdgeDistance);
-        }
+            }
     
             float2 GradientNoiseDir(float2 p)
             {
@@ -229,11 +240,18 @@ Shader"Terrain/Water"
                 //Foam
                 float2 screenUVs = IN.screenPos.xy / IN.screenPos.w;
                 float zRaw = SampleSceneDepth(screenUVs);
-                //float z01 = Linear01Depth(SampleSceneDepth(screenUVs), _ZBufferParams);
                 float zEye = LinearEyeDepth(SampleSceneDepth(screenUVs), _ZBufferParams);
                 float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);
                 float foamValue = step(foam,_Foam.z);
                 color = lerp(color,_FoamColor,foamValue);
+                if(foamValue >= 0.9) return color;
+    
+                //Water Fog
+                float waterFog= zEye - IN.screenPos.w;
+                waterFog = _FogIntensity * waterFog;
+                waterFog = pow(waterFog,_FogBias);
+                color.rgb *= pow(_Color2.rgb,waterFog);
+                color.a = color.a + waterFog;
     
                 //Voronoi
                 float3 voronoi = VoronoiNoise(cell - _Speed * _Time.x);
@@ -245,7 +263,7 @@ Shader"Terrain/Water"
                 float2 refractionUVs = screenUVs +  GradientNoise(tiledAndOffesettedUV) * 2 * _RefractionStrength;
                 half3 refractionColor = SampleSceneColor(refractionUVs);
                 color = lerp(half4(refractionColor,1), color, color.a);
-                
+    
                 return color;
             }
             ENDHLSL

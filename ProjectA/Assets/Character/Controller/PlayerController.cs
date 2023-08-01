@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float gravity = -9.8f;
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpIntensity;
+    [SerializeField] Animator animator;
 
     CharacterController controller;
     Camera cam;
@@ -39,8 +40,10 @@ public class PlayerController : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space))
             {
                 ySpeed = jumpIntensity;
+                animator.SetTrigger("Jump");
             }
         }
+        animator.SetFloat("Speed", moveDir.magnitude);
         moveDir.y = ySpeed;
         controller.Move(moveDir * Time.deltaTime);
     }
