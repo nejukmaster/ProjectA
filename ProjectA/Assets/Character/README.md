@@ -5,8 +5,7 @@ Character Shader Part
 >  2. Body Shader With Diffuse Wraping and Normal Map
 >  3. Hair Shader With Diffuse Wraping and Normal Map
 >  4. Unlit Eye Shader
->  5. Eyeline Shader
->  6. Shadow Casting
+>  5. Shadow Casting
 
 ### Skin Shader With Diffuse Wraping
 
@@ -44,7 +43,7 @@ _Left is Shader with remapping, and right is non remapping. After remapping, sha
 
 ### Unlit Eye Shader
 
-Unlit Eye Shader is very simple unlit shader with one texture. 
+Unlit Eye Shader use two material Eye Shader and Eyeline Shader. Both of two are very simple unlit shader with one texture.
 
 ![Alt text](/ExplainImgs/EyeShader.png)
 
