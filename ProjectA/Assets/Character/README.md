@@ -6,6 +6,7 @@ Character Shader Part
 >  3. Hair Shader With Diffuse Wraping and Normal Map
 >  4. Unlit Eye Shader
 >  5. Eyeline Shader
+>  6. Shadow Casting
 
 ### Skin Shader With Diffuse Wraping
 
