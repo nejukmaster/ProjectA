@@ -19,7 +19,7 @@ Using this, we can get smoother shading effect. Left image is Skin Shader with D
 
 ### Body Shader With Diffuse Wraping and Normal Map
 
-The Clothes's Shader use Diffuse Wrapping as above. but, this shader is only use normal Dot light value. because this shader is not necessary to be shown smoothly as much as Skin Shader above. And the clothes should show wrinkles, So that, I apply normal mapping to shader. 
+The Clothes' Shader use Diffuse Wrapping as above. but, this shader is only use normal Dot light value. because this shader is not necessary to be shown smoothly as much as Skin Shader above. And the clothes should show wrinkles, So that, I apply normal mapping to shader. 
 
 _Diffuse Map of Clothes_
 
