@@ -13,3 +13,7 @@ So, I Find a way, and search the "Gestner Wave" at GPU Gems(2004). It's the way 
 
 _Gestner Applied._
 ![Alt text](/ExplainImgs/WaveWithGestner.png)
+
+### Foam
+
+Foam means expression of breaking-wave at coast. It built by comparing Scene Depth value and fragment's depth.
