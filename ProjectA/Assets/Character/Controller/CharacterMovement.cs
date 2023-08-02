@@ -14,7 +14,7 @@ public class CharacterMovement
     {
         Vector3 r = Vector3.zero;
         Vector2 vertical = new Vector2(PlayerController.CameraToPlayerVector.x,PlayerController.CameraToPlayerVector.z);
-        Vector2 horizontal = new Vector2(vertical.y, vertical.x);
+        Vector2 horizontal = new Vector2(vertical.y, -1 * vertical.x);
 
         Vector2 movementDir = (vertical * verti + horizontal * horizon).normalized * moveSpeed;
         r += new Vector3(movementDir.x, 0, movementDir.y);

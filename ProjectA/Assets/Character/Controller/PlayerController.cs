@@ -7,8 +7,9 @@ public class PlayerController : MonoBehaviour
     public static Vector3 CameraToPlayerVector;
 
     public float gravity = -9.8f;
-    [SerializeField] float playerSpeed;
+    [SerializeField] float walkSpeed;
     [SerializeField] float jumpIntensity;
+    [SerializeField] float runSpeed;
     [SerializeField] Animator animator;
 
     CharacterController controller;
@@ -34,7 +35,10 @@ public class PlayerController : MonoBehaviour
             float horizon = Input.GetAxis("Horizontal");
             float verti = Input.GetAxis("Vertical");
 
-            moveDir += movement.BasicMove(verti, horizon, playerSpeed);
+            if (Input.GetKey(KeyCode.LeftShift))
+                moveDir += movement.BasicMove(verti, horizon, runSpeed);
+            else
+                moveDir += movement.BasicMove(verti, horizon, walkSpeed);
             this.transform.rotation = Quaternion.LookRotation(new Vector3(moveDir.x,0,moveDir.z));
 
             if(Input.GetKeyDown(KeyCode.Space))

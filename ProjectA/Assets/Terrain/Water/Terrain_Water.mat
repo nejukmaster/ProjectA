@@ -23,35 +23,40 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: cbc2d477b6df2f24cb3fe3d883a530fc, type: 3}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
     - _ReflMap:
         m_Texture: {fileID: 8900000, guid: 992a573f9b77fa242bc5302ba03e2f20, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amply: 5.3
-    - _Brightness: 6.11
-    - _CellSize: 79.1
+    - _Amply: 6.7
+    - _Brightness: 6.85
+    - _BumpIntensity: 0.389
+    - _CellSize: 92.6
     - _Cutoff: 0.0261
     - _Cuttoff: 0
     - _Depth: 1
-    - _FogBias: 1.29
-    - _FogIntensity: 0.00402
-    - _Frequency: 1
+    - _FogBias: 1.62
+    - _FogIntensity: 0.00249
+    - _Frequency: 26.5
     - _Progress: 65
     - _ReflectionStrenght: 0.181
     - _ReflectionStrength: 0.4
     - _RefractionSpeed: 1
     - _RefractionStrength: 0.00316
     - _Scale: 0.49
-    - _Sharpness: 1.25
+    - _Sharpness: 2.447
     - _Speed: 11.6
     m_Colors:
     - _CameraWS: {r: 136, g: 367, b: 436, a: 0}
     - _Color: {r: 0.31603748, g: 0.65935993, b: 1, a: 0.6745098}
     - _Color2: {r: 0, g: 0.26041698, b: 1, a: 1}
     - _Direction: {r: -0.23, g: -1, b: 0, a: 0}
-    - _Foam: {r: 19.23, g: 120, b: 0.22, a: 1}
+    - _Foam: {r: 10, g: 76.3, b: 0.41, a: 31.08}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDir: {r: 1, g: 1, b: 1, a: 0}
