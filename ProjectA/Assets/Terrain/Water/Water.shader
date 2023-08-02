@@ -29,7 +29,6 @@ Shader"Terrain/Water"
         [Header(Fog)]
         _FogIntensity("Fog Intensity",Range(0,0.01)) = 10
         _FogBias("Fog Bias",Range(1,10)) = 1
-
         
     }
 
@@ -74,7 +73,8 @@ Shader"Terrain/Water"
                 float3 positionWS : TEXCOORD1;
                 float4 screenPos : TEXCOORD2;
                 float3 tangentWS    : TEXTCOORD3;
-                float3 bitangentWS      : TEXCOORD3;
+                float3 bitangentWS      : TEXCOORD4;
+                float3 viewDir      : TEXCOORD5;
 
                 UNITY_VERTEX_OUTPUT_STEREO
             };
@@ -135,58 +135,6 @@ Shader"Terrain/Water"
             {
                 return (Depth-ScreenPosition.w)/(Distance*2);
             }
-
-            float3 VoronoiNoise(float3 value){
-            float3 baseCell = floor(value);
-    
-            float minDistToCell = 10;
-            float3 toClosestCell;
-            float3 closestCell;
-            [unroll]
-            for(int x1=-1; x1<=1; x1++){
-                [unroll]
-                for(int y1=-1; y1<=1; y1++){
-                    [unroll]
-                    for(int z1=-1; z1<=1; z1++){
-                        float3 cell = baseCell + float3(x1, y1, z1);
-                        float3 cellPosition = cell + rand3dTo3d(cell);
-                        float3 toCell = cellPosition - value;
-                        float distToCell = length(toCell);
-                        if(distToCell < minDistToCell){
-                            minDistToCell = distToCell;
-                            closestCell = cell;
-                            toClosestCell = toCell;
-                        }
-                    }
-                }
-            }
-    
-            float minEdgeDistance = 10;
-            [unroll]
-            for(int x2=-1; x2<=1; x2++){
-                [unroll]
-                for(int y2=-1; y2<=1; y2++){
-                    [unroll]
-                    for(int z2=-1; z2<=1; z2++){
-                        float3 cell = baseCell + float3(x2, y2, z2);
-                        float3 cellPosition = cell + rand3dTo3d(cell);
-                        float3 toCell = cellPosition - value;
-
-                        float3 diffToClosestCell = abs(closestCell - cell);
-                        bool isClosestCell = diffToClosestCell.x + diffToClosestCell.y + diffToClosestCell.z < 0.1;
-                        if(!isClosestCell){
-                            float3 toCenter = (toClosestCell + toCell) * 0.5;
-                            float3 cellDifference = normalize(toCell - toClosestCell);
-                            float edgeDistance = dot(toCenter, cellDifference);
-                            minEdgeDistance = min(minEdgeDistance, edgeDistance);
-                        }
-                    }
-                }
-            }
-
-            float random = rand3dTo1d(closestCell);
-            return float3(minDistToCell, random, minEdgeDistance);
-            }
     
             float2 GradientNoiseDir(float2 p)
             {
@@ -245,21 +193,16 @@ Shader"Terrain/Water"
                 IN.positionOS.x += _Direction.x * cos(dot(_Sharpness * _Direction.xy,ori.xz) * _Frequency + _Speed * _Time.x) / _Sharpness;
                 IN.positionOS.z += _Direction.z * cos(dot(_Sharpness * _Direction.xy,ori.xz) * _Frequency + _Speed * _Time.x) / _Sharpness;
                 IN.positionOS.y +=sin(dot(_Sharpness * _Direction.xy,ori.xz)  * _Frequency+ _Speed * _Time.x)*_Amply;
-    
-                float3 normal;
-    
-                normal.x = -1 * _Direction.x * _Sharpness * _Amply * cos(dot(_Direction.xy, ori.xz) + _Speed * _Time.x);
-                normal.z = -1 * _Direction.z * _Sharpness * _Amply * cos(dot(_Direction.xy, ori.xz) + _Speed * _Time.x);
-                normal.y = 1-sin(dot(_Direction.xy, ori.xz) + _Speed * _Time.x);
                 
 
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
                 OUT.uv = IN.uv;
                 OUT.tangentWS = float4(TransformObjectToWorldDir(IN.tangentOS.xyz), IN.tangentOS.w);
-                OUT.normalWS = TransformObjectToWorldNormal(normal);
+                OUT.normalWS = TransformObjectToWorldNormal(IN.normalOS);
                 OUT.positionWS = TransformObjectToWorld(IN.positionOS.xyz);
                 OUT.screenPos = ComputeScreenPos(OUT.positionHCS);
                 OUT.bitangentWS = cross(OUT.normalWS, OUT.tangentWS) * IN.tangentOS.w * unity_WorldTransformParams.w;
+                OUT.viewDir = _WorldSpaceCameraPos.xyz - TransformObjectToWorld(IN.positionOS.xyz);
                 return OUT;
             }
 
@@ -287,23 +230,20 @@ Shader"Terrain/Water"
                 waterFog = pow(waterFog,_FogBias);
                 color.rgb *= pow(_Color2.rgb,waterFog);
                 color.a = color.a + waterFog;
-    
-                //Voronoi
-                float3 voronoi = VoronoiNoise(cell - _Speed * _Time.x);
-                voronoi.x = pow(voronoi.x,_Brightness);
-                color = lerp(color,_FoamColor,voronoi.x);
-    
-                //Refraction
-                float2 tiledAndOffesettedUV = screenUVs * _Scale + (_Time.y * _RefractionSpeed);
-                float2 refractionUVs = screenUVs +  GradientNoise(tiledAndOffesettedUV) * 2 * _RefractionStrength;
-                half3 refractionColor = SampleSceneColor(refractionUVs);
-                color = lerp(half4(refractionColor,1), color, color.a);
                 
                 //Normal Mapping
                 half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,IN.uv + _Speed/1000 * _Time));
                 float3 normal = TangentNormalToWorldNormal(bump, IN.tangentWS, IN.bitangentWS, IN.normalWS);
                 float ndl = dot(normal, normalize(-1 * light.direction)) * _BumpIntensity + (1-_BumpIntensity);
+                float ndv = dot(normalize(IN.viewDir),normal) * 0.5 + 0.5;
+                float3 lrv = normalize(-1 * light.direction) + 2 * normal* ndv;
                 color.rgb *= ndl;
+    
+                //Refraction
+                float refractionmap = bump.r * 0.299 + bump.g * 0.587 + bump.b * 0.114;
+                refractionmap *= 0.1;
+                half3 refractionColor = SampleSceneColor(screenUVs + refractionmap);
+                color = lerp(half4(refractionColor,1), color, color.a);
     
                 return color;
             }
