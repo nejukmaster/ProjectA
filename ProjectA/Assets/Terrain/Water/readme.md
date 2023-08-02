@@ -17,3 +17,4 @@ _Gestner Applied._
 ### Foam
 
 Foam means the expression of waves breaking off the coast. It is obtained by comparing the Scene Depth value with the depth value of the current fragment. Shader then creates a Foam at the interface where water and other objects meet. 
+<img src="/ExplainImgs/WaterWithFoam.png" width="35%" height="30%"> <img src="/ExplainImgs/WaterWithoutFoam.png" width="30%" height="30%">
