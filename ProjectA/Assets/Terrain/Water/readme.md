@@ -8,3 +8,5 @@ Building wave is most important part to express water's movement. At First, I tr
 
 _This is shot of above. It is unnatural to be called "Wave"_
 ![Alt text](/ExplainImgs/WaveWithSin.png)
+
+So, I Find a way, and search the "Gestner Wave" at GPU Gems(2004). 
