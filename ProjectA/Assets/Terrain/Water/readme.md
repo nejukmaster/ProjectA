@@ -16,4 +16,4 @@ _Gestner Applied._
 
 ### Foam
 
-Foam means expression of breaking-wave at coast. It built by comparing Scene Depth value and fragment's depth.
+Foam means the expression of waves breaking off the coast. It is obtained by comparing the Scene Depth value with the depth value of the current fragment.
