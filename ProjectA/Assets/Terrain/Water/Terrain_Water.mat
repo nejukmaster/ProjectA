@@ -37,20 +37,20 @@ Material:
     - _BlinCutoff: 0.995
     - _BlinIntensity: 1.115
     - _Brightness: 6.85
-    - _BumpIntensity: 0.326
+    - _BumpIntensity: 0.595
     - _CellSize: 92.6
     - _Cutoff: 0.0261
     - _Cuttoff: 0
     - _Depth: 1
-    - _FogBias: 1.62
-    - _FogIntensity: 0.00484
+    - _FogBias: 1.27
+    - _FogIntensity: 0.00312
     - _Frequency: 19.7
     - _Progress: 65
     - _ReflectionStrenght: 0.181
     - _ReflectionStrength: 0.4
     - _RefractionSpeed: 1
-    - _RefractionStrength: 0.0001
-    - _Scale: 0.49
+    - _RefractionStrength: 0
+    - _Scale: 1.8
     - _Sharpness: 2.447
     - _Speed: 11.6
     m_Colors:

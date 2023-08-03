@@ -230,15 +230,12 @@ Shader"Terrain/Water"
                 waterFog = pow(waterFog,_FogBias);
                 color.rgb *= pow(_Color2.rgb,waterFog);
                 color.a = color.a + waterFog;
-                return color;
                 
                 //Normal Mapping
                 half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,IN.uv + _Speed/1000 * _Time));
                 float3 normal = TangentNormalToWorldNormal(bump, IN.tangentWS, IN.bitangentWS, IN.normalWS);
-                float ndl = dot(normal, normalize(-1 * light.direction)) * _BumpIntensity + (1-_BumpIntensity);
-                float ndv = dot(normalize(IN.viewDir),normal) * 0.5 + 0.5;
-                float3 lrv = normalize(-1 * light.direction) + 2 * normal* ndv;
-                color.rgb *= ndl;
+                float ndl = dot(normal, normalize(-1*light.direction)) * _BumpIntensity + (1-_BumpIntensity);
+                color.rgb *= 1-ndl;
     
                 //Refraction
                 float refractionmap = bump.r * 0.299 + bump.g * 0.587 + bump.b * 0.114;
