@@ -58,4 +58,5 @@ _The result seems to be oil floating on the water._
 To solve this problem, I tried to change pre-loaded Normal Map to grayscale and use it as a refractive map. To this, the sampled normal map pixels are grayscaleed and then multiplied by the _Scale property to adjust the degree of refraction. And Samples the Scene Opaque Texture with the obtained refraction plus uv. Then, the sampled Refraction Color and water color values are interpolated into the water's alpha values.
 
 __Scale is Property to adjust refraction intensity_
+
 ![Alt text](/ExplainImgs/WaterShaderCode_fragment refraction.png)
