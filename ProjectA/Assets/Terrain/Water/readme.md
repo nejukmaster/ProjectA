@@ -35,3 +35,12 @@ Water has different colors depending on the depth. WaterFog was created to imple
  ![Alt text](/ExplainImgs/WaterFogWithFoam.png)
 
  From the camera, you can see that the deeper the depth, the thicker the fog. If you have confirmed that it works properly, now, apply this Fog to the color and alpha.
+
+ _Water applied Fog. It can be seen that the color darkens and the transparency decreases in the deep._
+ ![Alt text](/ExplainImgs/WaterWithWaterFog.png)
+
+ As a result, I was able to obtain a more realistic water texture.
+
+ ### Normal Map
+
+ 
