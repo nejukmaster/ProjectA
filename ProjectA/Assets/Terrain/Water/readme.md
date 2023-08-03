@@ -47,3 +47,15 @@ In order to express the curvature of the actual water on the plan, a shadow was 
 
 _Water applied Normal Map. The curvature of the water was more emphasized._
 ![Alt text](/ExplainImgs/WaterWithNormal.png)
+
+### Refraction effect
+
+And the last thing to implement is the Refraction effect. First, a refractive texture must be created, but there was a disadvantage that if it was treated with gradient noise, it would look weird. 
+
+_The result seems to be oil floating on the water._
+![Alt text](/ExplainImgs/WaterRefractionWithGradientNoise.png)
+
+To solve this problem, I tried to change pre-loaded Normal Map to grayscale and use it as a refractive map. To this, the sampled normal map pixels are grayscaleed and then multiplied by the _Scale property to adjust the degree of refraction. And Samples the Scene Opaque Texture with the obtained refraction plus uv. Then, the sampled Refraction Color and water color values are interpolated into the water's alpha values.
+
+__Scale is Property to adjust refraction intensity_
+![Alt text](/ExplainImgs/WaterShaderCode_fragment refraction.png)
