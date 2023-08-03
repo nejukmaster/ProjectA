@@ -228,9 +228,9 @@ Shader"Terrain/Water"
                 float waterFog= zEye - IN.screenPos.w;
                 waterFog = _FogIntensity * waterFog;
                 waterFog = pow(waterFog,_FogBias);
-                return half4(waterFog,waterFog,waterFog,1);
                 color.rgb *= pow(_Color2.rgb,waterFog);
                 color.a = color.a + waterFog;
+                return color;
                 
                 //Normal Mapping
                 half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,IN.uv + _Speed/1000 * _Time));
