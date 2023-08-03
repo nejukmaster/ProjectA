@@ -1,12 +1,17 @@
 Water Shader Part
 =================
-In this part, I will introduce my tries to make water more realistic and more cartoonic. The Following is passing through to goal.
+In this part, I will introduce my tries to make water more realistic and more cartoonic. The Following is passing through to goal. The table of contents is as follows.
+> Getstner Wave
+> Foam
+> Water Fog
+> Normal map
+> Refraction effect
 
 ### Gestner Wave
 
 Building wave is most important part to express water's movement. At First, I tried to apply y-axis sin wave to vertex. but it was not natural.
 
-_This is shot of above. It is unnatural to be called "Wave"_
+_This is shot of above. It's hard to call it a wave_
 ![Alt text](/ExplainImgs/WaveWithSin.png)
 
 So, I Find a way, and search the "Gestner Wave" at GPU Gems(2004). It's the way of express Ocean Wave more realistic, that add the x/z movement to vertex as well as y axis. So that, I could get below movement of Plane.
@@ -17,4 +22,13 @@ _Gestner Applied._
 ### Foam
 
 Foam means the expression of waves breaking off the coast. It is obtained by comparing the Scene Depth value with the depth value of the current fragment. Shader then creates a Foam at the interface where water and other objects meet. 
-<img src="/ExplainImgs/WaterWithFoam.png" width="35%" height="30%"> <img src="/ExplainImgs/WaterWithoutFoam.png" width="30%" height="30%">
+
+_the application of water to the terrain._
+![Alt text](/ExplainImgs/WaterWithoutFoam.png)
+![Alt text](/ExplainImgs/WaterWithFoam.png)
+
+### Water Fog
+
+Water has different colors depending on the depth. WaterFog was created to implement this. It is composed by comparing depth and Scene Depth in the rest of the part other than Foam with the application of Foam.
+ _Water Fog with Foam_
+ ![Alt text](/ExplainImgs/WaterFogWithFoam.png)
