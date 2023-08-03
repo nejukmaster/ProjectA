@@ -228,6 +228,7 @@ Shader"Terrain/Water"
                 float waterFog= zEye - IN.screenPos.w;
                 waterFog = _FogIntensity * waterFog;
                 waterFog = pow(waterFog,_FogBias);
+                return half4(waterFog,waterFog,waterFog,1);
                 color.rgb *= pow(_Color2.rgb,waterFog);
                 color.a = color.a + waterFog;
                 
