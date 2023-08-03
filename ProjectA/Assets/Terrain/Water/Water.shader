@@ -22,7 +22,7 @@ Shader"Terrain/Water"
         _Brightness("Voronoi Brightness", Range(0,10)) = 1
 
         [Header(Refraction)]
-        _Scale("Refraction Scale", Range(0,10)) = 1
+        _Scale("Refraction Scale", Range(0,1)) = 0.1
         _RefractionSpeed("Refraction Speed",Float) = 1
         _RefractionStrength("Refraction Strength",Range(0,0.01)) = 0.002
 
@@ -239,7 +239,7 @@ Shader"Terrain/Water"
     
                 //Refraction
                 float refractionmap = bump.r * 0.299 + bump.g * 0.587 + bump.b * 0.114;
-                refractionmap *= 0.1;
+                refractionmap *= _Scale;
                 half3 refractionColor = SampleSceneColor(screenUVs + refractionmap);
                 color = lerp(half4(refractionColor,1), color, color.a);
     

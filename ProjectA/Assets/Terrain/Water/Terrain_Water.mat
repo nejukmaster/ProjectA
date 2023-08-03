@@ -38,7 +38,7 @@ Material:
     - _BlinIntensity: 1.115
     - _Brightness: 6.85
     - _BumpIntensity: 0.595
-    - _CellSize: 92.6
+    - _CellSize: 100
     - _Cutoff: 0.0261
     - _Cuttoff: 0
     - _Depth: 1
@@ -50,7 +50,7 @@ Material:
     - _ReflectionStrength: 0.4
     - _RefractionSpeed: 1
     - _RefractionStrength: 0
-    - _Scale: 1.8
+    - _Scale: 0.1
     - _Sharpness: 2.447
     - _Speed: 11.6
     m_Colors:
