@@ -43,4 +43,4 @@ Water has different colors depending on the depth. WaterFog was created to imple
 
  ### Normal Map
 
- 
+In order to express the curvature of the actual water on the plan, a shadow was expressed using a Normal Map.
