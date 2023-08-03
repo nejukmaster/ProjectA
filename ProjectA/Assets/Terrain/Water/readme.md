@@ -59,4 +59,4 @@ To solve this problem, I tried to change pre-loaded Normal Map to grayscale and 
 
 __Scale is Property to adjust refraction intensity_
 
-![Alt text](/ExplainImgs/WaterShaderCode_fragment refraction.png)
+![Alt text](/ExplainImgs/WaterShaderCodefragmentRefraction.png)
