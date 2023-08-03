@@ -30,5 +30,8 @@ _the application of water to the terrain._
 ### Water Fog
 
 Water has different colors depending on the depth. WaterFog was created to implement this. It is composed by comparing depth and Scene Depth in the rest of the part other than Foam with the application of Foam.
+
  _Water Fog with Foam_
  ![Alt text](/ExplainImgs/WaterFogWithFoam.png)
+
+ From the camera, you can see that the deeper the depth, the thicker the fog. If you have confirmed that it works properly, now, apply this Fog to the color and alpha.
