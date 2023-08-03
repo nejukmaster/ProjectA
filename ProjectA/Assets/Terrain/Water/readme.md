@@ -43,4 +43,7 @@ Water has different colors depending on the depth. WaterFog was created to imple
 
  ### Normal Map
 
-In order to express the curvature of the actual water on the plan, a shadow was expressed using a Normal Map.
+In order to express the curvature of the actual water on the plan, a shadow was expressed using a Normal Map. Normal Map used Noramap Texture included in Asset called Animated Water Texture in Asset Store, and shadows are expressed in simple Lambert Lighting using this normal.
+
+_Water applied Normal Map. The curvature of the water was more emphasized._
+![Alt text](/ExplainImgs/WaterWithNormal.png)
