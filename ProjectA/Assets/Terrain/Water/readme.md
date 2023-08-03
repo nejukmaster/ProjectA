@@ -1,6 +1,11 @@
 Water Shader Part
 =================
-In this part, I will introduce my tries to make water more realistic and more cartoonic. The Following is passing through to goal.
+In this part, I will introduce my tries to make water more realistic and more cartoonic. The Following is passing through to goal. The table of contents is as follows.
+> Getstner Wave
+> Foam
+> Water Fog
+> Normal map
+> Refraction effect
 
 ### Gestner Wave
 
@@ -17,6 +22,13 @@ _Gestner Applied._
 ### Foam
 
 Foam means the expression of waves breaking off the coast. It is obtained by comparing the Scene Depth value with the depth value of the current fragment. Shader then creates a Foam at the interface where water and other objects meet. 
+
+_the application of water to the terrain._
 ![Alt text](/ExplainImgs/WaterWithoutFoam.png)
 ![Alt text](/ExplainImgs/WaterWithFoam.png)
 
+### Water Fog
+
+Water has different colors depending on the depth. WaterFog was created to implement this. It is composed by comparing depth and Scene Depth in the rest of the part other than Foam with the application of Foam.
+ _Water Fog with Foam_
+ ![Alt text](/ExplainImgs/WaterFogWithFoam.png)
