@@ -3615,8 +3615,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 909607711}
   m_LocalRotation: {x: 0.0032256427, y: -0, z: -0, w: 0.9999949}
-  m_LocalPosition: {x: 578, y: 38.8, z: 495.9}
-  m_LocalScale: {x: 56.985325, y: 1, z: 100}
+  m_LocalPosition: {x: 578, y: 43, z: 496}
+  m_LocalScale: {x: 74.65077, y: 1, z: 133.44}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 924092445}
@@ -4170,7 +4170,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &972622519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7069,14 +7069,13 @@ GameObject:
   - component: {fileID: 1912882154}
   - component: {fileID: 1912882153}
   - component: {fileID: 1912882152}
-  - component: {fileID: 1912882155}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1912882151
 Transform:
   m_ObjectHideFlags: 0
@@ -7085,7 +7084,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912882150}
   m_LocalRotation: {x: 0.0032256427, y: -0, z: -0, w: 0.9999949}
-  m_LocalPosition: {x: 578, y: 31, z: 495.9}
+  m_LocalPosition: {x: 578, y: 37, z: 496}
   m_LocalScale: {x: 56.985325, y: 1, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7164,18 +7163,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912882150}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1912882155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1912882150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03df69e89fcec38428ab8fbb9762d6b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1914050743
 GameObject:
   m_ObjectHideFlags: 0
@@ -8457,7 +8444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &4378681398717928458
 GameObject:
   m_ObjectHideFlags: 0

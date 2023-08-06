@@ -6,10 +6,12 @@ Shader"Terrain/Water"
         _Color2("Color 2",Color) = (1,1,1,1)
         _BumpMap("Normal Map",2D) = "white" {}
         _BumpIntensity("Normal Map Intensity",Range(0,1)) = 0.5
+
         [Header(Wave)]
         _Amply("Amply",Range(1.0,50.0)) = 1.0
-        _Frequency("Frequency",Range(1.0,50.0)) = 1.0
-        _Sharpness("Wave Sharpness",Range(1.0,3.14)) = 1.0
+        _Frequency("Frequency",Range(0,1)) = 1.0
+        _Sharpness("Wave Sharpness",Range(0,1)) = 0.2
+        _WaveNum("Numbe of Waves", Int) = 1
         [ShowAsVector2]_Direction("Direction",Vector) = (1.0,1.0,0.0,0.0)
         _Speed("Flow Speed",Range(0,100)) = 1.0
         
@@ -88,6 +90,7 @@ Shader"Terrain/Water"
                 float4 _Direction;
                 float _Sharpness;
                 float _Speed;
+                int _WaveNum;
             
                 float4 _Foam;
                 half4 _FoamColor;
@@ -190,9 +193,11 @@ Shader"Terrain/Water"
                 //IN.positionOS.y += sin(dot(_Direction.xy,float2(IN.positionOS.x, IN.positionOS.z)) * _Frequency + _Speed * _Time.x)*_Amply;
                 //Gerstner Wave vertex
                 float3 ori = IN.positionOS.xyz;
-                IN.positionOS.x += _Direction.x * cos(dot(_Sharpness * _Direction.xy,ori.xz) * _Frequency + _Speed * _Time.x) / _Sharpness;
-                IN.positionOS.z += _Direction.z * cos(dot(_Sharpness * _Direction.xy,ori.xz) * _Frequency + _Speed * _Time.x) / _Sharpness;
-                IN.positionOS.y +=sin(dot(_Sharpness * _Direction.xy,ori.xz)  * _Frequency+ _Speed * _Time.x)*_Amply;
+                ori.x += _Sharpness * _Direction.x * cos(dot(_Frequency * _Direction.xy,IN.positionOS.xz)+ _Speed * 4 / _Frequency * _Time.x)/(_Frequency*_WaveNum);
+                ori.z += _Sharpness * _Direction.y * cos(dot(_Frequency * _Direction.xy,IN.positionOS.xz)+ _Speed * 4 / _Frequency * _Time.x)/(_Frequency*_WaveNum);
+                ori.y = _Amply * sin(dot(_Frequency * _Direction.xy,IN.positionOS.xz) + _Speed * 4 / _Frequency * _Time.x);
+    
+                IN.positionOS.xyz = ori;
                 
 
                 OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);

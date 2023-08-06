@@ -33,31 +33,32 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Amply: 6.7
+    - _Amply: 9
     - _BlinCutoff: 0.995
     - _BlinIntensity: 1.115
     - _Brightness: 6.85
-    - _BumpIntensity: 0.595
+    - _BumpIntensity: 0.686
     - _CellSize: 100
     - _Cutoff: 0.0261
     - _Cuttoff: 0
     - _Depth: 1
     - _FogBias: 1.27
     - _FogIntensity: 0.00312
-    - _Frequency: 19.7
+    - _Frequency: 1
     - _Progress: 65
     - _ReflectionStrenght: 0.181
     - _ReflectionStrength: 0.4
     - _RefractionSpeed: 1
     - _RefractionStrength: 0
-    - _Scale: 0.1
-    - _Sharpness: 2.447
-    - _Speed: 11.6
+    - _Scale: 0.152
+    - _Sharpness: 1
+    - _Speed: 5.4
+    - _WaveNum: 1
     m_Colors:
     - _CameraWS: {r: 136, g: 367, b: 436, a: 0}
     - _Color: {r: 0.31603748, g: 0.65935993, b: 1, a: 0.6745098}
     - _Color2: {r: 0, g: 0.21034239, b: 0.8113208, a: 1}
-    - _Direction: {r: -0.23, g: -1, b: 0, a: 0}
+    - _Direction: {r: 0, g: -1, b: 0, a: 0}
     - _Foam: {r: 10, g: 76.3, b: 0.41, a: 31.08}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightColor: {r: 1, g: 1, b: 1, a: 1}
