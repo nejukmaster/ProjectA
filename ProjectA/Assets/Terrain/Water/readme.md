@@ -15,6 +15,7 @@ _This is shot of above. It's hard to call it a wave_
 ![Alt text](/ExplainImgs/WaveWithSin.png)
 
 So, I Find a way, and search the "Gestner Wave" at GPU Gems(2004). It's the way of express Ocean Wave more realistic, that add the x/z movement to vertex as well as y axis.
+
 ![Alt text](/ExplainImgs/EquationOfGestnerWave.jpg)
 
 z is a sine wave value, and x and y are cosine values for each axis. In this equation, D is a two-dimensional vector representing the direction of the wave, A represents the amplitude of the wave, w represents the frequency, Q represents the steepness of the wave, and finally t represents the time. 
