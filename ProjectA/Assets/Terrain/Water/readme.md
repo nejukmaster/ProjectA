@@ -22,12 +22,12 @@ z is a sine wave value, and x and y are cosine values for each axis. In this equ
 _hlsl code implemented above_
 ```hlsl
 //Gerstner Wave vertex
-                float3 ori = IN.positionOS.xyz;
-                ori.x += _Sharpness * _Direction.x * cos(dot(_Frequency * _Direction.xy,IN.positionOS.xz)+ _Speed * 4 / _Frequency * _Time.x)/(_Frequency*_WaveNum);
-                ori.z += _Sharpness * _Direction.y * cos(dot(_Frequency * _Direction.xy,IN.positionOS.xz)+ _Speed * 4 / _Frequency * _Time.x)/(_Frequency*_WaveNum);
-                ori.y = _Amply * sin(dot(_Frequency * _Direction.xy,IN.positionOS.xz) + _Speed * 4 / _Frequency * _Time.x);
+float3 ori = IN.positionOS.xyz;
+ori.x += _Sharpness * _Direction.x * cos(dot(_Frequency * _Direction.xy,IN.positionOS.xz)+ _Speed * 4 / _Frequency * _Time.x)/(_Frequency*_WaveNum);
+ori.z += _Sharpness * _Direction.y * cos(dot(_Frequency * _Direction.xy,IN.positionOS.xz)+ _Speed * 4 / _Frequency * _Time.x)/(_Frequency*_WaveNum);
+ori.y = _Amply * sin(dot(_Frequency * _Direction.xy,IN.positionOS.xz) + _Speed * 4 / _Frequency * _Time.x);
     
-                IN.positionOS.xyz = ori;
+IN.positionOS.xyz = ori;
 ```
 
 _Gestner Applied._
