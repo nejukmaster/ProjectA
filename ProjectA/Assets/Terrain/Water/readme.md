@@ -38,6 +38,25 @@ _Gestner Applied._
 
 Foam means the expression of waves breaking off the coast. It is obtained by comparing the Scene Depth value with the depth value of the current fragment. Shader then creates a Foam at the interface where water and other objects meet. 
 
+_code of foam implemention_
+```hlsl
+ float WaterDepthFade(float Depth, float4 ScreenPosition, float Distance)
+{
+    return (Depth-ScreenPosition.w)/(Distance*2);
+}
+
+...
+
+//Foam
+float2 screenUVs = IN.screenPos.xy / IN.screenPos.w;
+float zRaw = SampleSceneDepth(screenUVs);
+float zEye = LinearEyeDepth(SampleSceneDepth(screenUVs), _ZBufferParams);
+float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);
+float foamValue = step(foam,_Foam.z);
+color = lerp(color, _FoamColor, foamValue);
+```
+First, obtain the screen uv from the screen coordinates and then sample the Scene Depth. Subsequently, the sampled depth value is converted to the world scale through the LinearEye Depth macro. The world scale value is then mapped by subtracting the missing value of the current pixel from the sampled depth value and dividing it by the length of foam to be rendered. Here, _Foam is a three-dimensional vector value that stores (amount, size, cut-off) information.
+
 _the application of water to the terrain._
 ![Alt text](/ExplainImgs/WaterWithoutFoam.png)
 ![Alt text](/ExplainImgs/WaterWithFoam.png)
@@ -81,3 +100,6 @@ refractionmap *= _Scale;
 half3 refractionColor = SampleSceneColor(screenUVs + refractionmap);
 color = lerp(half4(refractionColor,1), color, color.a);
 ```
+
+_Refraction Applied_
+![Alt text](/ExplainImgs/WaterWithRefraction.png)
