@@ -55,7 +55,7 @@ float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);
 float foamValue = step(foam,_Foam.z);
 color = lerp(color, _FoamColor, foamValue);
 ```
-First, obtain the screen uv from the screen coordinates and then sample the Scene Depth. Subsequently, the sampled depth value is converted to the world scale through the LinearEye Depth macro. The world scale value is then mapped by subtracting the missing value of the current pixel from the sampled depth value and dividing it by the length of foam to be rendered. Here, _Foam is a three-dimensional vector value that stores (amount, size, cut-off) information.
+First, obtain the screen uv from the screen coordinates and then sample the Scene Depth. Subsequently, the sampled depth value is converted to the world scale through the LinearEye Depth macro. The world scale value is then mapped by subtracting the missing value of the current pixel from the sampled depth value and dividing it by the length of foam to be rendered. Here, _Foam is property that stores (amount, size, cut-off) information.
 
 _the application of water to the terrain._
 ![Alt text](/ExplainImgs/WaterWithoutFoam.png)
