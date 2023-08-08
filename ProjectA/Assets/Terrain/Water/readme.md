@@ -70,6 +70,15 @@ Water has different colors depending on the depth. WaterFog was created to imple
 
  From the camera, you can see that the deeper the depth, the thicker the fog. If you have confirmed that it works properly, now, apply this Fog to the color and alpha.
 
+ ```hlsl
+//Water Fog
+float waterFog= zEye - IN.screenPos.w;
+waterFog = _FogIntensity * waterFog;
+waterFog = pow(waterFog,_FogBias);
+color.rgb *= pow(_Color2.rgb,waterFog);
+color.a = color.a + waterFog;
+```
+
  _Water applied Fog. It can be seen that the color darkens and the transparency decreases in the deep._
  ![Alt text](/ExplainImgs/WaterWithWaterFog.png)
 
