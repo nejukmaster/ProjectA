@@ -112,8 +112,32 @@ _Outline Mask Rendered_
 
 ### Character Outline Shader
 
-Then, this Outline Mask should be applied to the Main Camera. In order to produce a post-processing shader for this, an Outline Mask is required, which will then be produced and processed by RenderFeature.
+Then, this Outline Mask should be applied to the Main Camera. In order to produce a post-processing shader for this, an Outline Mask is required, which will then be produced and processed by RenderFeature. Therefore, here, we write a shader to receive and process an Outline Mask.
+```hlsl
+Properties
+{
+  _MainTex("Texture", 2D) = "white" {}
+  _OutlineColor("Outline Color", Color) = (0,0,0,1)
+  _Outline("Outline", 2D) = "white" {}
+}
+```
+This is the property of the Character Outline Shader that I'm going to write this time. Here, _MainTex will receive a temporary render texture from Main Camera, and _Outline Properties will receive an Outline Mask from CharacterCam. After that, it can be seen that the _Outline Color, which will determine the color of the outline, is also declared.
+```hlsl
+float SampleSceneOutline(float2 uv)
+{
+  return SAMPLE_TEXTURE2D_X(_Outline, sampler_Outline, UnityStereoTransformScreenSpaceTex(uv)).r;
+}
+...
+half4 frag (v2f i) : SV_Target
+{
+  float outline = SampleSceneOutline(i.uv);
+  half4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
+    
+  return lerp(color,_OutlineColor,outline);
+}
+```
 
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
 URP inherits and uses a class called Scriptable Render Feature when applying a postprocessing shader. The Scriptable Render Feature allows us to insert our Scriptable Render Pass into the rendering process of each camera.
+
