@@ -1,4 +1,4 @@
-Shader "PostProcessing/OutlineMap"
+Shader"PostProcessing/OutlineMap"
 {
     Properties
     {

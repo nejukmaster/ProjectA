@@ -70,8 +70,6 @@ o;
                 // sample the texture
                 float outline = SampleSceneOutline(i.uv);
                 half4 color = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv);
-                float3 normal = normalize(i.normalWS);
-                float ndv = dot(normal, normalize(-i.viewDir));
     
                 return lerp(color,_OutlineColor,outline);
             }
