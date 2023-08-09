@@ -13,6 +13,26 @@ To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and no
 
 ![Alt text](/ExplainImgs/SkinDiffuseRamp.png)
 
+And following is code for appling it
+
+```hlsl
+half4 color = lerp(SAMPLE_TEXTURE2D(_BaseMap,sampler_BaseMap,IN.uv),_Tone,_TonePow);
+    
+float4 shadowCoord = TransformWorldToShadowCoord(IN.positionWS);      //This converts the world coordinates into shadow map coordinates.
+Light light = GetMainLight(shadowCoord);
+    
+ float3 normal = normalize(IN.normalWS);
+float ndl = dot(normal, normalize(-1 * light.direction)) * 0.5 + 0.5;  //Map values between -1 and 1 to values between 0 and 1
+float ndv = dot(normal, normalize(-IN.viewDir)) * 0.5 + 0.5;
+    
+//Shadowing & Retouching
+half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(ndl,ndv));
+color =  lerp(color,color * _ShadowColor,shadow);
+    
+color = lerp(color,color * _ShadowColor,1-light.shadowAttenuation);    //Apply attenuation of light to affect the shadow.
+return color;
+```
+
 Using this, we can get smoother shading effect. Left image is Skin Shader with Diffuse Wrapping, and right image is Skin shader with Single Step Toon Shading.
 
 <img src="/ExplainImgs/SkinDiffuseWrapping.png" width="35%" height="30%"> <img src="/ExplainImgs/SkinSingleToonShading.png" width="30%" height="30%">
