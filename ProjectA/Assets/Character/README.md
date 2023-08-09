@@ -26,7 +26,7 @@ float ndl = dot(normal, normalize(-1 * light.direction)) * 0.5 + 0.5;  //Map val
 float ndv = dot(normal, normalize(-IN.viewDir)) * 0.5 + 0.5;
     
 //Shadowing & Retouching
-half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(ndl,ndv));
+half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(ndl,ndv));    //Sampling a Diffuse Map with ndl and ndv Values
 color =  lerp(color,color * _ShadowColor,shadow);
     
 color = lerp(color,color * _ShadowColor,1-light.shadowAttenuation);    //Apply attenuation of light to affect the shadow.
