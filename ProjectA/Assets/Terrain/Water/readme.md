@@ -2,9 +2,13 @@ Water Shader Part
 =================
 In this part, I will introduce my tries to make water more realistic and more cartoonic. The Following is passing through to goal. The table of contents is as follows.
 > Getstner Wave
+> 
 > Foam
+> 
 > Water Fog
+> 
 > Normal map
+> 
 > Refraction effect
 
 ### Gestner Wave
