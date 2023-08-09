@@ -64,7 +64,7 @@ void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
     int y = i%3;
 
     depthDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneDepth(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
-    normalDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));  The normal and depth of the 3x3 area centered on the current pixel are sampled and multiplied by the kernel
+    normalDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));  //The normal and depth of the 3x3 area centered on the current pixel are sampled and multiplied by the kernel
   }
 
   depthDifferency_horizon = abs(depthDifferency_horizon);
@@ -107,7 +107,13 @@ half4 color = lerp(0, 1, outline);
 return color;
 ```
 _Outline Mask Rendered_
+
 ![Alt text](/ExplainImgs/OutlineMask.png)
+
+### Character Outline Shader
+
+Then, this Outline Mask should be applied to the Main Camera. In order to produce a post-processing shader for this, an Outline Mask is required, which will then be produced and processed by RenderFeature.
+
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
 URP inherits and uses a class called Scriptable Render Feature when applying a postprocessing shader. The Scriptable Render Feature allows us to insert our Scriptable Render Pass into the rendering process of each camera.
