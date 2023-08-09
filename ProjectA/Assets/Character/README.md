@@ -45,6 +45,51 @@ _Diffuse Map of Clothes_
 
 ![Alt text](/ExplainImgs/ClothesDiffuseRamp.png)
 
+_Code_
+```hlsl
+inline float3 UnpackNormal(half4 packednormal)        //UnpackNormal Macro from "UnityCG.cginc"
+            {
+#if defined(SHADER_API_GLES) && defined(SHADER_API_MOBILE)
+         return (packednormal.xyz * 2 - 1) * _BumpScale;
+#else
+         float3 normal;
+         normal.xy = (packednormal.wy * 2 - 1) * _BumpScale;
+         normal.z = sqrt(1 - normal.x*normal.x - normal.y * normal.y);
+         return normal;
+#endif
+}
+
+inline half3 TangentNormalToWorldNormal(half3 TangnetNormal, half3 T, half3  B, half3 N)
+{
+      float3x3 TBN = float3x3(T, B, N);        //Obtain the base of the tangent space.
+      TBN = transpose(TBN);                    //calculate TBN^-1
+      return mul(TBN, TangnetNormal);          //Returns the world space normal by multiplying TBN^-1 by the tangent space normal vector.
+}
+.
+.
+.
+ half4 frag (Varyings IN) : SV_Target
+{
+        half4 color = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,IN.uv);
+    
+        float4 shadowCoord = TransformWorldToShadowCoord(IN.positionWS);
+        Light light = GetMainLight(shadowCoord);
+    
+        //Normal Mapping
+        half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,IN.uv));
+        float3 normal = TangentNormalToWorldNormal(bump, IN.tangentWS, IN.bitangentWS, IN.normalWS);    //Extract the normal from the normal map.
+        float ndl = dot(normal, normalize(-1 * light.direction)) * 0.5 + 0.5;                           //Calculates ndl as the normal obtained.
+    
+        //Shadowing & Retouching
+        half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(pow(ndl,_ShadowPow),0));
+        color =  lerp(color,color * _ShadowColor,shadow);
+    
+        color *= _ShadowColor * (light.shadowAttenuation * 0.5 + 0.5);
+    
+        return color;
+}
+```
+
 _Clothes Without Normal Mapping_
 
 ![Alt text](/ExplainImgs/ClothesWithoutNormal.png)
