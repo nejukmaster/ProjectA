@@ -51,26 +51,12 @@ Shader"PostProcessing/OutlineMap"
 
             void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
 
-                float3x3 verticalOutlineConv = {1,0,-1,
+                float3x3 horizontalOutlineConv = {1,0,-1,
                                                 2,0,-2,
                                                 1,0,-1};
-                float3x3 horizontalOutlineConv = {1,2,1,
+                float3x3 verticalOutlineConv = {1,2,1,
                                                 0,0,0,
                                                 -1,-2,-1};
-
-                float depthDifferency_vert = 0;
-                float3 normalDifferency_vert = 0;
-
-                for(uint i = 0; i < 9; i ++){
-                    int x = i/3;
-                    int y = i%3;
-
-                    depthDifferency_vert += verticalOutlineConv[x][y] * SampleSceneDepth(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
-                    normalDifferency_vert += verticalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
-                }
-
-                depthDifferency_vert = abs(depthDifferency_vert);
-                normalDifferency_vert = abs(normalDifferency_vert);
 
                 float depthDifferency_horizon = 0;
                 float3 normalDifferency_horizon = 0;
@@ -86,7 +72,21 @@ Shader"PostProcessing/OutlineMap"
                 depthDifferency_horizon = abs(depthDifferency_horizon);
                 normalDifferency_horizon = abs(normalDifferency_horizon);
 
-                depthOutline = depthDifferency_horizon + depthDifferency_vert / 2.0;
+                float depthDifferency_vert = 0;
+                float3 normalDifferency_vert = 0;
+
+                for(uint i = 0; i < 9; i ++){
+                    int x = i/3;
+                    int y = i%3;
+
+                    depthDifferency_vert += verticalOutlineConv[x][y] * SampleSceneDepth(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
+                    normalDifferency_vert += verticalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
+                }
+
+                depthDifferency_vert = abs(depthDifferency_vert);
+                normalDifferency_vert = abs(normalDifferency_vert);
+
+                depthOutline = (depthDifferency_horizon + depthDifferency_vert) / 2.0;
                 normalOutline = (normalDifferency_horizon.r + normalDifferency_horizon.g + normalDifferency_horizon.b + normalDifferency_vert.r + normalDifferency_vert.g + normalDifferency_vert.b)/6.0;
             }
 
