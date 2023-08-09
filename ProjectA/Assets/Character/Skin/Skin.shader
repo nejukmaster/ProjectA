@@ -84,7 +84,7 @@ Shader"Character/Skin"
                 half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(ndl,ndv));
                 color =  lerp(color,color * _ShadowColor,shadow);
     
-                color = lerp(color,color * _ShadowColor,1-light.shadowAttenuation);
+                color = lerp(color,color * _ShadowColor,1-(light.shadowAttenuation*0.5 +0.5));
                 return color;
             }
             ENDHLSL

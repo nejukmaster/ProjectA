@@ -97,7 +97,6 @@ Shader"Character/Body"
                 OUT.positionWS = TransformObjectToWorld(IN.positionOS.xyz);
                 OUT.tangentWS = TransformObjectToWorldDir(IN.tangentOS.xyz);
                 OUT.bitangentWS = cross(OUT.normalWS, OUT.tangentWS) * IN.tangentOS.w * unity_WorldTransformParams.w;
-                OUT.viewDir = _WorldSpaceCameraPos.xyz - TransformObjectToWorld(IN.positionOS.xyz);
                 return OUT;
             }
 
@@ -112,7 +111,6 @@ Shader"Character/Body"
                 half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,IN.uv));
                 float3 normal = TangentNormalToWorldNormal(bump, IN.tangentWS, IN.bitangentWS, IN.normalWS);
                 float ndl = dot(normal, normalize(-1 * light.direction)) * 0.5 + 0.5;
-                float ndv = dot(normal, normalize(-IN.viewDir)) * 0.5 + 0.5;
     
                 //Shadowing & Retouching
                 half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(pow(ndl,_ShadowPow),0));
