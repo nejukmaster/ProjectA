@@ -122,10 +122,11 @@ Properties
 }
 ```
 This is the property of the Character Outline Shader that I'm going to write this time. Here, _MainTex will receive a temporary render texture from Main Camera, and _Outline Properties will receive an Outline Mask from CharacterCam. After that, it can be seen that the _Outline Color, which will determine the color of the outline, is also declared.
+_Apply in fragment shader_
 ```hlsl
 float SampleSceneOutline(float2 uv)
 {
-  return SAMPLE_TEXTURE2D_X(_Outline, sampler_Outline, UnityStereoTransformScreenSpaceTex(uv)).r;
+  return SAMPLE_TEXTURE2D_X(_Outline, sampler_Outline, uv).r;
 }
 ...
 half4 frag (v2f i) : SV_Target
@@ -136,6 +137,7 @@ half4 frag (v2f i) : SV_Target
   return lerp(color,_OutlineColor,outline);
 }
 ```
+All that remains is to provide an Outline Mask to the _Outline property of the material associated with this shader.
 
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
