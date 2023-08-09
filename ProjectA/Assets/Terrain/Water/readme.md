@@ -55,7 +55,7 @@ float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);
 float foamValue = step(foam,_Foam.z);
 color = lerp(color, _FoamColor, foamValue);
 ```
-First, obtain the screen uv from the screen coordinates and then sample the Scene Depth. Subsequently, the sampled depth value is converted to the world scale through the LinearEye Depth macro. The world scale value is then mapped by subtracting the missing value of the current pixel from the sampled depth value and dividing it by the length of foam to be rendered. Here, _Foam is a three-dimensional vector value that stores (amount, size, cut-off) information.
+First, obtain the screen uv from the screen coordinates and then sample the Scene Depth. Subsequently, the sampled depth value is converted to the world scale through the LinearEye Depth macro. The world scale value is then mapped by subtracting the missing value of the current pixel from the sampled depth value and dividing it by the length of foam to be rendered. Here, _Foam is property that stores (amount, size, cut-off) information.
 
 _the application of water to the terrain._
 ![Alt text](/ExplainImgs/WaterWithoutFoam.png)
@@ -69,6 +69,15 @@ Water has different colors depending on the depth. WaterFog was created to imple
  ![Alt text](/ExplainImgs/WaterFogWithFoam.png)
 
  From the camera, you can see that the deeper the depth, the thicker the fog. If you have confirmed that it works properly, now, apply this Fog to the color and alpha.
+
+ ```hlsl
+//Water Fog
+float waterFog= zEye - IN.screenPos.w;
+waterFog = _FogIntensity * waterFog;
+waterFog = pow(waterFog,_FogBias);
+color.rgb *= pow(_Color2.rgb,waterFog);
+color.a = color.a + waterFog;
+```
 
  _Water applied Fog. It can be seen that the color darkens and the transparency decreases in the deep._
  ![Alt text](/ExplainImgs/WaterWithWaterFog.png)
