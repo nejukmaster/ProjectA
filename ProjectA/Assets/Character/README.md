@@ -48,45 +48,43 @@ _Diffuse Map of Clothes_
 _Code_
 ```hlsl
 inline float3 UnpackNormal(half4 packednormal)        //UnpackNormal Macro from "UnityCG.cginc"
-            {
+{
 #if defined(SHADER_API_GLES) && defined(SHADER_API_MOBILE)
-         return (packednormal.xyz * 2 - 1) * _BumpScale;
+    return (packednormal.xyz * 2 - 1) * _BumpScale;
 #else
-         float3 normal;
-         normal.xy = (packednormal.wy * 2 - 1) * _BumpScale;
-         normal.z = sqrt(1 - normal.x*normal.x - normal.y * normal.y);
-         return normal;
+    float3 normal;
+    normal.xy = (packednormal.wy * 2 - 1) * _BumpScale;
+    normal.z = sqrt(1 - normal.x*normal.x - normal.y * normal.y);
+    return normal;
 #endif
 }
 
 inline half3 TangentNormalToWorldNormal(half3 TangnetNormal, half3 T, half3  B, half3 N)
 {
-      float3x3 TBN = float3x3(T, B, N);        //Obtain the base of the tangent space.
-      TBN = transpose(TBN);                    //calculate TBN^-1
-      return mul(TBN, TangnetNormal);          //Returns the world space normal by multiplying TBN^-1 by the tangent space normal vector.
+    float3x3 TBN = float3x3(T, B, N);        //Obtain the base of the tangent space.
+    TBN = transpose(TBN);                    //calculate TBN^-1
+    return mul(TBN, TangnetNormal);          //Returns the world space normal by multiplying TBN^-1 by the tangent space normal vector.
 }
-.
-.
-.
+...
  half4 frag (Varyings IN) : SV_Target
 {
-        half4 color = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,IN.uv);
+    half4 color = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,IN.uv);
     
-        float4 shadowCoord = TransformWorldToShadowCoord(IN.positionWS);
-        Light light = GetMainLight(shadowCoord);
+    float4 shadowCoord = TransformWorldToShadowCoord(IN.positionWS);
+    Light light = GetMainLight(shadowCoord);
     
-        //Normal Mapping
-        half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,IN.uv));
-        float3 normal = TangentNormalToWorldNormal(bump, IN.tangentWS, IN.bitangentWS, IN.normalWS);    //Extract the normal from the normal map.
-        float ndl = dot(normal, normalize(-1 * light.direction)) * 0.5 + 0.5;                           //Calculates ndl as the normal obtained.
+    //Normal Mapping
+    half3 bump = UnpackNormal(SAMPLE_TEXTURE2D(_BumpMap,sampler_BumpMap,IN.uv));
+    float3 normal = TangentNormalToWorldNormal(bump, IN.tangentWS, IN.bitangentWS, IN.normalWS);    //Extract the normal from the normal map.
+    float ndl = dot(normal, normalize(-1 * light.direction)) * 0.5 + 0.5;                           //Calculates ndl as the normal obtained.
     
-        //Shadowing & Retouching
-        half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(pow(ndl,_ShadowPow),0));
-        color =  lerp(color,color * _ShadowColor,shadow);
+    //Shadowing & Retouching
+    half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(pow(ndl,_ShadowPow),0));
+    color =  lerp(color,color * _ShadowColor,shadow);
     
-        color *= _ShadowColor * (light.shadowAttenuation * 0.5 + 0.5);
+    color *= _ShadowColor * (light.shadowAttenuation * 0.5 + 0.5);
     
-        return color;
+    return color;
 }
 ```
 
@@ -101,6 +99,25 @@ _Clothes With Normal Mapping_
 ### Hair Shader With Diffuse Wrapping and Normal Map
 
 Hair Shader use Diffuse Warpping and Normal Mapping like Body Shader, and use Diffuse Ramp which is Body Shader's. But Hair Shader should show shadow more certainly than Body Shader, so, I remapped normal dot light value with cubic function.
+
+_code_
+```hlsl
+float f_x(float x)    //remapping Function f(x) = -2(x-0.5)^3 + 1.5(x-0.5) + 0.5
+{
+    return -2*pow(x-0.5,3)+1.5*(x-0.5) +0.5;
+}
+...
+half4 frag (Varyings IN) : SV_Target
+{
+    ...
+    //Shadowing & Retouching
+    half4 shadow = SAMPLE_TEXTURE2D(_DiffuseRamp,sampler_DiffuseRamp,float2(f_x(ndl),0));    //remapping ndl and sampling diffuse map
+    color = lerp(color,color * _ShadowColor,shadow);
+    color = lerp(color,color * _ShadowColor,1-light.shadowAttenuation);
+    
+    return color;
+}
+```
 
 _Left is Shader with remapping, and right is non remapping. After remapping, shadow have been more distinct._
 
