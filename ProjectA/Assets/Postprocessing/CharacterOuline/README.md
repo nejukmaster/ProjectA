@@ -19,3 +19,9 @@ First, set the rendering layer. In Inspector > Layer > Add Layer, add Layer name
 After that, create another camera as children of the main camera. And set it up as follows.
 ![Alt text](/ExplainImgs/AddCharacterCam.png)
 ![Alt text](/ExplainImgs/CharacterCamSettings.png)
+Explain of Settings
+Priority: Sets the rendering order of the camera. Set it to -1 to render before the main camera.
+Depth Texture: Decide whether to use Depth Texture. I will use DepthNormal to draw the outline, so I will choose "On".
+Culling Mask: Determines which layer to render. Let's choose the "Character" layer.
+
+Now, CharacterCam has been set up to create a character outline mask. What we're going to do now is create an outline mask with CharacterCam's DepthNormal and a post-processing shader that applies it to the main camera.
