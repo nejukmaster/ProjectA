@@ -107,6 +107,7 @@ half4 color = lerp(0, 1, outline);
 return color;
 ```
 _Outline Mask Rendered_
+
 ![Alt text](/ExplainImgs/OutlineMask.png)
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
