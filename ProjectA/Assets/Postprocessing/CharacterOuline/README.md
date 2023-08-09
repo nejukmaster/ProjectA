@@ -54,6 +54,8 @@ void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
                                     0,0,0,
                                     -1,-2,-1};  //Vertical axis kernel
 
+  //Horizontal Outline
+
   float depthDifferency_horizon = 0;
   float3 normalDifferency_horizon = 0;
 
@@ -62,11 +64,13 @@ void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
     int y = i%3;
 
     depthDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneDepth(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
-    normalDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
+    normalDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));  The normal and depth of the 3x3 area centered on the current pixel are sampled and multiplied by the kernel
   }
 
-  depthDifferency_horizon = abs(depthDifferency_vert);
-  normalDifferency_horizon = abs(normalDifferency_vert);
+  depthDifferency_horizon = abs(depthDifferency_horizon);
+  normalDifferency_horizon = abs(normalDifferency_horizon);  //Since it is to find the difference, not the displacement, it gives an absolute value.
+
+  //Vertical Outline
 
   float depthDifferency_vert = 0;
   float3 normalDifferency_vert = 0;
@@ -79,11 +83,11 @@ void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
     normalDifferency_vert += verticallOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
   }
 
-  depthDifferency_vert = abs(depthDifferency_horizon);
-  normalDifferency_vert = abs(normalDifferency_horizon);
+  depthDifferency_vert = abs(depthDifferency_vert);
+  normalDifferency_vert = abs(normalDifferency_vert);
 
-  depthOutline = depthDifferency_vert + depthDifferency_horizon / 2.0;
-  normalOutline = (normalDifferency_horizon.r + normalDifferency_horizon.g + normalDifferency_horizon.b + normalDifferency_vert.r + normalDifferency_vert.g + normalDifferency_vert.b)/6.0;
+  depthOutline = (depthDifferency_vert + depthDifferency_horizon) / 2.0;   
+  normalOutline = (normalDifferency_horizon.r + normalDifferency_horizon.g + normalDifferency_horizon.b + normalDifferency_vert.r + normalDifferency_vert.g + normalDifferency_vert.b)/6.0;  //The horizontal outline and the vertical outline are added to give the average.
 }
 ```
 
