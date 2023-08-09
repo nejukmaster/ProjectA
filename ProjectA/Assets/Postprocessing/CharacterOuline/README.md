@@ -13,7 +13,7 @@ To achieve this, I have set up an implementation plan as follows.
 First, after dividing the character layers, set up a character camera that will render only the characters. Because I will render only the outline of the character. 
 
 First, set the rendering layer. In Inspector > Layer > Add Layer, add Layer named "Character" and Assign to the character.
-![Alt text](/ExplainImgs/ShaderImplementionPlanMap.png)
+![Alt text](/ExplainImgs/AddCharacterLayer.png)
 ![Alt text](/ExplainImgs/AssignLayerToCharacter.png)
 
 After that, create another camera as children of the main camera. And set it up as follows.
