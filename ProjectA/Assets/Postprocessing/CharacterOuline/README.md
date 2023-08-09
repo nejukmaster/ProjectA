@@ -109,6 +109,11 @@ return color;
 _Outline Mask Rendered_
 
 ![Alt text](/ExplainImgs/OutlineMask.png)
+
+### Character Outline Shader
+
+Then, this Outline Mask should be applied to the Main Camera. In order to produce a post-processing shader for this, an Outline Mask is required, which will then be produced and processed by RenderFeature.
+
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
 URP inherits and uses a class called Scriptable Render Feature when applying a postprocessing shader. The Scriptable Render Feature allows us to insert our Scriptable Render Pass into the rendering process of each camera.
