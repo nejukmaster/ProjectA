@@ -2,9 +2,13 @@ Water Shader Part
 =================
 In this part, I will introduce my tries to make water more realistic and more cartoonic. The Following is passing through to goal. The table of contents is as follows.
 > Getstner Wave
+> 
 > Foam
+> 
 > Water Fog
+> 
 > Normal map
+> 
 > Refraction effect
 
 ### Gestner Wave
@@ -112,3 +116,8 @@ color = lerp(half4(refractionColor,1), color, color.a);
 
 _Refraction Applied_
 ![Alt text](/ExplainImgs/WaterWithRefraction.png)
+
+### Final
+Use two water objects to construct more realistic water shading. This is a finished copy for my water shader.
+
+![Alt text](/ExplainImgs/WaterComplete.png)

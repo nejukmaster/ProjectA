@@ -101,6 +101,7 @@ _Clothes With Normal Mapping_
 Hair Shader use Diffuse Warpping and Normal Mapping like Body Shader, and use Diffuse Ramp which is Body Shader's. But Hair Shader should show shadow more certainly than Body Shader, so, I remapped normal dot light value with cubic function.
 
 _Graph of Remapping Function_
+
 ![Alt text](/ExplainImgs/GraphOfRemappingFunction.png)
 
 Since the graph is a trigeminal function graph with inflection at (0.5,0.5) and polar values at (0,1) and (1,0), the value changes rapidly in the middle, and the value changes less as you approach (0,1) and (1,0).
