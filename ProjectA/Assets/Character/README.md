@@ -45,6 +45,11 @@ _Diffuse Map of Clothes_
 
 ![Alt text](/ExplainImgs/ClothesDiffuseRamp.png)
 
+_Graph of Remapping Function_
+![Alt text](/ExplainImgs/GraphOfRemappingFunction.png)
+
+Since the graph is a trigeminal function graph with inflection at (0.5,0.5) and polar values at (0,1) and (1,0), the value changes rapidly in the middle, and the value changes less as you approach (0,1) and (1,0).
+
 _Code_
 ```hlsl
 inline float3 UnpackNormal(half4 packednormal)        //UnpackNormal Macro from "UnityCG.cginc"
