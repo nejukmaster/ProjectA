@@ -6,3 +6,4 @@ The character outline effect plays a role in highlighting and highlighting the c
 > Draw Character Only
 
 To achieve this, I have set up an implementation plan as follows.
+![Alt text](/ExplainImgs/ShaderImplementionPlanMap.png)
