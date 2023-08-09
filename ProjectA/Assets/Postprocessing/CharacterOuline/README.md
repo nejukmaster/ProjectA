@@ -43,6 +43,49 @@ Drawing an outline using Depth Normal is a technique that compares the current D
 
 Sobel Filter is one of the Edge detection algorithms, which is a method of multiplying the kernel of 3x3 by the original image to obtain an approximate value of the rate of change, usually expressed as follows.
 ![Alt text](/ExplainImgs/SobelOperator.png)
+And this is a function of finding the outline using Sobel Filter.
+```hlsl
+void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
+
+  float3x3 horizontalOutlineConv = {1,0,-1,
+                                  2,0,-2,
+                                  1,0,-1};    //Horizontal axis kernel
+  float3x3 verticallOutlineConv = {1,2,1,
+                                    0,0,0,
+                                    -1,-2,-1};  //Vertical axis kernel
+
+  float depthDifferency_horizon = 0;
+  float3 normalDifferency_horizon = 0;
+
+  for(uint i = 0; i < 9; i ++){
+    int x = i/3;
+    int y = i%3;
+
+    depthDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneDepth(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
+    normalDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
+  }
+
+  depthDifferency_horizon = abs(depthDifferency_vert);
+  normalDifferency_horizon = abs(normalDifferency_vert);
+
+  float depthDifferency_vert = 0;
+  float3 normalDifferency_vert = 0;
+
+  for(uint i = 0; i < 9; i ++){
+    int x = i/3;
+    int y = i%3;
+
+    depthDifferency_vert += verticallOutlineConv[x][y] * SampleSceneDepth(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
+    normalDifferency_vert += verticallOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
+  }
+
+  depthDifferency_vert = abs(depthDifferency_horizon);
+  normalDifferency_vert = abs(normalDifferency_horizon);
+
+  depthOutline = depthDifferency_vert + depthDifferency_horizon / 2.0;
+  normalOutline = (normalDifferency_horizon.r + normalDifferency_horizon.g + normalDifferency_horizon.b + normalDifferency_vert.r + normalDifferency_vert.g + normalDifferency_vert.b)/6.0;
+}
+```
 
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
