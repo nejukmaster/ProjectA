@@ -90,7 +90,24 @@ void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
   normalOutline = (normalDifferency_horizon.r + normalDifferency_horizon.g + normalDifferency_horizon.b + normalDifferency_vert.r + normalDifferency_vert.g + normalDifferency_vert.b)/6.0;  //The horizontal outline and the vertical outline are added to give the average.
 }
 ```
+_Apply to Fragment Shader_
+```hlsl
+Compare(depthDifference, normalDifference, IN.uv);
+normalDifference = normalDifference * _NormalMult;
+normalDifference = saturate(normalDifference);
+normalDifference = pow(normalDifference, _NormalBias);
+    
+depthDifference = depthDifference * _DepthMult;
+depthDifference = saturate(depthDifference);
+depthDifference = pow(depthDifference, _DepthBias);
 
+float outline = (normalDifference + depthDifference);
+
+half4 color = lerp(0, 1, outline);
+return color;
+```
+_Outline Mask Rendered_
+![Alt text](/ExplainImgs/OutlineMask.png)
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
 URP inherits and uses a class called Scriptable Render Feature when applying a postprocessing shader. The Scriptable Render Feature allows us to insert our Scriptable Render Pass into the rendering process of each camera.
