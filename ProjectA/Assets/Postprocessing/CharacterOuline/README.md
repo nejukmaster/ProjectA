@@ -143,18 +143,18 @@ All that remains is to provide an Outline Mask to the _Outline property of the m
 
 URP inherits and uses a class called Scriptable Render Feature when applying a postprocessing shader. The Scriptable Render Feature allows us to insert our Scriptable Render Pass into the rendering process of each camera. 
 
-First, write a Scriptable Render Pass. 
+First, write a Scriptable Render Pass. declare a colorBuffer to store temporary textures and a shaderBuffer to store the post-processed textures. It also declares the ShaderPropertyID to access this shaderBuffer.
 ```hlsl
 class CustomRenderPass : ScriptableRenderPass
 {
   private RenderTargetIdentifier colorBuffer, shaderBuffer;
   private int shaderBufferID = Shader.PropertyToID("_ShaderBuffer");
 ```
-First, declare a colorBuffer to store temporary textures and a shaderBuffer to store the post-processed textures. It also declares the ShaderPropertyID to access this shaderBuffer.
+And, Creates a constructor with various properties. The description of each property is annotated.
 ```hlsl
-private Material material;
-private Material outlineMapping;
-private RenderTexture outlineMap;
+private Material material;          //Specify the material associated with the postprocessing shader.
+private Material outlineMapping;    //Specify the material of the shader that creates the outline mask
+private RenderTexture outlineMap;   //Custom Lander Texture to Store OutlineMask
 public CustomRenderPass(CustomPassSettings settings) : base()
 {
   this.renderPassEvent = settings.renderPassEvent;
