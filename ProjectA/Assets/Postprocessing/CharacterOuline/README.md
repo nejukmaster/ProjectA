@@ -64,7 +64,7 @@ void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
     int y = i%3;
 
     depthDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneDepth(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));
-    normalDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));  The normal and depth of the 3x3 area centered on the current pixel are sampled and multiplied by the kernel
+    normalDifferency_horizon += horizontalOutlineConv[x][y] * SampleSceneNormals(uv + _MainTex_TexelSize.xy * float2(x-2,y-2));  //The normal and depth of the 3x3 area centered on the current pixel are sampled and multiplied by the kernel
   }
 
   depthDifferency_horizon = abs(depthDifferency_horizon);
