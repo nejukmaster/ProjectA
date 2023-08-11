@@ -47,7 +47,7 @@ Shader"PostProcessing/CharacterOutlineShader"
 
             float SampleSceneOutline(float2 uv)
             {
-                return SAMPLE_TEXTURE2D_X(_Outline, sampler_Outline, UnityStereoTransformScreenSpaceTex(uv)).r;
+                return SAMPLE_TEXTURE2D_X(_Outline, sampler_Outline, uv).r;
             }
 
             CBUFFER_START(UnityPerMaterial)

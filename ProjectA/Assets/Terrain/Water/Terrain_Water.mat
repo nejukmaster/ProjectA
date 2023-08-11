@@ -53,6 +53,7 @@ Material:
     - _Scale: 0.152
     - _Sharpness: 1
     - _Speed: 5.4
+    - _StencilRef: 1
     - _WaveNum: 1
     m_Colors:
     - _CameraWS: {r: 136, g: 367, b: 436, a: 0}

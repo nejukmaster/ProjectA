@@ -31,6 +31,8 @@ Shader"Terrain/Water"
         [Header(Fog)]
         _FogIntensity("Fog Intensity",Range(0,0.01)) = 10
         _FogBias("Fog Bias",Range(1,10)) = 1
+
+        [IntRange] _StencilRef("Stencil Reference Value", Range(0,255)) = 0
         
     }
 
@@ -44,6 +46,11 @@ Shader"Terrain/Water"
         {
             Name "ForwardLit"
             Tags { "LightMode" = "UniversalForward" }
+            
+            Stencil{
+                Ref [_StencilRef]
+                Comp Equal
+            }
 
             HLSLPROGRAM
             #pragma vertex vert

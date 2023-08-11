@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Vector3 moveDir = Vector3.zero;
-        ySpeed += gravity;
+        ySpeed += gravity*Time.deltaTime;
         if (Input.anyKey)
         {
             CameraToPlayerVector = Camera.main.transform.forward;
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
         }
         animator.SetFloat("Speed", moveDir.magnitude);
         moveDir.y = ySpeed;
-        controller.Move(moveDir * Time.deltaTime);
+        controller.Move(new Vector3((moveDir * Time.deltaTime).x,moveDir.y, (moveDir * Time.deltaTime).z));
     }
 
 }
