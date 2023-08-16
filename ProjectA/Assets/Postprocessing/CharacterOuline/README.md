@@ -234,3 +234,42 @@ Finally, it releases the resources used by the OnCleanupCamera block.
   }
 }
 ```
+Well, the rendering pass is complete. All that remains is to configure Scriptable RenderFeature to apply this rendering pass. It is very easy and simple.
+
+First, it inherits Scriptable RenderFeature to the script, and for convenience, it creates a modified CustomPassSetting class in the inspector.
+```hlsl
+public class CharacterOutlineFeature : ScriptableRendererFeature
+{
+    [System.Serializable]
+    public class CustomPassSettings
+    {
+        //RenderPassEvent determines when RenderPass runs.
+        public RenderPassEvent renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
+        //Material to draw the outline
+        public Material mat;
+        //Material to create an outline mask
+        public Material outlineMapping;
+    }
+```
+Then, in AddRenderPass, insert the RenderPass we created into the rendering pipeline.
+```hlsl
+  private CustomRenderPass m_ScriptablePass;
+    [SerializeField] CustomPassSettings m_Settings;
+
+    /// <inheritdoc/>
+    public override void Create()
+    {
+        m_ScriptablePass = new CustomRenderPass(m_Settings);
+    }
+
+    public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
+    {
+        renderer.EnqueuePass(m_ScriptablePass);
+    }
+}
+```
+Finally, add the feature you just created to the Universal Render Data you are currently using.
+![Alt text](/ExplainImgs/InsertRendererFeatureAndSetting.png)
+### Result
+![Alt text](/ExplainImgs/OutlineResult.png)
+It can be seen that the outline is applied only to the character and not to the terrain behind it.
