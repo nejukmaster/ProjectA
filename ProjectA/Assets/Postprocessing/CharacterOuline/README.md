@@ -181,3 +181,47 @@ public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderin
   shaderBuffer = new RenderTargetIdentifier(shaderBufferID);
 }
 ```
+Then We should Execute this pass. At this time, the outline mask is configured and mapped. Since we use two cameras, it is necessary to separate them and apply different processes, which were distinguished using the Tag function to Unity. The following is an Execute block that divides each camera into tags and configures an Outline Mask in the character cam, and applies it in the main camera.
+```hlsl
+//The Execute block is executed when this Pass is actually executed.
+public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
+{
+  //Get one new CommandBuffer from the CommandBufferPool.
+  CommandBuffer cmd = CommandBufferPool.Get();
+
+  //Create a new CustomRenderTexture if there is no texture in the Outline Map.
+  if (outlineMap == null) outlineMap = new CustomRenderTexture(renderingData.cameraData.camera.pixelWidth, renderingData.cameraData.camera.pixelHeight);
+
+  //Main camera rendering
+  if (renderingData.cameraData.camera.CompareTag("MainCamera"))
+  {
+    //ProfilingScope makes it easier to debug by making the rendering process visible in Unity Profiler.
+    using (new ProfilingScope(cmd, new ProfilingSampler("Character Outline Pass")))
+    {
+      //Saves the generated OutlineMask to the Material's _OutlineMap property.
+      material.SetTexture("_Outline", outlineMap);
+      //After that, apply the material that draws the outline of the character created earlier and blit the camera.
+      cmd.Blit(colorBuffer, shaderBuffer, material);
+      cmd.Blit(shaderBuffer, colorBuffer);
+    } 
+  }
+  //Character Camera Rendering
+  else if (renderingData.cameraData.camera.CompareTag("CharacterCam"))
+  {
+    using (new ProfilingScope(cmd, new ProfilingSampler("Outline Mapping")))
+    {
+      //Release the previously used Outline Mask texture.
+      outlineMap.Release();
+      //Blit the CharacterCam by applying the shader that creates the Outline Mask.
+      cmd.Blit(colorBuffer, shaderBuffer, outlineMapping);
+      cmd.Blit(shaderBuffer, colorBuffer);
+      //Saves the generated Outline Mask to the Outline Map.
+      cmd.Blit(colorBuffer, outlineMap);
+    }
+  }
+  //Run the CommandBuffer you created earlier.
+  context.ExecuteCommandBuffer(cmd);
+  //Release the used CommandBuffer.
+  CommandBufferPool.Release(cmd);
+}
+```
