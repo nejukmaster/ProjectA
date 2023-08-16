@@ -225,3 +225,12 @@ public override void Execute(ScriptableRenderContext context, ref RenderingData 
   CommandBufferPool.Release(cmd);
 }
 ```
+Finally, it releases the resources used by the OnCleanupCamera block.
+```hlsl
+  public override void OnCameraCleanup(CommandBuffer cmd)
+  {
+    if (cmd == null) throw new System.ArgumentNullException("cmd");
+    cmd.ReleaseTemporaryRT(shaderBufferID);
+  }
+}
+```
