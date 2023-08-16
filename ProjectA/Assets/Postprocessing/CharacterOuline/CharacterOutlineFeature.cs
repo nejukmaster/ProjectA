@@ -60,6 +60,7 @@ public class CharacterOutlineFeature : ScriptableRendererFeature
             {
                 using (new ProfilingScope(cmd, new ProfilingSampler("Outline Mapping")))
                 {
+                    outlineMap.Release();
                     cmd.Blit(colorBuffer, shaderBuffer, outlineMapping);
                     cmd.Blit(shaderBuffer, colorBuffer);
                     cmd.Blit(colorBuffer, outlineMap);
