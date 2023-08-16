@@ -164,3 +164,20 @@ public CustomRenderPass(CustomPassSettings settings) : base()
   ConfigureInput(ScriptableRenderPassInput.Normal);
 }
 ```
+The next step is to complete the necessary settings in OnCameraSetup.
+```hlsl
+//OnCameraSetup runs before rendering the camera.
+public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
+{
+  //Lander DepthNormal on camera.
+  renderingData.cameraData.camera.depthTextureMode = DepthTextureMode.DepthNormals;
+  //Connect the rendering screen of the current camera to the colorBuffer.
+  colorBuffer = renderingData.cameraData.renderer.cameraColorTargetHandle;
+  //Gets the RenderTextureDescriptor from the current camera to use when creating the rendering texture.
+  RenderTextureDescriptor descriptor = renderingData.cameraData.cameraTargetDescriptor;
+
+  //Gets the current temporary render texture and binds it to shaderBufferID.
+  cmd.GetTemporaryRT(shaderBufferID, descriptor, FilterMode.Point);
+  shaderBuffer = new RenderTargetIdentifier(shaderBufferID);
+}
+```
