@@ -7,7 +7,7 @@ Online-Open World with Unity
 
 >  2.Bloom Post Processing with SRP
 
->  3.Multi-Play with Unity Gaming Service
+>  3.Multi-Play with Unity Netcode
 
 >  4.Character Moving, Skill...etc which the basical function at Open World game
 
