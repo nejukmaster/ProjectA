@@ -13,6 +13,8 @@ ProjectA/[Mm]emoryCaptures/
 ProjectA/**/*.meta
 ProjectA/[Uu]serSettings/
 ProjectA/Assets/unity-chan!
+ProjectA/Assets/ParrelSync
+ProjectA_clone_0
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta

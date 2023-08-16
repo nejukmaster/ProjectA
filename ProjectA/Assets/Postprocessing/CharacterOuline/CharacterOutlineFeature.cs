@@ -30,6 +30,7 @@ public class CharacterOutlineFeature : ScriptableRendererFeature
 
             ConfigureInput(ScriptableRenderPassInput.Normal);
         }
+
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
         {
             renderingData.cameraData.camera.depthTextureMode = DepthTextureMode.DepthNormals;

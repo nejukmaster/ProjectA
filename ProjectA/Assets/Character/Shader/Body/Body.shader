@@ -117,7 +117,7 @@ Shader"Character/Body"
                 color =  lerp(color,color * _ShadowColor,shadow);
     
                 color *= _ShadowColor * (light.shadowAttenuation * 0.5 + 0.5);
-    
+                
                 return color;
             }
             ENDHLSL

@@ -6,7 +6,7 @@ using UnityEngine;
 [CustomEditor(typeof(CameraController))]
 public class CameraControllerEditor : Editor
 {
-    private void OnSceneGUI()
+    /*private void OnSceneGUI()
     {
         CameraController controller = (CameraController)target;
 
@@ -17,5 +17,5 @@ public class CameraControllerEditor : Editor
         {
             controller.trackingOffset = trackingOffset = controller.trackingObj.transform.position;
         }
-    }
+    }*/
 }

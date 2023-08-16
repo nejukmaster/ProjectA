@@ -255,6 +255,7 @@ Shader"Terrain/Water"
                 half3 refractionColor = SampleSceneColor(screenUVs + refractionmap);
                 color = lerp(half4(refractionColor,1), color, color.a);
     
+                
                 return color;
             }
             ENDHLSL
