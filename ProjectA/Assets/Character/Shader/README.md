@@ -13,7 +13,7 @@ To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and no
 
 ![Alt text](/ExplainImgs/SkinDiffuseRamp.png)
 
-And following is code for appling it
+And following is the code.
 
 ```hlsl
 half4 color = lerp(SAMPLE_TEXTURE2D(_BaseMap,sampler_BaseMap,IN.uv),_Tone,_TonePow);
