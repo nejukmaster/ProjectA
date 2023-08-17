@@ -1,6 +1,6 @@
 Character Shader Part
 =====================
-#### Character Shader is based on unity-chan, and written with hlsl because this project runs on URP. Following is what I made to implement Illustrative NRP Shader
+#### Character Shader is based on unity-chan, and written with hlsl because this project runs on URP. The Iilustrative NRP shader is implemented in the following five processes
 >  1. Skin Shader With Diffuse Wraping
 >  2. Body Shader With Diffuse Wraping and Normal Map
 >  3. Hair Shader With Diffuse Wraping and Normal Map
