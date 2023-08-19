@@ -5,12 +5,12 @@ Online-Open World with Unity
 
 >  1.[Illustrative Character Shader in URP](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Character/Shader)
 
->  3.[Charactor Controller With Netcode](
+>  2.[Charactor Controller With Netcode](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Character/Scripts/Controller)
 
->  2.[Water Shader in URP](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Terrain/Water)
+>  3.[Water Shader in URP](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Terrain/Water)
 
->  3.Multi-Play with Unity Netcode
+>  4.Multi-Play with Unity Netcode
 
->  4.Character Moving, Skill...etc which the basical function at Open World game
+>  5.Character Moving, Skill...etc which the basical function at Open World game
 
->  5.Optimizing(scripts and shader)
+>  6.Optimizing(scripts and shader)
