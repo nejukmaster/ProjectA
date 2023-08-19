@@ -59,4 +59,34 @@ private void Update()
     if(canMove) MovePlayerServer();        //Move the Player
 }
 ```
-This is actually the update syntax that will work on the client side. Use isOwner to verify ownership so that it cannot work on the server or other clients, and if there is no problem, send a character-moving packet to the server. The function that does this is the MovePlayerServer function at the bottom.
+This is actually the Update Block that will work on the client side. Use isOwner to verify ownership so that it cannot work on the server or other clients, and if there is no problem, send a character-moving packet to the server. The function that does this is the MovePlayerServer function at the bottom. Next, we will look at this MovePlayerServer function.
+```c#
+void MovePlayerServer()
+{
+    Vector3 moveDir = Vector3.zero;
+    Quaternion rotateDir = this.transform.rotation;
+    ySpeed += gravity*Time.deltaTime;
+    if (Input.anyKey)
+    {
+        CameraToPlayerVector = Camera.main.transform.forward;
+            
+        float horizon = Input.GetAxis("Horizontal");
+        float verti = Input.GetAxis("Vertical");
+
+        if (Input.GetKey(KeyCode.LeftShift))
+            moveDir += movement.BasicMove(verti, horizon, runSpeed);
+        else
+            moveDir += movement.BasicMove(verti, horizon, walkSpeed);
+        rotateDir = Quaternion.LookRotation(new Vector3(moveDir.x,0,moveDir.z));
+
+        if(Input.GetKeyDown(KeyCode.Space) && onGround)
+        {
+            ySpeed = jumpIntensity;
+            JumpPlayerServerRpc();
+            onGround = false;
+        }
+    }
+    moveDir.y = ySpeed;
+    MovePlayerServerRpc(rotateDir, moveDir, Time.deltaTime);
+}
+```
