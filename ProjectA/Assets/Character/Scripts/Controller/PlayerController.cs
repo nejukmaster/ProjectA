@@ -20,6 +20,8 @@ public class PlayerController : NetworkBehaviour
     CharacterMovement movement;
     float ySpeed = 0.0f;
     float invincibility;
+    bool canMove = true;
+    bool onGround = true;
 
     public override void OnNetworkSpawn()
     {
@@ -33,9 +35,10 @@ public class PlayerController : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsOwner || !Application.isFocused) return;
-        MovePlayerServer();
-        if(invincibility > 0) invincibility -= Time.deltaTime;
+        if(!IsOwner) return;
+        if (invincibility > 0) invincibility -= Time.deltaTime;
+        if (!Application.isFocused) return;
+        if(canMove) MovePlayerServer();
     }
 
     void MovePlayerServer()
@@ -56,14 +59,28 @@ public class PlayerController : NetworkBehaviour
                 moveDir += movement.BasicMove(verti, horizon, walkSpeed);
             rotateDir = Quaternion.LookRotation(new Vector3(moveDir.x,0,moveDir.z));
 
-            if(Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetKeyDown(KeyCode.Space) && onGround)
             {
                 ySpeed = jumpIntensity;
                 JumpPlayerServerRpc();
+                onGround = false;
             }
         }
         moveDir.y = ySpeed;
         MovePlayerServerRpc(rotateDir, moveDir, Time.deltaTime);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        GameObject go = hit.gameObject;
+        Debug.Log(go.tag);
+        if (go.CompareTag("Ground"))
+        {
+            if (hit.moveDirection == new Vector3(0, -1, 0) && !onGround)
+            {
+                onGround = true;
+            }
+        }
     }
 
     [ServerRpc]
@@ -83,12 +100,19 @@ public class PlayerController : NetworkBehaviour
     public void DamagedServerRpc()
     {
         if (invincibility <= 0)
+        {
             animator.SetTrigger("Damage");
+        }
     }
 
-    public void Invincible()
+    public void SetCanMove(int p_int)
     {
-        invincibility = 7.0f;
+        this.canMove = p_int == 1;
+    }
+
+    public void Invincible(float p_float)
+    {
+        invincibility = p_float;
     }
 
 }

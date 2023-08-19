@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Obstacle
   - CharacterCam
+  - Ground
   layers:
   - Default
   - TransparentFX

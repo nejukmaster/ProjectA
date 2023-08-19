@@ -71,8 +71,7 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
   - {fileID: -2111743684430249164}
-  - {fileID: 6143059388730491207}
-  m_RendererFeatureMap: adc0de57c6d2eee53443dcb84e94b1e247c1687bf7874055
+  m_RendererFeatureMap: adc0de57c6d2eee53443dcb84e94b1e2
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 0}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -113,20 +112,3 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
---- !u!114 &6143059388730491207
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7585939223f0c6f43acab4e79833d0a2, type: 3}
-  m_Name: GlowFeature
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    renderPassEvent: 550
-    glowMat: {fileID: 2100000, guid: 2871dec522e8cbc478418d4e6214eb14, type: 2}
-    glowMaskMat: {fileID: 0}

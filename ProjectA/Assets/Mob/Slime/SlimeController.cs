@@ -12,7 +12,7 @@ public class SlimeController : NetworkBehaviour
     [SerializeField] float attackRange;
     Animator animator;
     NavMeshAgent agent;
-    public void Start()
+    public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         agent = GetComponent<NavMeshAgent>();

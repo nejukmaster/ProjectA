@@ -21035,8 +21035,7 @@ AnimationClip:
   - time: 0.125
     functionName: BasicAttack
     data: 
-    objectReferenceParameter: {fileID: 5400183432113805099, guid: 726f9745e17d09a4194b1465768f6bcb,
-      type: 3}
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
