@@ -26,7 +26,7 @@ public class PlayerController : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        controller = GetComponent<CharacterController>();
+        if(IsServer) controller = GetComponent<CharacterController>();
         if (!IsOwner) return;
         cam = Camera.main;
         cam.GetComponent<CameraController>().SetTrackingObj(this);
@@ -36,6 +36,7 @@ public class PlayerController : NetworkBehaviour
     private void Update()
     {
         if(!IsOwner) return;
+        Debug.Log("tlfgod");
         if (invincibility > 0) invincibility -= Time.deltaTime;
         if (!Application.isFocused) return;
         if(canMove) MovePlayerServer();
@@ -73,7 +74,6 @@ public class PlayerController : NetworkBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         GameObject go = hit.gameObject;
-        Debug.Log(go.tag);
         if (go.CompareTag("Ground"))
         {
             if (hit.moveDirection == new Vector3(0, -1, 0) && !onGround)
