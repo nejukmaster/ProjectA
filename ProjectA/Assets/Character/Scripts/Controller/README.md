@@ -63,30 +63,30 @@ This is actually the Update Block that will work on the client side. Use isOwner
 ```c#
 void MovePlayerServer()
 {
-    Vector3 moveDir = Vector3.zero;
-    Quaternion rotateDir = this.transform.rotation;
-    ySpeed += gravity*Time.deltaTime;
-    if (Input.anyKey)
+    Vector3 moveDir = Vector3.zero;                            //Local variable that stores the vector that the character will eventually move to
+    Quaternion rotateDir = this.transform.rotation;            //Save Player Rotation Quarterion
+    ySpeed += gravity*Time.deltaTime;                          //Gravity application
+    if (Input.anyKey)    //If keystrokes are detected
     {
-        CameraToPlayerVector = Camera.main.transform.forward;
+        CameraToPlayerVector = Camera.main.transform.forward; //Gets the vector the camera is looking at.
             
-        float horizon = Input.GetAxis("Horizontal");
-        float verti = Input.GetAxis("Vertical");
+        float horizon = Input.GetAxis("Horizontal");         //Receive Horizontal Key Input
+        float verti = Input.GetAxis("Vertical");             //Receive vertical axis key input
 
-        if (Input.GetKey(KeyCode.LeftShift))
-            moveDir += movement.BasicMove(verti, horizon, runSpeed);
+        if (Input.GetKey(KeyCode.LeftShift))                //running key
+            moveDir += movement.BasicMove(verti, horizon, runSpeed);    //Apply runSpeed
         else
-            moveDir += movement.BasicMove(verti, horizon, walkSpeed);
-        rotateDir = Quaternion.LookRotation(new Vector3(moveDir.x,0,moveDir.z));
+            moveDir += movement.BasicMove(verti, horizon, walkSpeed);    //Apply walkSpeed if you are not pressing the Run key
+        rotateDir = Quaternion.LookRotation(new Vector3(moveDir.x,0,moveDir.z));    //Character rotation. No longitudinal rotation.
 
-        if(Input.GetKeyDown(KeyCode.Space) && onGround)
+        if(Input.GetKeyDown(KeyCode.Space) && onGround)    //jump key
         {
-            ySpeed = jumpIntensity;
-            JumpPlayerServerRpc();
-            onGround = false;
+            ySpeed = jumpIntensity;                        //Set y-axis speed to jump strength
+            JumpPlayerServerRpc();                         //Send player's jump data in packets
+            onGround = false;                             //Player fell off the ground
         }
     }
-    moveDir.y = ySpeed;
-    MovePlayerServerRpc(rotateDir, moveDir, Time.deltaTime);
+    moveDir.y = ySpeed;                                    //Apply y-axis motion
+    MovePlayerServerRpc(rotateDir, moveDir, Time.deltaTime);    //Send calculated player movement data to the server in packets
 }
 ```
