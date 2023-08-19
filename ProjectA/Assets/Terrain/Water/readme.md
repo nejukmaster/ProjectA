@@ -117,6 +117,27 @@ color = lerp(half4(refractionColor,1), color, color.a);
 _Refraction Applied_
 ![Alt text](/ExplainImgs/WaterWithRefraction.png)
 
+### Stencil
+
+The stencil buffer allows water to be rendered only on top of the terrain.
+_Stencil Receive in Water Shader_
+```hlsl
+Stencil{
+    Ref [_StencilRef]
+    Comp Equal
+}
+```
+_Stencil Write in Terrain Shader_
+```hlsl
+Stencil{
+    Ref [_StencilRef]
+    Comp Always
+    Pass Replace
+}
+```
+_Stencil Applied_
+![Alt text](/ExplainImgs/WaterWithStencil.png)
+
 ### Final
 Use two water objects to construct more realistic water shading. This is a finished copy for my water shader.
 
