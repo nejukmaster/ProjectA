@@ -12,7 +12,7 @@ Okay, then It's ready.
 
 ### Character Controller Script
 The Character Controller script is responsible for the actual movement of this character.I will explain the script while looking at the code.
-```hlsl
+```c#
 public class PlayerController : NetworkBehaviour  //NetworkBehaviour inheritance
 {
     public static Vector3 CameraToPlayerVector;  //Direction vector from the main camera to this character
@@ -37,3 +37,14 @@ public class PlayerController : NetworkBehaviour  //NetworkBehaviour inheritance
 The first thing to see is that he inherited NetworkBehaviour, not MonoBehaviour. Because Network Behaviour enables Unity to use network-related properties or methods.
 
 CameraToPlayerVector and character tracking points are both variables to be used for camera tracking and will be used to determine the direction of each camera and where the camera will look. Each of the Serialized variables under it is a property that can arbitrarily change the player's movement. Animator and controller are the variables to import each of the Player's Animator and Character Controller components, and the private variables below are the variables to be used in the controller's system.
+```c#
+ public override void OnNetworkSpawn()
+{
+    base.OnNetworkSpawn();
+    controller = GetComponent<CharacterController>();
+    if (!IsOwner) return;
+    cam = Camera.main;
+    cam.GetComponent<CameraController>().SetTrackingObj(this);
+    movement = new CharacterMovement(this);
+}
+```
