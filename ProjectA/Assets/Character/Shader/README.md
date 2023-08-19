@@ -1,6 +1,6 @@
 Character Shader Part
 =====================
-#### Character Shader is based on unity-chan, and written with hlsl because this project is on URP. Following is what I made to implement Illustrative NRP Shader
+#### Character Shader is based on unity-chan. And this is written with hlsl because this project runs on URP. The Iilustrative NPR shader is implemented in the following five processes.
 >  1. Skin Shader With Diffuse Wraping
 >  2. Body Shader With Diffuse Wraping and Normal Map
 >  3. Hair Shader With Diffuse Wraping and Normal Map
@@ -9,11 +9,11 @@ Character Shader Part
 
 ### Skin Shader With Diffuse Wraping
 
-To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and normal Dot view value. For this, I made a Diffuse Ramp which maps normal Dot light value at xAxis and normal dot view value at yAxis. So that, the fragment be illuminated by standard Lambert, and will brighten up that fragnent is nearer to Main Camera's view direction.
+To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and normal Dot view value. For this, I made a Diffuse Ramp which maps normal Dot light value at xAxis and normal dot view value at yAxis. So that, the fragment is illuminated by standard Lambert, and the closer the Main Camera looks, the brighter the fragment becomes.
 
 ![Alt text](/ExplainImgs/SkinDiffuseRamp.png)
 
-And following is code for appling it
+And following is the code.
 
 ```hlsl
 half4 color = lerp(SAMPLE_TEXTURE2D(_BaseMap,sampler_BaseMap,IN.uv),_Tone,_TonePow);
@@ -39,7 +39,7 @@ Using this, we can get smoother shading effect. Left image is Skin Shader with D
 
 ### Body Shader With Diffuse Wraping and Normal Map
 
-The Clothes' Shader use Diffuse Wrapping as above. but, this shader is only use normal Dot light value. because this shader is not necessary to be shown smoothly as much as Skin Shader above. And the clothes should show wrinkles, So that, I apply normal mapping to shader. 
+However this shader is not necessary to show as smoothly as Skin Shader so Normal dot Light value is used only. And the clothes should show wrinkles, So that, I apply normal mapping to shader. 
 
 _Diffuse Map of Clothes_
 
