@@ -23,9 +23,10 @@ public class PlayerController : NetworkBehaviour  //NetworkBehaviour inheritance
     [SerializeField] float walkSpeed;          //the walking speed of a character
     [SerializeField] float jumpIntensity;      //the strength of a jump
     [SerializeField] float runSpeed;          //running speed
-    [SerializeField] Animator animator;        //Player's animator
 
+    [SerializeField] Animator animator;        //Player's animator
     public CharacterController controller;    //Player's Character Controller
+
     Camera cam;                               //Main Camera
     CharacterMovement movement;               //Character Movement Object, which summarizes Character's motion operation
     float ySpeed = 0.0f;                      //The movement of the current character on the y-axis
@@ -33,3 +34,4 @@ public class PlayerController : NetworkBehaviour  //NetworkBehaviour inheritance
     bool canMove = true;                      //Parameters for whether the character can be moved
     bool onGround = true;                    //Parameters to check if the character is touching the ground
 ```
+The first thing to see is that he inherited NetworkBehaviour, not MonoBehaviour. Because Network Behaviour enables Unity to use network-related properties or methods. CameraToPlayerVector and character tracking points are both variables to be used for camera tracking and will be used to determine the direction of each camera and where the camera will look. Each of the Serialized variables under it is a property that can arbitrarily change the player's movement. Animator and controller are the variables to import each of the Player's Animator and Character Controller components, and the private variables below are the variables to be used in the controller's system.
