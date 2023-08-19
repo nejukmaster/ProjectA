@@ -50,3 +50,13 @@ CameraToPlayerVector and character tracking points are both variables to be used
 }
 ```
 OnNetworkSpawn is invoked on each NetworkBehaviour associated with a NetworkObject spawned. So, it is usually used for initialization, and as shown in the code, it is possible to initialize the server and the client separately using NetworkBehaviour's properties. Here, you can see that only the Character Controller responsible for the character's movement is initialized on the server, and the rest of the camera-related and Character Movement objects are initialized on the client.
+
+```c#
+private void Update()
+{
+    if(!IsOwner) return;                //Run this character's owner only
+    if (invincibility > 0) invincibility -= Time.deltaTime;    //Invincible Time Countdown
+    if (!Application.isFocused) return;    //Run only when this window is selected
+    if(canMove) MovePlayerServer();        //Move the Player
+}
+```
