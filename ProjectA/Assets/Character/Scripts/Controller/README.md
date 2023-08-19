@@ -41,10 +41,11 @@ CameraToPlayerVector and character tracking points are both variables to be used
  public override void OnNetworkSpawn()
 {
     base.OnNetworkSpawn();
-    controller = GetComponent<CharacterController>();
+    if(isServer) controller = GetComponent<CharacterController>();
     if (!IsOwner) return;
     cam = Camera.main;
     cam.GetComponent<CameraController>().SetTrackingObj(this);
     movement = new CharacterMovement(this);
 }
 ```
+OnNetworkSpawn is invoked on each NetworkBehaviour associated with a NetworkObject spawned. 
