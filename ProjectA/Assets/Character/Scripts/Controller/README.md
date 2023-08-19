@@ -41,11 +41,12 @@ CameraToPlayerVector and character tracking points are both variables to be used
  public override void OnNetworkSpawn()
 {
     base.OnNetworkSpawn();
-    if(isServer) controller = GetComponent<CharacterController>();
-    if (!IsOwner) return;
-    cam = Camera.main;
-    cam.GetComponent<CameraController>().SetTrackingObj(this);
-    movement = new CharacterMovement(this);
+    //When the local player is a server
+    if(isServer) controller = GetComponent<CharacterController>();    //Gets the character controller.
+    if (!IsOwner) return;                            //If the local player owns this script
+    cam = Camera.main;                                                        //Initialize the main camera
+    cam.GetComponent<CameraController>().SetTrackingObj(this);                //Set the camera to track this player object
+    movement = new CharacterMovement(this);                                   //Character Movement object initialization
 }
 ```
-OnNetworkSpawn is invoked on each NetworkBehaviour associated with a NetworkObject spawned. 
+OnNetworkSpawn is invoked on each NetworkBehaviour associated with a NetworkObject spawned. So, it is usually used for initialization, and as shown in the code, it is possible to initialize the server and the client separately using NetworkBehaviour's properties. Here, you can see that only the Character Controller responsible for the character's movement is initialized on the server, and the rest of the camera-related and Character Movement objects are initialized on the client.
