@@ -5322,9 +5322,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterTrackingPoint: {x: 0, y: 67.14827, z: 0}
-  gravity: -9.8
+  gravity: -450
   walkSpeed: 65
-  jumpIntensity: 2.5
+  jumpIntensity: 200
   runSpeed: 120
   animator: {fileID: 5147863709501356527}
   controller: {fileID: 0}

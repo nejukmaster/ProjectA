@@ -9,7 +9,7 @@ public class PlayerController : NetworkBehaviour
 
     public Vector3 characterTrackingPoint;
     
-    public float gravity = -9.8f;
+    public float gravity = -20f;
     [SerializeField] float walkSpeed;
     [SerializeField] float jumpIntensity;
     [SerializeField] float runSpeed;
@@ -36,7 +36,6 @@ public class PlayerController : NetworkBehaviour
     private void Update()
     {
         if(!IsOwner) return;
-        Debug.Log("tlfgod");
         if (invincibility > 0) invincibility -= Time.deltaTime;
         if (!Application.isFocused) return;
         if(canMove) MovePlayerServer();
@@ -46,7 +45,6 @@ public class PlayerController : NetworkBehaviour
     {
         Vector3 moveDir = Vector3.zero;
         Quaternion rotateDir = this.transform.rotation;
-        ySpeed += gravity*Time.deltaTime;
         if (Input.anyKey)
         {
             CameraToPlayerVector = Camera.main.transform.forward;
@@ -67,8 +65,9 @@ public class PlayerController : NetworkBehaviour
                 onGround = false;
             }
         }
+        ySpeed += gravity * Time.deltaTime;
         moveDir.y = ySpeed;
-        MovePlayerServerRpc(rotateDir, moveDir, Time.deltaTime);
+        MovePlayerServerRpc(rotateDir, moveDir * Time.deltaTime, new Vector3(moveDir.x,0,moveDir.z).magnitude);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -84,12 +83,11 @@ public class PlayerController : NetworkBehaviour
     }
 
     [ServerRpc]
-    void MovePlayerServerRpc(Quaternion rotateDir, Vector3 p_moveDir, float p_deltaTime)
+    void MovePlayerServerRpc(Quaternion rotateDir, Vector3 p_moveDir, float speed)
     {
-        Vector3 moveDir = new Vector3((p_moveDir * p_deltaTime).x, p_moveDir.y, (p_moveDir * p_deltaTime).z);
         this.transform.rotation = rotateDir;
-        controller.Move(moveDir);
-        animator.SetFloat("Speed", new Vector3(p_moveDir.x,0,p_moveDir.z).magnitude);
+        controller.Move(p_moveDir);
+        animator.SetFloat("Speed", speed);
     }
     [ServerRpc]
     void JumpPlayerServerRpc()
