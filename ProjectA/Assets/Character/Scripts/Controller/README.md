@@ -91,3 +91,13 @@ void MovePlayerServer()
 }
 ```
 What should be noted here is that this data is delivered to the server through ServerRpc after completing the computation of the player's. This is because what actually moves the player is handled by the server.
+```c#
+[ServerRpc]            //Server Rpc Attribute. Can only call in client
+void MovePlayerServerRpc(Quaternion rotateDir, Vector3 p_moveDir, float p_deltaTime)
+{
+    Vector3 moveDir = new Vector3((p_moveDir * p_deltaTime).x, p_moveDir.y, (p_moveDir * p_deltaTime).z);    //Apply deltaTime only to values that do not apply deltaTime
+    this.transform.rotation = rotateDir;                                                                     //Apply rotation
+    controller.Move(moveDir);                                                                                //Apply Move
+    animator.SetFloat("Speed", new Vector3(p_moveDir.x,0,p_moveDir.z).magnitude);                            //Hand over the speed to the animator.
+}
+```
