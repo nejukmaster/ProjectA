@@ -101,4 +101,4 @@ void MovePlayerServerRpc(Quaternion rotateDir, Vector3 p_moveDir, float p_deltaT
     animator.SetFloat("Speed", new Vector3(p_moveDir.x,0,p_moveDir.z).magnitude);                            //Pass the speed value to the animator.
 }
 ```
-ServerRpc is invoked from the client and runs on the server.
+ServerRpc is invoked from the client and runs on the server. Therefore, the character can be moved through the Character Controller initialized in server. And it also applies the rotation value of the character.
