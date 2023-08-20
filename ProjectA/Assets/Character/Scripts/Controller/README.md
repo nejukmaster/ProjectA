@@ -102,3 +102,8 @@ void MovePlayerServerRpc(Quaternion rotateDir, Vector3 p_moveDir, float p_deltaT
 }
 ```
 ServerRpc is invoked from the client and runs on the server. Therefore, the character can be moved through the Character Controller initialized in server. And it also applies the rotation value of the character.
+
+### Final
+
+As a result, This is the movement of the character implemented.
+[![Video Label](http://img.youtube.com/vi/BLV-J57aiv4/0.jpg)](https://youtu.be/BLV-J57aiv4)
