@@ -90,3 +90,4 @@ void MovePlayerServer()
     MovePlayerServerRpc(rotateDir, moveDir, Time.deltaTime);    //Send calculated player movement data to the server in packets
 }
 ```
+What should be noted here is that this data is delivered to the server through ServerRpc after completing the computation of the player's. This is because what actually moves the player is handled by the server.
