@@ -50,3 +50,60 @@ CameraToPlayerVector and character tracking points are both variables to be used
 }
 ```
 OnNetworkSpawn is invoked on each NetworkBehaviour associated with a NetworkObject spawned. So, it is usually used for initialization, and as shown in the code, it is possible to initialize the server and the client separately using NetworkBehaviour's properties. Here, you can see that only the Character Controller responsible for the character's movement is initialized on the server, and the rest of the camera-related and Character Movement objects are initialized on the client.
+```c#
+private void Update()
+{
+    if(!IsOwner) return;                //Run this character's owner only
+    if (invincibility > 0) invincibility -= Time.deltaTime;    //Invincible Time Countdown
+    if (!Application.isFocused) return;    //Run only when this window is selected
+    if(canMove) MovePlayerServer();        //Move the Player
+}
+```
+This is actually the Update Block that will work on the client side. Use isOwner to verify ownership so that it cannot work on the server or other clients, and if there is no problem, send a character-moving packet to the server. The function that does this is the MovePlayerServer function at the bottom. Next, we will look at this MovePlayerServer function.
+```c#
+void MovePlayerServer()
+{
+    Vector3 moveDir = Vector3.zero;                            //Local variable that stores the vector that the character will eventually move to
+    Quaternion rotateDir = this.transform.rotation;            //Save Player Rotation Quarterion
+    ySpeed += gravity*Time.deltaTime;                          //Gravity application
+    if (Input.anyKey)    //If keystrokes are detected
+    {
+        CameraToPlayerVector = Camera.main.transform.forward; //Gets the vector the camera is looking at.
+            
+        float horizon = Input.GetAxis("Horizontal");         //Receive Horizontal Key Input
+        float verti = Input.GetAxis("Vertical");             //Receive vertical axis key input
+
+        if (Input.GetKey(KeyCode.LeftShift))                //running key
+            moveDir += movement.BasicMove(verti, horizon, runSpeed);    //Apply runSpeed
+        else
+            moveDir += movement.BasicMove(verti, horizon, walkSpeed);    //Apply walkSpeed if you are not pressing the Run key
+        rotateDir = Quaternion.LookRotation(new Vector3(moveDir.x,0,moveDir.z));    //Character rotation. No longitudinal rotation.
+
+        if(Input.GetKeyDown(KeyCode.Space) && onGround)    //jump key
+        {
+            ySpeed = jumpIntensity;                        //Set y-axis speed to jump strength
+            JumpPlayerServerRpc();                         //Send player's jump data in packets
+            onGround = false;                             //Player fell off the ground
+        }
+    }
+    moveDir.y = ySpeed;                                    //Apply y-axis motion
+    MovePlayerServerRpc(rotateDir, moveDir * Time.deltaTime, new Vector3(moveDir.x,0,moveDir.z).magnitude);    //Send calculated player movement data to the server in packets
+}
+```
+What should be noted here is that this data is delivered to the server through ServerRpc after completing the computation of the player's. This is because what actually moves the player is handled by the server.
+```c#
+[ServerRpc]            //Server Rpc Attribute. Can only call in client
+void MovePlayerServerRpc(Quaternion rotateDir, Vector3 p_moveDir, float p_deltaTime)
+{
+    this.transform.rotation = rotateDir;                          //Apply rotation
+    controller.Move(p_moveDir);                                   //Apply Move
+    animator.SetFloat("Speed", speed);                            //Pass the speed value to the animator.
+}
+```
+ServerRpc is invoked from the client and runs on the server. Therefore, the character can be moved through the Character Controller initialized in server. And it also applies the rotation value of the character.
+
+### Final
+
+As a result, This is the movement of the character implemented.
+
+[![Video Label](http://img.youtube.com/vi/BLV-J57aiv4/0.jpg)](https://youtu.be/BLV-J57aiv4)
