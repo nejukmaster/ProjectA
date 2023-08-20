@@ -98,6 +98,7 @@ void MovePlayerServerRpc(Quaternion rotateDir, Vector3 p_moveDir, float p_deltaT
     Vector3 moveDir = new Vector3((p_moveDir * p_deltaTime).x, p_moveDir.y, (p_moveDir * p_deltaTime).z);    //Apply deltaTime only to values that do not apply deltaTime
     this.transform.rotation = rotateDir;                                                                     //Apply rotation
     controller.Move(moveDir);                                                                                //Apply Move
-    animator.SetFloat("Speed", new Vector3(p_moveDir.x,0,p_moveDir.z).magnitude);                            //Hand over the speed to the animator.
+    animator.SetFloat("Speed", new Vector3(p_moveDir.x,0,p_moveDir.z).magnitude);                            //Pass the speed value to the animator.
 }
 ```
+ServerRpc is invoked from the client and runs on the server.
