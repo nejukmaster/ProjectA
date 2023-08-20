@@ -106,4 +106,5 @@ ServerRpc is invoked from the client and runs on the server. Therefore, the char
 ### Final
 
 As a result, This is the movement of the character implemented.
+
 [![Video Label](http://img.youtube.com/vi/BLV-J57aiv4/0.jpg)](https://youtu.be/BLV-J57aiv4)
