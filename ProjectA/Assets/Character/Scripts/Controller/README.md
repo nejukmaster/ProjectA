@@ -87,7 +87,7 @@ void MovePlayerServer()
         }
     }
     moveDir.y = ySpeed;                                    //Apply y-axis motion
-    MovePlayerServerRpc(rotateDir, moveDir, Time.deltaTime);    //Send calculated player movement data to the server in packets
+    MovePlayerServerRpc(rotateDir, moveDir * Time.deltaTime, new Vector3(moveDir.x,0,moveDir.z).magnitude);    //Send calculated player movement data to the server in packets
 }
 ```
 What should be noted here is that this data is delivered to the server through ServerRpc after completing the computation of the player's. This is because what actually moves the player is handled by the server.
@@ -95,10 +95,9 @@ What should be noted here is that this data is delivered to the server through S
 [ServerRpc]            //Server Rpc Attribute. Can only call in client
 void MovePlayerServerRpc(Quaternion rotateDir, Vector3 p_moveDir, float p_deltaTime)
 {
-    Vector3 moveDir = new Vector3((p_moveDir * p_deltaTime).x, p_moveDir.y, (p_moveDir * p_deltaTime).z);    //Apply deltaTime only to values that do not apply deltaTime
-    this.transform.rotation = rotateDir;                                                                     //Apply rotation
-    controller.Move(moveDir);                                                                                //Apply Move
-    animator.SetFloat("Speed", new Vector3(p_moveDir.x,0,p_moveDir.z).magnitude);                            //Pass the speed value to the animator.
+    this.transform.rotation = rotateDir;                          //Apply rotation
+    controller.Move(p_moveDir);                                   //Apply Move
+    animator.SetFloat("Speed", speed);                            //Pass the speed value to the animator.
 }
 ```
 ServerRpc is invoked from the client and runs on the server. Therefore, the character can be moved through the Character Controller initialized in server. And it also applies the rotation value of the character.
