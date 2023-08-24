@@ -43,7 +43,7 @@ float normalDifference = 0;
 float depthDifference = 0;
 ```
 
-Drawing an outline using Depth Normal is a technique that compares the current Depth value with the normal value with the surrounding pixels, and generates a darker outline as the difference increases. To do this, I'm going to use a simple algorithm called Sobel Filter.
+Drawing an outline using Depth Normal is a technique that compares the current Depth value and normal value with the surrounding pixels, and generates a darker outline as the difference increases. To do this, I'm going to use a simple algorithm called Sobel Filter.
 
 Sobel Filter is one of the Edge detection algorithms, which is a method of multiplying the kernel of 3x3 by the original image to obtain an approximate value of the rate of change.
 ![Alt text](/ExplainImgs/SobelOperator.png)
