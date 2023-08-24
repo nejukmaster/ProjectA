@@ -241,7 +241,7 @@ Finally, it releases the resources used by the OnCleanupCamera block.
   }
 }
 ```
-Well, the rendering pass is complete. All that remains is to configure Scriptable RenderFeature to apply this rendering pass. It is very easy and simple.
+Now, the rendering pass is complete. All we have to do is to configure Scriptable RenderFeature to apply this rendering pass. It is very easy and simple.
 
 First, it inherits Scriptable RenderFeature to the script, and for convenience, it creates a modified CustomPassSetting class in the inspector.
 ```hlsl
