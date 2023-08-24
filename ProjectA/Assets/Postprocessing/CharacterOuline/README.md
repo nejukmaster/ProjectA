@@ -24,11 +24,11 @@ Explain of Settings
 
 Priority: Set the rendering order of the camera. Set it to -1 to render before the main camera.
 
-Depth Texture: Decide whether to use Depth Texture. I will use DepthNormal to draw the outline, so I will choose "On".
+Depth Texture: Decide whether to use Depth Texture. Since I will use DepthNormal to draw the outline, so I will choose "On".
 
 Culling Mask: Determines which layer to render. Let's choose the "Character" layer.
 
-Now, CharacterCam has been set up to create a character outline mask. What we're going to do now is create an outline mask with CharacterCam's DepthNormal and a post-processing shader that applies it to the main camera.
+Now, CharacterCam has been set up to create a character outline mask. What we're going to do now is creating an outline mask with CharacterCam's DepthNormal and a post-processing shader that applies it to the main camera.
 
 ### Outline Mask
 
