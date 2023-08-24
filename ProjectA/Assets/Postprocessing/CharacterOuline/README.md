@@ -34,7 +34,7 @@ Now, CharacterCam has been set up to create a character outline mask. What we're
 
 What we are going to produce this time is a post-processing shader that creates an outline mask to be applied to the CharacterCam. This shader gets the Scene Depth Normal from CharacterCam and turn it into Outline Mask. 
 
-First, receive and save Scene's Depth and Normal Texture. It also declares a variable that will store values compared to neighboring pixels.
+First, receive and save Scene's Depth and Normal Texture. It also declares a variable which stores values compared to neighboring pixels.
 
 ```hlsl
 float3 normal = SampleSceneNormals(IN.uv);
