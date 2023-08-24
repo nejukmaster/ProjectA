@@ -16,7 +16,7 @@ First, set the rendering layer. In Inspector > Layer > Add Layer, add Layer name
 ![Alt text](/ExplainImgs/AddCharacterLayer.png)
 ![Alt text](/ExplainImgs/AssignLayerToCharacter.png)
 
-After that, create another camera as children of the main camera. And set it up as follows.
+After that, create another camera as children of the main camera. And set it up as the following.
 ![Alt text](/ExplainImgs/AddCharacterCam.png)
 ![Alt text](/ExplainImgs/CharacterCamSettings.png)
 Explain of Settings
