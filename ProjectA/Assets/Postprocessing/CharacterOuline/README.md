@@ -127,7 +127,7 @@ Properties
   _Outline("Outline", 2D) = "white" {}
 }
 ```
-This is the property of the Character Outline Shader that I'm going to write this time. Here, _MainTex will receive a temporary render texture from Main Camera, and _Outline Properties will receive an Outline Mask from CharacterCam. After that, it can be seen that the _Outline Color, which will determine the color of the outline, is also declared.
+This is the property of the Character Outline Shader that I'm going to write this time. Here, _MainTex will receive a temporary render texture from Main Camera, and _Outline Properties will receive an Outline Mask from CharacterCam. After that, it can be seen that the _Outline Color, which will determine the color of the outline. Now, the _Outline Color is declared.
 _Apply in fragment shader_
 ```hlsl
 float SampleSceneOutline(float2 uv)
