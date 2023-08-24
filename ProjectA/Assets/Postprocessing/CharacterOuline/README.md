@@ -1,6 +1,6 @@
 Character Outline
 =================
-The character outline effect plays a role in highlighting the character in NPR. In particular, this project, which aims at rendering such as illustration, has focused on drawing the outline as naturally as possible. Accordingly, the target point for this outline shader has been set as follows
+The character outline effect plays a role in highlighting the character in NPR. This project, which aims at rendering such as illustration, has particularly focused on drawing the outline as naturally as possible. Accordingly, the target points for this outline shader has been set as follows
 >  Depth Normal Outline
 >
 > Draw Character Only
