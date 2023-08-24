@@ -118,7 +118,7 @@ _Outline Mask Rendered_
 
 ### Character Outline Shader
 
-Then, this Outline Mask should be applied to the Main Camera. In order to produce a post-processing shader for this, an Outline Mask is required, which will then be produced and processed by RenderFeature. Therefore, here, we write a shader to receive and process an Outline Mask.
+Then, this Outline Mask should be applied to the Main Camera. In order to produce a post-processing shader for this, an Outline Mask is required to be produced and processed by RenderFeature. Therefore, we write a shader which receives and processes an Outline Mask.
 ```hlsl
 Properties
 {
