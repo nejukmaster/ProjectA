@@ -5,7 +5,7 @@ The character outline effect plays a role in highlighting the character in NPR. 
 >
 > Draw Character Only
 
-To achieve this, I have set up an implementation plan as follows.
+To achieve this, I have set up an implementation plan as the following.
 ![Alt text](/ExplainImgs/ShaderImplementionPlanMap.png)
 
 ### Character Camera Setting
