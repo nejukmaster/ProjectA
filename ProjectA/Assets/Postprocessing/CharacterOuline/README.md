@@ -10,7 +10,7 @@ To achieve this, I have set up an implementation plan as follows.
 
 ### Character Camera Setting
 
-First, as I wanted to render the outline of the character only, I divided the character layer, and set up a character camera.
+As I wanted to render the outline of the character only, I divided the character layer, and set up a character camera.
 
 First, set the rendering layer. In Inspector > Layer > Add Layer, add Layer named "Character" and Assign to the character.
 ![Alt text](/ExplainImgs/AddCharacterLayer.png)
