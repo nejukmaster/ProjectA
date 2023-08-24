@@ -144,7 +144,7 @@ half4 frag (v2f i) : SV_Target
   return lerp(color,_OutlineColor,outline);
 }
 ```
-All that remains is to provide an Outline Mask to the _Outline property of the material associated with this shader.
+All we have to do is to provide an Outline Mask to the _Outline property of the material associated with this shader.
 
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
