@@ -150,7 +150,7 @@ All we have to do is to provide an Outline Mask to the _Outline property of the 
 
 URP inherits and uses a class called Scriptable Render Feature when applying a postprocessing shader. The Scriptable Render Feature allows us to insert our Scriptable Render Pass into the rendering process of each camera. 
 
-First, write a Scriptable Render Pass. declare a colorBuffer to store temporary textures and a shaderBuffer to store the post-processed textures. It also declares the ShaderPropertyID to access this shaderBuffer.
+First, write a Scriptable Render Pass. Declare a colorBuffer to store temporary textures and a shaderBuffer to store the post-processed textures. It also declares the ShaderPropertyID to access this shaderBuffer.
 ```hlsl
 class CustomRenderPass : ScriptableRenderPass
 {
@@ -188,7 +188,7 @@ public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderin
   shaderBuffer = new RenderTargetIdentifier(shaderBufferID);
 }
 ```
-Then We should Execute this pass. At this time, the outline mask is configured and mapped. Since we use two cameras, it is necessary to separate them and apply different processes, which were distinguished using the Tag function to Unity. The following is an Execute block that divides each camera into tags and configures an Outline Mask in the character cam, and applies it in the main camera.
+Then We should Execute this pass. At this time, the outline mask is configured and mapped. Since we use two cameras, it is necessary to separate them and apply different processes. They are distinguished by using the Tag function to Unity. The following is an Execute block that divides each camera into tags and configures an Outline Mask in the character cam, and applies it in the main camera.
 ```hlsl
 //The Execute block is executed when this Pass is actually executed.
 public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
