@@ -99,7 +99,7 @@ _Water applied Normal Map. The curvature of the water was more emphasized._
 
 And the last thing to implement is the Refraction effect. First, a refractive texture must be created, but there was a disadvantage, that if it was created with gradient noise, it looked weird. 
 
-_The result seems to be oil floating on the water._
+_It looked like oil floating on the water._
 
 <img src="/ExplainImgs/WaterRefractionWithGradientNoise.png" width="40%" height="40%">
 
