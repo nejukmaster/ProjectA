@@ -13,7 +13,7 @@ In this part, I will introduce my tries to make water more realistic and more ca
 
 ### Gestner Wave
 
-Building wave is most important part to express water's movement. At First, I tried to apply y-axis sin wave to vertex. but it was not natural.
+Building wave is one of the most important part to express water's movement. At First, I tried to apply y-axis sin wave to vertex but it was not natural.
 
 _This is shot of above. It's hard to call it a wave_
 ![Alt text](/ExplainImgs/WaveWithSin.png)
