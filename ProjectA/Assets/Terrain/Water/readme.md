@@ -120,6 +120,7 @@ _Refraction Applied_
 ### Stencil
 
 The stencil buffer allows water to be rendered only on top of the terrain.
+
 _Stencil Receive in Water Shader_
 ```hlsl
 Stencil{
