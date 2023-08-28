@@ -1,36 +1,40 @@
 Character Outline
 =================
-The character outline effect plays a role in highlighting and highlighting the character in NPR. In particular, this project, which aims at rendering such as illustration, has focused on drawing the outline as naturally as possible. Accordingly, the target point for this outline shader has been set as follows
+The character outline effect plays a role in highlighting the character in NPR. This project, which aims at rendering such as illustration, has particularly focused on drawing the outline as naturally as possible. Accordingly, the target points for this outline shader has been set as follows
 >  Depth Normal Outline
 >
 > Draw Character Only
 
-To achieve this, I have set up an implementation plan as follows.
+To achieve this, I have set up an implementation plan as the following.
 ![Alt text](/ExplainImgs/ShaderImplementionPlanMap.png)
 
 ### Character Camera Setting
 
-First, after dividing the character layers, set up a character camera that will render only the characters. Because I will render only the outline of the character. 
+As I wanted to render the outline of the character only, I divided the character layer, and set up a character camera.
 
 First, set the rendering layer. In Inspector > Layer > Add Layer, add Layer named "Character" and Assign to the character.
 ![Alt text](/ExplainImgs/AddCharacterLayer.png)
 ![Alt text](/ExplainImgs/AssignLayerToCharacter.png)
 
-After that, create another camera as children of the main camera. And set it up as follows.
+After that, create another camera as children of the main camera. And set it up as the following.
 ![Alt text](/ExplainImgs/AddCharacterCam.png)
 ![Alt text](/ExplainImgs/CharacterCamSettings.png)
+
 Explain of Settings
-Priority: Sets the rendering order of the camera. Set it to -1 to render before the main camera.
-Depth Texture: Decide whether to use Depth Texture. I will use DepthNormal to draw the outline, so I will choose "On".
+
+Priority: Set the rendering order of the camera. Set it to -1 to render before the main camera.
+
+Depth Texture: Decide whether to use Depth Texture. Since I will use DepthNormal to draw the outline, so I will choose "On".
+
 Culling Mask: Determines which layer to render. Let's choose the "Character" layer.
 
-Now, CharacterCam has been set up to create a character outline mask. What we're going to do now is create an outline mask with CharacterCam's DepthNormal and a post-processing shader that applies it to the main camera.
+Now, CharacterCam has been set up to create a character outline mask. What we're going to do now is creating an outline mask with CharacterCam's DepthNormal and a post-processing shader that applies it to the main camera.
 
 ### Outline Mask
 
-What we are going to produce this time is a post-processing shader that creates an outline mask to be applied to the CharacterCam. This shader will take the Scene Depth Normal from CharacterCam and turn it into CharacterMask. 
+What we are going to produce this time is a post-processing shader that creates an outline mask to be applied to the CharacterCam. This shader gets the Scene Depth Normal from CharacterCam and turn it into Outline Mask. 
 
-First, receive and save Scene's Depth and Normal Texture. It also declares a variable that will store values compared to neighboring pixels.
+This shader receives and saves Scene's Depth and Normal Texture. It also declares a variable which stores values compared to neighboring pixels.
 
 ```hlsl
 float3 normal = SampleSceneNormals(IN.uv);
@@ -39,10 +43,12 @@ float normalDifference = 0;
 float depthDifference = 0;
 ```
 
-Drawing an outline using Depth Normal is a technique that compares the current Depth value with the normal value with the surrounding pixels, and generates a darker outline as the difference increases. To do this, I'm going to use a simple algorithm called Sobel Filter.
+Drawing an outline using Depth Normal is a technique that compares the current Depth value and normal value with the surrounding pixels, and generates a darker outline as the difference increases. To do this, I'm going to use a simple algorithm called Sobel Filter.
 
-Sobel Filter is one of the Edge detection algorithms, which is a method of multiplying the kernel of 3x3 by the original image to obtain an approximate value of the rate of change, usually expressed as follows.
+Sobel Filter is one of the Edge detection algorithms, which is a method of multiplying the kernel of 3x3 by the original image to obtain an approximate value of the rate of change.
+
 ![Alt text](/ExplainImgs/SobelOperator.png)
+
 And this is a function of finding the outline using Sobel Filter.
 ```hlsl
 void Compare(inout float depthOutline, inout float normalOutline,float2 uv) {
@@ -112,7 +118,7 @@ _Outline Mask Rendered_
 
 ### Character Outline Shader
 
-Then, this Outline Mask should be applied to the Main Camera. In order to produce a post-processing shader for this, an Outline Mask is required, which will then be produced and processed by RenderFeature. Therefore, here, we write a shader to receive and process an Outline Mask.
+Then, this Outline Mask should be applied to the Main Camera. In order to produce a post-processing shader for this, an Outline Mask is required to be produced and processed by RenderFeature. Therefore, we write a shader which receives and processes an Outline Mask.
 ```hlsl
 Properties
 {
@@ -121,7 +127,8 @@ Properties
   _Outline("Outline", 2D) = "white" {}
 }
 ```
-This is the property of the Character Outline Shader that I'm going to write this time. Here, _MainTex will receive a temporary render texture from Main Camera, and _Outline Properties will receive an Outline Mask from CharacterCam. After that, it can be seen that the _Outline Color, which will determine the color of the outline, is also declared.
+This is the property of the Character Outline Shader that I'm going to write this time. Here, _MainTex will receive a temporary render texture from Main Camera, and _Outline Properties will receive an Outline Mask from CharacterCam. After that, it can be seen that the _Outline Color, which will determine the color of the outline. Now, the _OutlineColor is declared.
+
 _Apply in fragment shader_
 ```hlsl
 float SampleSceneOutline(float2 uv)
@@ -137,13 +144,13 @@ half4 frag (v2f i) : SV_Target
   return lerp(color,_OutlineColor,outline);
 }
 ```
-All that remains is to provide an Outline Mask to the _Outline property of the material associated with this shader.
+All we have to do is to provide an Outline Mask to the _Outline property of the material associated with this shader.
 
 ### Scriptable Renderer Feature To Apply Post-Processing Shader
 
 URP inherits and uses a class called Scriptable Render Feature when applying a postprocessing shader. The Scriptable Render Feature allows us to insert our Scriptable Render Pass into the rendering process of each camera. 
 
-First, write a Scriptable Render Pass. declare a colorBuffer to store temporary textures and a shaderBuffer to store the post-processed textures. It also declares the ShaderPropertyID to access this shaderBuffer.
+First, write a Scriptable Render Pass. Declare a colorBuffer to store temporary textures and a shaderBuffer to store the post-processed textures. It also declares the ShaderPropertyID to access this shaderBuffer.
 ```hlsl
 class CustomRenderPass : ScriptableRenderPass
 {
@@ -181,7 +188,7 @@ public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderin
   shaderBuffer = new RenderTargetIdentifier(shaderBufferID);
 }
 ```
-Then We should Execute this pass. At this time, the outline mask is configured and mapped. Since we use two cameras, it is necessary to separate them and apply different processes, which were distinguished using the Tag function to Unity. The following is an Execute block that divides each camera into tags and configures an Outline Mask in the character cam, and applies it in the main camera.
+Then We should Execute this pass. At this time, the outline mask is configured and mapped. Since we use two cameras, it is necessary to separate them and apply different processes. They are distinguished by using the Tag function to Unity. The following is an Execute block that divides each camera into tags and configures an Outline Mask in the character cam, and applies it in the main camera.
 ```hlsl
 //The Execute block is executed when this Pass is actually executed.
 public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -234,7 +241,7 @@ Finally, it releases the resources used by the OnCleanupCamera block.
   }
 }
 ```
-Well, the rendering pass is complete. All that remains is to configure Scriptable RenderFeature to apply this rendering pass. It is very easy and simple.
+Now, the rendering pass is complete. All we have to do is to configure Scriptable RenderFeature to apply this rendering pass. It is very easy and simple.
 
 First, it inherits Scriptable RenderFeature to the script, and for convenience, it creates a modified CustomPassSetting class in the inspector.
 ```hlsl

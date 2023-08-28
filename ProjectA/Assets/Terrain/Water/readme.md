@@ -1,6 +1,6 @@
 Water Shader Part
 =================
-In this part, I will introduce my tries to make water more realistic and more cartoonic. The Following is passing through to goal. The table of contents is as follows.
+In this part, I will introduce my tries to make water more realistic and more cartoonic. The following is the table of contents.
 > Getstner Wave
 > 
 > Foam
@@ -13,12 +13,12 @@ In this part, I will introduce my tries to make water more realistic and more ca
 
 ### Gestner Wave
 
-Building wave is most important part to express water's movement. At First, I tried to apply y-axis sin wave to vertex. but it was not natural.
+Building wave is one of the most important part to express water's movement. At First, I tried to apply y-axis sin wave to vertex but it was not natural.
 
 _This is shot of above. It's hard to call it a wave_
 ![Alt text](/ExplainImgs/WaveWithSin.png)
 
-So, I Find a way, and search the "Gestner Wave" at GPU Gems(2004). It's the way of express Ocean Wave more realistic, that add the x/z movement to vertex as well as y axis.
+So, I found a way, and searched the "Gestner Wave" at GPU Gems(2004). It's the way of express Ocean Wave more realistic, that adds the x/z movement to vertex as well as y axis.
 
 ![Alt text](/ExplainImgs/EquationOfGestnerWave.jpg)
 
@@ -67,12 +67,12 @@ _the application of water to the terrain._
 
 ### Water Fog
 
-Water has different colors depending on the depth. WaterFog was created to implement this. It is composed by comparing depth and Scene Depth in the rest of the part other than Foam with the application of Foam.
-
+Water has different colors depending on the depth. WaterFog was created to implement this. It is made by comparing depth and Scene Depth, and it is applied to the rest of the part that Foam hasn't been applied.
+  
  _Water Fog with Foam_
  ![Alt text](/ExplainImgs/WaterFogWithFoam.png)
 
- From the camera, you can see that the deeper the depth, the thicker the fog. If you have confirmed that it works properly, now, apply this Fog to the color and alpha.
+ As you can now see on the camera, the deeper the depth, the thicker the fog is. If you confirm that it works properly, now, apply this Fog to the color and alpha.
 
  ```hlsl
 //Water Fog
@@ -90,20 +90,20 @@ color.a = color.a + waterFog;
 
  ### Normal Map
 
-In order to express the curvature of the actual water on the plan, a shadow was expressed using a Normal Map. Normal Map used Noramap Texture included in Asset called Animated Water Texture in Asset Store, and shadows are expressed in simple Lambert Lighting using this normal.
+In order to express the curvature of the actual water on the plan, a shadow was expressed by using a Normal Map. Normal Map used Noramap Texture which is included in Asset called Animated Water Texture in Asset Store, and shadows are expressed in simple Lambert Lighting using this normal.
 
 _Water applied Normal Map. The curvature of the water was more emphasized._
 ![Alt text](/ExplainImgs/WaterWithNormal.png)
 
 ### Refraction effect
 
-And the last thing to implement is the Refraction effect. First, a refractive texture must be created, but there was a disadvantage that if it was treated with gradient noise, it would look weird. 
+And the last thing to implement is the Refraction effect. First, a refractive texture must be created, but there was a disadvantage, that if it was created with gradient noise, it looked weird. 
 
-_The result seems to be oil floating on the water._
+_It looked like oil floating on the water._
 
 <img src="/ExplainImgs/WaterRefractionWithGradientNoise.png" width="40%" height="40%">
 
-To solve this problem, I tried to change pre-loaded Normal Map to grayscale and use it as a refractive map. To this, the sampled normal map pixels are grayscaleed and then multiplied by the _Scale property to adjust the degree of refraction. And Samples the Scene Opaque Texture with the obtained refraction plus uv. Then, the sampled Refraction Color and water color values are interpolated into the water's alpha values.
+To solve this problem, I tried to change pre-loaded Normal Map to grayscale, and used it as a refractive map. The sampled normal map pixels are grayscaleed and then multiplied by the _Scale property, and they are adjusted to the degree of refraction. And then sample the Scene Opaque Texture with the obtained refraction plus uv. Now the sampled Refraction Color and water color values are interpolated by the water's alpha values.
 
 __Scale is Property to adjust refraction intensity_
 ```hlsl
@@ -120,6 +120,7 @@ _Refraction Applied_
 ### Stencil
 
 The stencil buffer allows water to be rendered only on top of the terrain.
+
 _Stencil Receive in Water Shader_
 ```hlsl
 Stencil{
@@ -137,6 +138,34 @@ Stencil{
 ```
 _Stencil Applied_
 ![Alt text](/ExplainImgs/WaterWithStencil.png)
+
+### Foam Noise
+Additionally, noise was used to add irregularities to the foam. At First, Create a special function to obtain multiple stems of Foam.
+
+_Foam Remapping Function_
+![Alt text](/ExplainImgs/FoamRemappingFunction.png)
+We're going to pass the Foam value through this function and then cut it off with Cutoff to get multiple lines of Foam.
+
+_With Cutoff Value_
+![Alt text](/ExplainImgs/FoamRemappingFunctionWithCutoff.png)
+_Applied Shot_
+![Alt text](/ExplainImgs/AppliedMultipleFoam.png)
+
+And, noise is applied at this Cutoff Value in water flowing direction, then we obtain more natural foam.
+
+_Code of this_
+```hlsl
+float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);    //_Foam.x determines the amount of foam.
+foam = (sin(_Foam.w * foam) * 0.5 + _Foam.y) * 1 / foam;    //_Foam.w controls the frequency of the remapping function, and _Foam.y controls the degree of curvature of the remapping function.
+
+/*    Apply gradientNoise.
+         The gradientNoise factor is the xz position of the pixel divided by the value of _FoamNoiseSize which signfy Noise's cell size and the internal value of _Direction.
+        This allows pixels with the same position to have the same noise value for the direction in which the water flows, resulting in bubbles in the direction in which the water flows.    */
+float foamValue = step(_Foam.z + gradientNoise(dot(_Direction.xy,IN.positionWS.xz/_FoamNoiseSize) + _Speed*_Time.x),foam);
+color = lerp(color, 1, foamValue * _FoamIntensity);
+```
+_Applied at foam_
+![Alt text](/ExplainImgs/FoamWithNoise.png)
 
 ### Final
 Use two water objects to construct more realistic water shading. This is a finished copy for my water shader.
