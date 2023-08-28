@@ -139,6 +139,34 @@ Stencil{
 _Stencil Applied_
 ![Alt text](/ExplainImgs/WaterWithStencil.png)
 
+### Foam Noise
+Additionally, noise was used to add irregularities to the foam. At First, Create a special function to obtain multiple stems of Foam.
+
+_Foam Remapping Function_
+![Alt text](/ExplainImgs/FoamRemappingFunction.png)
+We're going to pass the Foam value through this function and then cut it off with Cutoff to get multiple lines of Foam.
+
+_With Cutoff Value_
+![Alt text](/ExplainImgs/FoamRemappingFunctionWithCutoff.png)
+_Applied Shot_
+![Alt text](/ExplainImgs/AppliedMultipleFoam.png)
+
+And, noise is applied at this Cutoff Value in water flowing direction, then we obtain more natural foam.
+
+_Code of this_
+```hlsl
+float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);    //_Foam.x determines the amount of foam.
+foam = (sin(_Foam.w * foam) * 0.5 + _Foam.y) * 1 / foam;    //_Foam.w controls the frequency of the remapping function, and _Foam.y controls the degree of curvature of the remapping function.
+
+/*    Apply gradientNoise.
+         The gradientNoise factor is the xz position of the pixel divided by the value of _FoamNoiseSize which signfy Noise's cell size and the internal value of _Direction.
+        This allows pixels with the same position to have the same noise value for the direction in which the water flows, resulting in bubbles in the direction in which the water flows.    */
+float foamValue = step(_Foam.z + gradientNoise(dot(_Direction.xy,IN.positionWS.xz/_FoamNoiseSize) + _Speed*_Time.x),foam);
+color = lerp(color, 1, foamValue * _FoamIntensity);
+```
+_Applied at foam_
+![Alt text](/ExplainImgs/FoamWithNoise.png)
+
 ### Final
 Use two water objects to construct more realistic water shading. This is a finished copy for my water shader.
 
