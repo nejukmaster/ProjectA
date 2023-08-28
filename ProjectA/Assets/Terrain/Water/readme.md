@@ -72,7 +72,7 @@ Water has different colors depending on the depth. WaterFog was created to imple
  _Water Fog with Foam_
  ![Alt text](/ExplainImgs/WaterFogWithFoam.png)
 
- From the camera, you can see that the deeper the depth, the thicker the fog. If you have confirmed that it works properly, now, apply this Fog to the color and alpha.
+ As you can now see on the camera, the deeper the depth, the thicker the fog is. If you confirm that it works properly, now, apply this Fog to the color and alpha.
 
  ```hlsl
 //Water Fog
