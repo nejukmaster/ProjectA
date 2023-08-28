@@ -1,6 +1,6 @@
 Water Shader Part
 =================
-In this part, I will introduce my tries to make water more realistic and more cartoonic. The Following is passing through to goal.
+In this part, I will introduce my tries to make water more realistic and more cartoonic. The following is the table of contents.
 > Getstner Wave
 > 
 > Foam
