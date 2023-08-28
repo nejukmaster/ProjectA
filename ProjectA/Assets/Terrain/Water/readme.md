@@ -97,7 +97,7 @@ _Water applied Normal Map. The curvature of the water was more emphasized._
 
 ### Refraction effect
 
-And the last thing to implement is the Refraction effect. First, a refractive texture must be created, but there was a disadvantage that if it was treated with gradient noise, it would look weird. 
+And the last thing to implement is the Refraction effect. First, a refractive texture must be created, but there was a disadvantage, that if it was created with gradient noise, it looked weird. 
 
 _The result seems to be oil floating on the water._
 
