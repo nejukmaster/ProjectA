@@ -67,8 +67,8 @@ _the application of water to the terrain._
 
 ### Water Fog
 
-Water has different colors depending on the depth. WaterFog was created to implement this. It is composed by comparing depth and Scene Depth in the rest of the part other than Foam with the application of Foam.
-
+Water has different colors depending on the depth. WaterFog was created to implement this. It is made by comparing depth and Scene Depth, and it is applied to the rest of the part that Foam hasn't been applied.
+  
  _Water Fog with Foam_
  ![Alt text](/ExplainImgs/WaterFogWithFoam.png)
 
