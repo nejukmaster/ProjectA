@@ -14,9 +14,13 @@ public class SlimeAttack : NetworkBehaviour
 
     public void BasicAttack()
     {
-        PlayerController pc = controller.target.GetComponent<PlayerController>();
-        if (pc.IsOwner) {
-            pc.DamagedServerRpc();
+        if (controller.target != null)
+        {
+            PlayerController pc = controller.target.GetComponent<PlayerController>();
+            if (pc.IsOwner)
+            {
+                pc.Damaged(0.2f);
+            }
         }
     }
 }

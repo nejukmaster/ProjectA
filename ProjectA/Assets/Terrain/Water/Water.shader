@@ -16,12 +16,9 @@ Shader"Terrain/Water"
         _Speed("Flow Speed",Range(0,100)) = 1.0
         
         [Header(Foam)]
-        _Foam("Foam: Amount(x) Scale(y) Cutoff(z) NoiseSize(w)",Vector) = (1,120,0.5,1)
-        _FoamColor("Foam Color",Color) = (1.0,1.0,1.0,1.0)
-
-        [Header(Voronoi)]
-        _CellSize("Voronoi Cell Size",Range(0,100)) = 1
-        _Brightness("Voronoi Brightness", Range(0,10)) = 1
+        _Foam("Foam: Amount(x) Scale(y) Cutoff(z) Frequency(w)",Vector) = (1,120,0.5,1)
+        _FoamNoiseSize("Foam Noise Cell Size", Float) = 30.0
+        _FoamIntensity("Foam Intensity",Range(0,1)) = 1.0
 
         [Header(Refraction)]
         _Scale("Refraction Scale", Range(0,1)) = 0.1
@@ -100,7 +97,8 @@ Shader"Terrain/Water"
                 int _WaveNum;
             
                 float4 _Foam;
-                half4 _FoamColor;
+                float _FoamIntensity;
+                float _FoamNoiseSize;
 
                 float _CellSize;
                 float _Brightness;
@@ -145,27 +143,19 @@ Shader"Terrain/Water"
             {
                 return (Depth-ScreenPosition.w)/(Distance*2);
             }
-    
-            float2 GradientNoiseDir(float2 p)
-            {
-                p = p % 289;
-                float x = (34 * p.x + 1) * p.x % 289 + p.y;
-                x = (34 * x + 1) * x % 289;
-                x = frac(x / 41) * 2 - 1;
-                return normalize(float2(x - floor(x + 0.5), abs(x) - 0.5));
-            }
 
-            float GradientNoise(float2 p)
-            {
-                float2 ip = floor(p);
-                float2 fp = frac(p);
-                float d00 = dot(GradientNoiseDir(ip), fp);
-                float d01 = dot(GradientNoiseDir(ip + float2(0, 1)), fp - float2(0, 1));
-                float d10 = dot(GradientNoiseDir(ip + float2(1, 0)), fp - float2(1, 0));
-                float d11 = dot(GradientNoiseDir(ip + float2(1, 1)), fp - float2(1, 1));
-                fp = fp * fp * fp * (fp * (fp * 6 - 15) + 10);
-                return lerp(lerp(d00, d01, fp.y), lerp(d10, d11, fp.y), fp.x);
-            }
+            float gradientNoise(float value){
+                float fraction = frac(value);
+                float interpolator = easeInOut(fraction);
+            
+                float previousCellInclination = rand1dTo1d(floor(value)) * 2 - 1;
+                float previousCellLinePoint = previousCellInclination * fraction;
+
+			    float nextCellInclination = rand1dTo1d(ceil(value)) * 2 - 1;
+                float nextCellLinePoint = nextCellInclination * (fraction - 1);
+    
+			    return lerp(previousCellLinePoint, nextCellLinePoint, interpolator);
+		    }
 
             inline float3 UnpackNormal(half4 packednormal)
             {
@@ -228,13 +218,6 @@ Shader"Terrain/Water"
                 float2 screenUVs = IN.screenPos.xy / IN.screenPos.w;
                 float zRaw = SampleSceneDepth(screenUVs);
                 float zEye = LinearEyeDepth(SampleSceneDepth(screenUVs), _ZBufferParams);
-                float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);
-                float foamValue = step(foam,_Foam.z);
-                color = lerp(color, _FoamColor, foamValue);
-                if (color.a >= 0.8)
-                {
-                    return color;
-                }
     
                 //Water Fog
                 float waterFog= zEye - IN.screenPos.w;
@@ -254,7 +237,12 @@ Shader"Terrain/Water"
                 refractionmap *= _Scale;
                 half3 refractionColor = SampleSceneColor(screenUVs + refractionmap);
                 color = lerp(half4(refractionColor,1), color, color.a);
-    
+                
+                float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);
+                foam = (sin(_Foam.w * foam) * 0.5 + _Foam.y) * 1 / foam;
+                float foamValue = step(_Foam.z + gradientNoise(dot(_Direction.xy,IN.positionWS.xz/_FoamNoiseSize) + _Speed*_Time.x),foam);
+                //foamValue *= _Foam.y/foam - _Foam.y/_Foam.z;
+                color = lerp(color, 1, foamValue * _FoamIntensity);
                 
                 return color;
             }

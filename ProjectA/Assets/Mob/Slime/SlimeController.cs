@@ -4,22 +4,9 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class SlimeController : NetworkBehaviour
+public class SlimeController : MobController
 {
-    public GameObject target;
-
-    [SerializeField] float detectionRange;
-    [SerializeField] float attackRange;
-    Animator animator;
-    NavMeshAgent agent;
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        agent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-    }
-    // Update is called once per frame
-    void Update()
+    protected override void Move()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         if (players.Length > 0)
@@ -49,5 +36,10 @@ public class SlimeController : NetworkBehaviour
             agent.SetDestination(transform.position);
         }
         animator.SetBool("Move", Vector3.Distance(transform.position, agent.destination) > attackRange);
+    }
+
+    public override void Damaged(float damage)
+    {
+        animator.SetTrigger("Damaged");
     }
 }

@@ -36,7 +36,7 @@ Material:
     - _Amply: 9
     - _BlinCutoff: 0.995
     - _BlinIntensity: 1.115
-    - _Brightness: 6.85
+    - _Brightness: 5.91
     - _BumpIntensity: 0.686
     - _CellSize: 100
     - _Cutoff: 0.0261
@@ -60,7 +60,7 @@ Material:
     - _Color: {r: 0.31603748, g: 0.65935993, b: 1, a: 0.6745098}
     - _Color2: {r: 0, g: 0.21034239, b: 0.8113208, a: 1}
     - _Direction: {r: 0, g: -1, b: 0, a: 0}
-    - _Foam: {r: 10, g: 76.3, b: 0.41, a: 31.08}
+    - _Foam: {r: 10, g: 0, b: 1.03, a: 31.49}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDir: {r: 1, g: 1, b: 1, a: 0}

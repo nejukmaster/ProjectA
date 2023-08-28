@@ -108,7 +108,6 @@ public class NetworkObjectPool : NetworkBehaviour
     /// </summary>
     void RegisterPrefabInternal(GameObject prefab, int prewarmCount)
     {
-        Debug.Log("tlfgod");
         NetworkObject CreateFunc()
         {
             return Instantiate(prefab).GetComponent<NetworkObject>();

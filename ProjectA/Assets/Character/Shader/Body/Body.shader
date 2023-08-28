@@ -39,6 +39,7 @@ Shader"Character/Body"
                 float2 uv           : TEXCOORD0;
                 float3 normalOS     : NORMAL;
                 float4 tangentOS    : TANGENT;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct Varyings
@@ -50,6 +51,7 @@ Shader"Character/Body"
                 float3 tangentWS        : TEXCOORD2;
                 float3 bitangentWS      : TEXCOORD3;
                 float3 viewDir          : TEXCOORD4;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
             
             CBUFFER_START(UnityPerMaterial)
@@ -97,11 +99,16 @@ Shader"Character/Body"
                 OUT.positionWS = TransformObjectToWorld(IN.positionOS.xyz);
                 OUT.tangentWS = TransformObjectToWorldDir(IN.tangentOS.xyz);
                 OUT.bitangentWS = cross(OUT.normalWS, OUT.tangentWS) * IN.tangentOS.w * unity_WorldTransformParams.w;
+                
+                UNITY_SETUP_INSTANCE_ID(IN);
+                UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
+    
                 return OUT;
             }
 
             half4 frag (Varyings IN) : SV_Target
             {
+                UNITY_SETUP_INSTANCE_ID(IN);
                 half4 color = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,IN.uv);
     
                 float4 shadowCoord = TransformWorldToShadowCoord(IN.positionWS);

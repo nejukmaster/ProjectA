@@ -416,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f5d3b39fe25dd7f4dae3b27c0bf6ad5d,
         type: 3}
       propertyPath: m_Name
-      value: mob_slime Variant
+      value: mob_slime
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f5d3b39fe25dd7f4dae3b27c0bf6ad5d,
         type: 3}
@@ -781,6 +781,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4828839012760311525}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f5d3b39fe25dd7f4dae3b27c0bf6ad5d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4031579316616978283}
   m_SourcePrefab: {fileID: 100100000, guid: f5d3b39fe25dd7f4dae3b27c0bf6ad5d, type: 3}
 --- !u!1 &5400183432113805099 stripped
 GameObject:
@@ -907,3 +911,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea5bdb1146e73644a9356e1d75ae8cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4031579316616978283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5400183432113805099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -1940458415
+    DestinationState: -770800050
+    TransitionDuration: 0.0028136354
+    TriggerNameHash: 1080829965
+    TransitionIndex: 1
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -1940458415
+    DestinationState: -63773453
+    TransitionDuration: 0.000000042716643
+    TriggerNameHash: 326473335
+    TransitionIndex: 2
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -770800050
+    DestinationState: -63773453
+    TransitionDuration: 0
+    TriggerNameHash: 326473335
+    TransitionIndex: 1
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -572310767
+    DestinationState: -63773453
+    TransitionDuration: 0.0027043556
+    TriggerNameHash: 326473335
+    TransitionIndex: 1
+  m_Animator: {fileID: 7157246312903060231}

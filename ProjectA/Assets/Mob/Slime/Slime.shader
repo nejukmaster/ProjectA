@@ -28,6 +28,8 @@ Shader"Custom/Slime"
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
                 float3 normalOS     : NORMAL;
+    
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
@@ -36,6 +38,7 @@ Shader"Custom/Slime"
                 float4 positionHCS : SV_POSITION;
                 float3 positionWS       : TEXCOORD1;
                 float3 normalWS     :TEXCOORD2;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             TEXTURE2D(_MainTex);
@@ -53,13 +56,17 @@ Shader"Custom/Slime"
                 o.positionHCS = TransformObjectToHClip(v.vertex);
                 o.positionWS = TransformObjectToWorld(v.vertex.xyz);
                 o.normalWS = TransformObjectToWorldNormal(v.normalOS);
-                o.uv = v.
-uv;
+                o.uv = v.uv;
+
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_TRANSFER_INSTANCE_ID(v, o);
+
                 return o;
             }
 
             half4 frag (v2f i) : SV_Target
             {
+                UNITY_SETUP_INSTANCE_ID(i);
                 half4 color = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,i.uv);
                 float4 shadowCoord = TransformWorldToShadowCoord(i.positionWS);
                 Light light = GetMainLight(shadowCoord);
