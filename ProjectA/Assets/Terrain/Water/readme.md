@@ -18,7 +18,7 @@ Building wave is one of the most important part to express water's movement. At 
 _This is shot of above. It's hard to call it a wave_
 ![Alt text](/ExplainImgs/WaveWithSin.png)
 
-So, I Find a way, and search the "Gestner Wave" at GPU Gems(2004). It's the way of express Ocean Wave more realistic, that add the x/z movement to vertex as well as y axis.
+So, I found a way, and searched the "Gestner Wave" at GPU Gems(2004). It's the way of express Ocean Wave more realistic, that adds the x/z movement to vertex as well as y axis.
 
 ![Alt text](/ExplainImgs/EquationOfGestnerWave.jpg)
 
