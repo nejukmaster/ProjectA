@@ -166,8 +166,3 @@ color = lerp(color, 1, foamValue * _FoamIntensity);
 ```
 _Applied at foam_
 ![Alt text](/ExplainImgs/FoamWithNoise.png)
-
-### Final
-Use two water objects to construct more realistic water shading. This is a finished copy for my water shader.
-
-![Alt text](/ExplainImgs/WaterComplete.png)
