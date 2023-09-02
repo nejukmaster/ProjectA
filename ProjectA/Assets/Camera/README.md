@@ -29,3 +29,34 @@ public static Vector3 TranslateSphericalToOrthogonal(Vector3 p_vec)
 }
 ```
 Then write an update block.
+```c#
+void Update()
+{
+  if (tracking)
+  {
+    this.transform.position = (trackingObj.transform.position + trackingObj.characterTrackingPoint) + offset;
+    this.transform.LookAt(trackingObj.transform.position + trackingObj.characterTrackingPoint);
+    float xAxis = Input.GetAxis("Mouse X");
+    float yAxis = Input.GetAxis("Mouse Y");
+
+    Vector3 spherical = Utility.TranslateOrthogonalToSpherical(offset);
+    if (radious - Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity > zoomLimits)
+      radious -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
+    spherical.x = radious;
+    spherical.y += yAxis * Time.deltaTime * mouseSensitivity;
+    spherical.z -= xAxis * Time.deltaTime * mouseSensitivity;
+
+    Ray ray = new Ray((trackingObj.transform.position + trackingObj.characterTrackingPoint), transform.position - (trackingObj.transform.position + trackingObj.characterTrackingPoint));
+    RaycastHit hit;
+    Physics.Raycast(ray, out hit);
+
+    if (hit.collider != null)
+    {
+      Vector3 hitpos = hit.point;
+      float hitdis = Vector3.Distance(hitpos, (trackingObj.transform.position + trackingObj.characterTrackingPoint));
+      if (hitdis < radious) spherical.x = hitdis;
+    }
+
+    offset = Utility.TranslateSphericalToOrthogonal(spherical);
+  }
+}
