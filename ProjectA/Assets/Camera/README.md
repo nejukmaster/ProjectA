@@ -12,3 +12,19 @@ In Open World games, the camera has to move freely than the other games. Therefo
 
 The basic idea is to add vertical and horizontal movements of the mouse to the spherical coordinates of the camera, respectively, and change them back into orthogonal coordinate systems. 
 ![Alt text](/ExplainImgs/SphericalCoordinateForCamera.png)
+To implement this, we first produce a function that transforms the orthogonal coordinate system and the spherical coordinate system.
+```c#
+public static Vector3 TranslateCertesianToSpherical(Vector3 p_vec)
+{
+  Vector3 r = Vector3.zero;
+  r.x = p_vec.magnitude;
+  r.y = Mathf.Acos(p_vec.y/ p_vec.magnitude);
+  r.z = Mathf.Atan2(p_vec.z , p_vec.x);
+  return r;
+}
+
+public static Vector3 TranslateSphericalToCertesian(Vector3 p_vec)
+{
+  return new Vector3(p_vec.x * Mathf.Sin(p_vec.y) * Mathf.Cos(p_vec.z), p_vec.x * Mathf.Cos(p_vec.y), p_vec.x * Mathf.Sin(p_vec.y)*Mathf.Sin(p_vec.z));
+}
+```
