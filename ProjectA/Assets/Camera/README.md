@@ -36,20 +36,22 @@ _CameraController.cs_
 ```c#
 void Update()
 {
-  if (tracking)
+  if (tracking)//Run only when tracking is enabled
   {
-    this.transform.position = (trackingObj.transform.position + trackingObj.characterTrackingPoint) + offset;
+    this.transform.position = (trackingObj.transform.position + trackingObj.characterTrackingPoint) + offset; //Set location to track. offset is the relative position of the camera relative to the character.
     this.transform.LookAt(trackingObj.transform.position + trackingObj.characterTrackingPoint);
-    float xAxis = Input.GetAxis("Mouse X");
-    float yAxis = Input.GetAxis("Mouse Y");
+    float xAxis = Input.GetAxis("Mouse X");  //Horizontal axis movement of the mouse
+    float yAxis = Input.GetAxis("Mouse Y");  //the vertical axis movement of the mouse
 
-    Vector3 spherical = Utility.TranslateOrthogonalToSpherical(offset);
+    Vector3 spherical = Utility.TranslateOrthogonalToSpherical(offset);  //Transform orthogonal coordinate system into spherical coordinate system
     if (radious - Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity > zoomLimits)
-      radious -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
-    spherical.x = radious;
-    spherical.y += yAxis * Time.deltaTime * mouseSensitivity;
-    spherical.z -= xAxis * Time.deltaTime * mouseSensitivity;
+      radious -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;  //Set radius with mouse wheel
 
+    spherical.x = radious;                                      //r value set
+    spherical.y += yAxis * Time.deltaTime * mouseSensitivity;   //Φ+ΔΦ value set
+    spherical.z -= xAxis * Time.deltaTime * mouseSensitivity;   //θ+Δθ value set
+
+    /*  Use raycast to check for shielding between the camera and the character  */
     Ray ray = new Ray((trackingObj.transform.position + trackingObj.characterTrackingPoint), transform.position - (trackingObj.transform.position + trackingObj.characterTrackingPoint));
     RaycastHit hit;
     Physics.Raycast(ray, out hit);
@@ -58,9 +60,10 @@ void Update()
     {
       Vector3 hitpos = hit.point;
       float hitdis = Vector3.Distance(hitpos, (trackingObj.transform.position + trackingObj.characterTrackingPoint));
-      if (hitdis < radious) spherical.x = hitdis;
+      if (hitdis < radious) spherical.x = hitdis;  
     }
 
     offset = Utility.TranslateSphericalToOrthogonal(spherical);
   }
 }
+```
