@@ -13,6 +13,7 @@ In Open World games, the camera has to move freely than the other games. Therefo
 The basic idea is to add vertical and horizontal movements of the mouse to the spherical coordinates of the camera, respectively, and change them back into orthogonal coordinate systems. 
 ![Alt text](/ExplainImgs/SphericalCoordinateForCamera.png)
 To implement this, we first make a function that transforms the orthogonal coordinate system and the spherical coordinate system.
+
 _Utility.cs_
 ```c#
 public static Vector3 TranslateOrthogonalToSpherical(Vector3 p_vec)
@@ -30,6 +31,7 @@ public static Vector3 TranslateSphericalToOrthogonal(Vector3 p_vec)
 }
 ```
 Then write an update block.
+
 _CameraController.cs_
 ```c#
 void Update()
