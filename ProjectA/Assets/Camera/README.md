@@ -1,9 +1,7 @@
 Camera Controller
 =================
 The Camera Controller is a script that controls the movement of the camera during the game. The main functions of this script are as follows.
-> Rotating around the character
->
-> Track characters
+> Rotating around the character & Tracking character
 >
 > Camera Walk
 
@@ -67,3 +65,20 @@ void Update()
   }
 }
 ```
+And make additional functions that set the object to be tracked.
+```c#
+public void SetTrackingObj(PlayerController player)
+{
+  trackingObj = player;
+
+  offset = this.transform.position - (trackingObj.transform.position + trackingObj.characterTrackingPoint);  //Initialize offset
+  radious = Vector3.Distance(this.transform.position, (trackingObj.transform.position + trackingObj.characterTrackingPoint));
+
+  //Hide and position the mouse cursor so that the mouse does not go off-screen.
+  Cursor.visible = false;
+  Cursor.lockState = CursorLockMode.Locked;
+  tracking = true;  //start tracking
+}
+```
+
+### Camera Walk
