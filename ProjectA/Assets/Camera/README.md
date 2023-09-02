@@ -62,8 +62,8 @@ void Update()
       float hitdis = Vector3.Distance(hitpos, (trackingObj.transform.position + trackingObj.characterTrackingPoint));
       if (hitdis < radious) spherical.x = hitdis;  
     }
-
-    offset = Utility.TranslateSphericalToOrthogonal(spherical);
+  
+    offset = Utility.TranslateSphericalToOrthogonal(spherical);  //Transform spherical coordinate system to orthogonal coordinate system
   }
 }
 ```
