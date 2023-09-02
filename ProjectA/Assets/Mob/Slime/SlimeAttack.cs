@@ -14,13 +14,10 @@ public class SlimeAttack : NetworkBehaviour
 
     public void BasicAttack()
     {
-        if (controller.target != null)
+        if (!IsServer || controller.target == null) return;
+        PlayerController pc = controller.target.GetComponent<PlayerController>();
         {
-            PlayerController pc = controller.target.GetComponent<PlayerController>();
-            if (pc.IsOwner)
-            {
-                pc.Damaged(0.2f);
-            }
+            pc.Damaged(2);
         }
     }
 }

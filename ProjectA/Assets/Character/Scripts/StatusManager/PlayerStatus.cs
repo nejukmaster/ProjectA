@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerStatus : NetworkBehaviour
 {
     [ClientRpc]
-    public void StatusChangeClientRpc(string status, float value)
+    public void HPChangeClientRpc(int hp, int max_hp)
     {
-        HPBar.instance.SetHp(value);
+        HPBar.instance.SetHp((float)hp/(float)max_hp);
     }
 }

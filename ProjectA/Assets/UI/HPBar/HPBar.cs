@@ -14,8 +14,8 @@ public class HPBar : MonoBehaviour
         instance = this;
     }
 
-    public void SetHp(float hp)
+    public void SetHp(float hp_rate)
     {
-        hpbar.fillAmount = hp;
+        hpbar.fillAmount = hp_rate;
     }
 }

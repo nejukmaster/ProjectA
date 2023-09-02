@@ -19,4 +19,9 @@ public class PlayerAttack : NetworkBehaviour
             target.GetComponent<MobController>().Damaged(1f);
         }
     }
+
+    public void SlideAttack()
+    {
+
+    }
 }

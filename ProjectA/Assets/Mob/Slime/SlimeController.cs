@@ -20,11 +20,11 @@ public class SlimeController : MobController
                 }
             }
             float distanceToNearest = Vector3.Distance(target.transform.position, transform.position);
-            if (distanceToNearest <= detectionRange && distanceToNearest > attackRange)
+            if (distanceToNearest <= status.GetStatus("detect_range") && distanceToNearest > status.GetStatus("attack_range"))
             {
                 agent.SetDestination(target.transform.position);
             }
-            else if(distanceToNearest <= attackRange)
+            else if(distanceToNearest <= status.GetStatus("attack_range"))
             {
                 agent.SetDestination(transform.position);
                 animator.SetTrigger("Attack");
@@ -35,11 +35,12 @@ public class SlimeController : MobController
         {
             agent.SetDestination(transform.position);
         }
-        animator.SetBool("Move", Vector3.Distance(transform.position, agent.destination) > attackRange);
+        animator.SetBool("Move", Vector3.Distance(transform.position, agent.destination) > status.GetStatus("attack_range"));
     }
 
     public override void Damaged(float damage)
     {
         animator.SetTrigger("Damaged");
+        
     }
 }

@@ -14,10 +14,10 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
+  m_Fog: 1
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.0005
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -27,7 +27,7 @@ RenderSettings:
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
-  m_HaloStrength: 0.5
+  m_HaloStrength: 0.264
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
@@ -99,7 +99,8 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 1bedd449f25ad94499ad719a93263514,
     type: 2}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: e2abbc1e32ec5bb45a2c12871cb8c876,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -965,7 +966,6 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
-  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1039,8 +1039,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.008541969, y: -0.98172617, z: 0.18356147, w: 0.04945662}
-  m_LocalPosition: {x: 225.98889, y: 54.961365, z: 717.79254}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 189, y: 51.360695, z: 487.22253}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1108,21 +1108,26 @@ MonoBehaviour:
   trackingObj: {fileID: 0}
   mouseSensitivity: 6.1
   zoomSensitivity: 100
+  movingCurves:
+  - name: Test
+    stareTarget: 1
+    curve:
+      points:
+      - point: {x: -1.1298676, y: -0.33837128, z: -110.49457}
+        postTangent: {x: 14.536087, y: 36.274757, z: -76.732666}
+        preTangent: {x: 1.3412781, y: 5.916935, z: -115.90488}
+      - point: {x: -65.01227, y: 13.950611, z: -192.96616}
+        postTangent: {x: -12.07399, y: 19.360855, z: -164.56949}
+        preTangent: {x: -65.01227, y: 13.950611, z: -192.96616}
+  - name: CharacterSliding
+    stareTarget: 1
+    curve:
+      points:
+      - point: {x: -0.41653442, y: -0.111888885, z: -1.5288391}
+        postTangent: {x: 0.23329163, y: -0.16698074, z: -3.2866821}
+        preTangent: {x: -0.41653442, y: -0.111888885, z: -1.5288391}
+  updateEditor: 1
   zoomLimits: 16.63
---- !u!114 &330585549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2633578d5ec413d45ae3c910f36ccba3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rt: 0
-  MRTShader: {fileID: 4800000, guid: 52a9bfc117094ba4ca7866d494152c84, type: 3}
 --- !u!1 &337266052
 GameObject:
   m_ObjectHideFlags: 0

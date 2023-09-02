@@ -7,9 +7,7 @@ using UnityEngine.AI;
 public class MobController : NetworkBehaviour
 {
     public GameObject target;
-
-    [SerializeField] protected float detectionRange;
-    [SerializeField] protected float attackRange;
+    protected MobStatus status;
     protected Animator animator;
     protected NavMeshAgent agent;
 
@@ -18,11 +16,15 @@ public class MobController : NetworkBehaviour
         base.OnNetworkSpawn();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        status = GetComponent<MobStatus>();
     }
 
     private void Update()
     {
-        Move();
+        if (IsServer)
+        {
+            Move();
+        }
     }
 
     protected virtual void Move()

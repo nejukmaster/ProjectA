@@ -7,32 +7,32 @@ using UnityEngine;
 
 public class Status
 {
-    Dictionary<string,float> status = new Dictionary<string,float>();
+    Dictionary<string,int> status = new Dictionary<string,int>();
 
-    public Status(Dictionary<string,float> status) 
+    public Status(Dictionary<string,int> status) 
     {
         this.status = status;
     }
 
-    public void AddStat(KeyValuePair<string,float> b)
+    public void AddStat(KeyValuePair<string,int> b)
     {
         if (status.ContainsKey(b.Key))
             status[b.Key] += b.Value;
     }
     
-    public void SetStat(KeyValuePair<string,float> b)
+    public void SetStat(KeyValuePair<string,int> b)
     {
         if(status.ContainsKey(b.Key))
             status[(b.Key)] = b.Value;
     }
 
-    public void InstanceStat(KeyValuePair<string,float> b)
+    public void InstanceStat(KeyValuePair<string,int> b)
     {
         if (!status.ContainsKey(b.Key))
             status.Add(b.Key,b.Value);
     }
 
-    public float GetStat(string key)
+    public int GetStat(string key)
     {
         return status[key];
     }
@@ -53,29 +53,35 @@ public class StatusManager : NetworkBehaviour
     {
         if (!playerStatusDic.ContainsKey(playerId))
         {
-            Dictionary<string, float> status = new Dictionary<string,float>();
-            status.Add("hp", 1.0f);
-            status.Add("attackRange", 100.0f);
-            status.Add("max_hp", 1.0f);
+            Dictionary<string, int> status = new Dictionary<string,int>();
+            status.Add("hp", 10);
+            status.Add("attackRange", 100);
+            status.Add("max_hp", 10);
             playerStatusDic.Add(playerId, new Status(status));
         }
     }
 
-    public void ChangeStatus(ulong playerId, string s, float v)
+    public void ChangeStatus(ulong playerId, string s, int v)
     {
         if(playerStatusDic.ContainsKey(playerId))
         {
-            playerStatusDic[playerId].SetStat(new KeyValuePair<string, float>(s,v));
-            NetworkManager.Singleton.ConnectedClients[playerId].PlayerObject.GetComponent<PlayerStatus>().StatusChangeClientRpc(s, v);
+            playerStatusDic[playerId].SetStat(new KeyValuePair<string, int>(s,v));
+            if(s == "hp") 
+            {
+                NetworkManager.Singleton.ConnectedClients[playerId].PlayerObject.GetComponent<PlayerStatus>().HPChangeClientRpc(playerStatusDic[playerId].GetStat("hp"), playerStatusDic[playerId].GetStat("max_hp"));
+            }
         }
     }
 
-    public void AddStatus(ulong playerId, string s, float v)
+    public void AddStatus(ulong playerId, string s, int v)
     {
         if(playerStatusDic.ContainsKey(playerId))
         {
-            playerStatusDic[playerId].AddStat(new KeyValuePair<string, float>(s, v));
-            NetworkManager.Singleton.ConnectedClients[playerId].PlayerObject.GetComponent<PlayerStatus>().StatusChangeClientRpc(s, playerStatusDic[playerId].GetStat(s));
+            playerStatusDic[playerId].AddStat(new KeyValuePair<string, int>(s, v));
+            if (s == "hp")
+            {
+                NetworkManager.Singleton.ConnectedClients[playerId].PlayerObject.GetComponent<PlayerStatus>().HPChangeClientRpc(playerStatusDic[playerId].GetStat("hp"), playerStatusDic[playerId].GetStat("max_hp"));
+            }
         }
     }
 

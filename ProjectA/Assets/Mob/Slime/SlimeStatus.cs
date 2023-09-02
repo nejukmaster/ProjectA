@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeStatus : MobStatusManager
+public class SlimeStatus : MobStatus
 {
     protected override Status InitializeStatus()
     {
-        Dictionary<string, float> r = new Dictionary<string, float>();
-        r.Add("hp", 10f);
+        Dictionary<string, int> r = new Dictionary<string, int>();
+        r.Add("hp", 10);
+        r.Add("attack_range", 50);
+        r.Add("detect_range", 100);
         return new Status(r);
     }
 }

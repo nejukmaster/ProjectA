@@ -20,6 +20,7 @@ public class PlayerController : NetworkBehaviour
     CharacterController controller;
     Camera cam;
     CharacterMovement movement;
+    PlayerSkill skill;
     PlayerStatus playerStatus;
     float ySpeed = 0.0f;
     float invincibility;
@@ -31,6 +32,7 @@ public class PlayerController : NetworkBehaviour
         if (IsServer)
         {
             controller = GetComponent<CharacterController>();
+            skill = new PlayerSkill(this);
         }
         if (!IsOwner) return;
         cam = Camera.main;
@@ -87,6 +89,21 @@ public class PlayerController : NetworkBehaviour
             if (Input.GetKeyDown(KeyCode.I))
             {
                 AttackServerRpc();
+                canMove = false;
+                return;
+            }
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Vector3 endPoint = PlayerSkill.Slide(transform, 50.0f);
+                cam.GetComponent<CameraController>().tracking = false;
+                cam.GetComponent<CameraController>().CameraMove("CharacterSliding", 0.8f, false, (curve, camera) =>
+                {
+                    for(int i =0; i < curve.points.Length; i++)
+                    {
+                        curve.points[i] = curve.points[0] + (-(curve.points[0] - endPoint)) * (curve.points[i] - curve.points[0]) * (curve.points[curve.points.Length - 1] - curve.points[0]).Inverse();
+                    }
+                }, null);
+                SlideServerRpc(250.0f, endPoint);
                 canMove = false;
                 return;
             }
@@ -157,21 +174,20 @@ public class PlayerController : NetworkBehaviour
     {
         animator.SetTrigger("Jump");
     }
-    [ServerRpc]
-    public void DamagedServerRpc(ulong clientId, float p_float)
+    public void Damaged(int p_int)
     {
         if (invincibility <= 0)
         {
 
-            if (StatusManager.instance.GetStatus(ID).GetStat("hp") - p_float > 0)
+            if (StatusManager.instance.GetStatus(ID).GetStat("hp") - p_int > 0)
             {
                 animator.SetTrigger("Damage");
-                StatusManager.instance.AddStatus(clientId, "hp", -p_float);
+                StatusManager.instance.AddStatus(ID, "hp", -p_int);
             }
             else
             {
                 animator.SetTrigger("Death");
-                StatusManager.instance.AddStatus(clientId, "hp", -p_float);
+                StatusManager.instance.AddStatus(ID, "hp", -p_int);
                 DeathClientRpc();
             }
         }
@@ -188,6 +204,11 @@ public class PlayerController : NetworkBehaviour
         StatusManager.instance.ChangeStatus(ID, "hp", StatusManager.instance.GetStatus(ID).GetStat("max_hp"));
         gameObject.SetActive(true);
         RespawnCharacterClientRpc();
+    }
+    [ServerRpc]
+    public void SlideServerRpc(float speed, Vector3 endPoint)
+    {
+        StartCoroutine(skill.SlideCo(animator, speed, endPoint));
     }
     public void DespawnCharacter()
     {
@@ -206,14 +227,14 @@ public class PlayerController : NetworkBehaviour
             invincibility = p_float;
     }
 
-    public void Damaged(float p_float)
+    public void OnSkillEnd()
     {
         if (IsOwner)
         {
-            DamagedServerRpc(NetworkManager.Singleton.LocalClientId, p_float);
+            cam.GetComponent<CameraController>().tracking = true;
+            StopCoroutine(cam.GetComponent<CameraController>().currentCo);
         }
     }
-
 }
 
 [CustomEditor(typeof(PlayerController))]

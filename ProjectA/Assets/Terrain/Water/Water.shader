@@ -241,7 +241,7 @@ Shader"Terrain/Water"
                 float foam = WaterDepthFade(zEye, IN.screenPos, _Foam.x);
                 foam = (sin(_Foam.w * foam) * 0.5 + _Foam.y) * 1 / foam;
                 float foamValue = step(_Foam.z + gradientNoise(dot(_Direction.xy,IN.positionWS.xz/_FoamNoiseSize) + _Speed*_Time.x),foam);
-                //foamValue *= _Foam.y/foam - _Foam.y/_Foam.z;
+                //foamValue *= _Foam.y/foam - _Foam.y
                 color = lerp(color, 1, foamValue * _FoamIntensity);
                 
                 return color;

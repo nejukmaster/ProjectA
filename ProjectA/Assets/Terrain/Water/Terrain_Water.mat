@@ -42,6 +42,8 @@ Material:
     - _Cutoff: 0.0261
     - _Cuttoff: 0
     - _Depth: 1
+    - _FoamIntensity: 0.659
+    - _FoamNoiseSize: 40.41
     - _FogBias: 1.27
     - _FogIntensity: 0.00312
     - _Frequency: 1
@@ -60,7 +62,7 @@ Material:
     - _Color: {r: 0.31603748, g: 0.65935993, b: 1, a: 0.6745098}
     - _Color2: {r: 0, g: 0.21034239, b: 0.8113208, a: 1}
     - _Direction: {r: 0, g: -1, b: 0, a: 0}
-    - _Foam: {r: 10, g: 0, b: 1.03, a: 31.49}
+    - _Foam: {r: 0.7, g: 3.82, b: 1.15, a: 4.05}
     - _FoamColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightColor: {r: 1, g: 1, b: 1, a: 1}
     - _LightDir: {r: 1, g: 1, b: 1, a: 0}
