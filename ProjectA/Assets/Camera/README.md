@@ -86,4 +86,7 @@ And this is the camera movement video.
 
 [![Video Label](http://img.youtube.com/vi/g6W0aXs5C28/0.jpg)](https://youtu.be/g6W0aXs5C28)
 ### Camera Walk
-Camera Walk consists of 3D Bezier. Bezier Curve is a curve defined by two or more points and is widely used in vector graphics. Using this Bezier curve, the camera's transit point will be stored, and each transit point will be interpolated into a tertiary Bezier curve to form a camera walk.
+Camera Walk consists of 3D Bezier. Bezier Curve is a curve defined by two or more points and is widely used in vector graphics. Using this Bezier curve, the camera's transit point will be stored, and each transit point will be interpolated into a Cubic Bezier curve to form a camera walk.
+
+At first, We make the Curve class and its composition BezierPoint class. The structure of the Curve class is as follows.
+![Alt text](/ExplainImgs/BazierCurve3DSchematicDiagram.png)
