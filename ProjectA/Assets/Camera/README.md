@@ -90,3 +90,43 @@ Camera Walk consists of 3D Bezier. Bezier Curve is a curve defined by two or mor
 
 At first, We make the Curve class and its composition BezierPoint class. The structure of the Curve class is as follows.
 ![Alt text](/ExplainImgs/BazierCurve3DSchematicDiagram.png)
+
+_Bezier Point class_
+```c#
+[System.Serializable]
+public class BezierPoint
+{
+  public static BezierPoint operator -(BezierPoint a) => new BezierPoint(-a.point, -a.postTangent, -a.preTangent);
+  public static BezierPoint operator +(BezierPoint a, Vector3 b) => new BezierPoint(a .point + b, a.postTangent + b, a.preTangent + b);
+  public static BezierPoint operator +(BezierPoint a, BezierPoint b) => new BezierPoint(a.point + b.point, a.postTangent + b.postTangent, a.preTangent + b.preTangent);
+  public static BezierPoint operator -(BezierPoint a, Vector3 b) => new BezierPoint(a.point - b, a.postTangent - b, a.preTangent - b);
+  public static BezierPoint operator -(BezierPoint a, BezierPoint b) => new BezierPoint(a.point - b.point, a.postTangent - b.postTangent, a.preTangent - b.preTangent);
+  public static BezierPoint operator *(BezierPoint a, Vector3 b) => new BezierPoint(new Vector3(a.point.x * b.x, a.point.y * b.y, a.point.z * b.z), new Vector3(a.postTangent.x * b.x, a.postTangent.y * b.y, a.postTangent.z * b.z), new Vector3(a.preTangent.x * b.x, a.preTangent.y * b.y, a.preTangent.z * b.z));
+  public static BezierPoint operator *(BezierPoint a, BezierPoint b) => new BezierPoint(new Vector3(a.point.x * b.point.x, a.point.y * b.point.y, a.point.z * b.point.z), new Vector3(a.postTangent.x * b.postTangent.x, a.postTangent.y * b.postTangent.y, a.postTangent.z * b.postTangent.z), new Vector3(a.preTangent.x * b.preTangent.x, a.preTangent.y * b.preTangent.y, a.preTangent.z * b.preTangent.z));
+
+  public Vector3 point;
+  public Vector3 postTangent;
+  public Vector3 preTangent;
+
+  public BezierPoint(Vector3 point, Vector3 postTangent, Vector3 preTangent)
+  {
+    this.point = point;
+    this.postTangent = postTangent;
+    this.preTangent = preTangent;
+  }
+
+  public BezierPoint() { }
+
+  public BezierPoint Clone()
+  {
+    return new BezierPoint(point, postTangent, preTangent);
+  }
+
+  public BezierPoint Inverse()
+  {
+      return new BezierPoint(new Vector3(point.x == 0 ? 0 : 1 / point.x, point.y == 0 ? 0 : 1 / point.y, point.z == 0 ? 0 : 1 / point.z),
+                              new Vector3(postTangent.x == 0 ? 0 : 1 / postTangent.x, postTangent.y == 0 ? 0 : 1 / postTangent.y, postTangent.z == 0 ? 0 : 1 / postTangent.z),
+                              new Vector3(preTangent.x == 0 ? 0 : 1 / preTangent.x, preTangent.y == 0 ? 0 : 1 / preTangent.y, preTangent.z == 0 ? 0 : 1 / preTangent.z));
+  }
+}
+```
