@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     {
         public string name;
         public bool stareTarget;
-        public BazierCurve3D.Curve curve;
+        public BezierCurve3D.Curve curve;
 
         public CameraMoveCurve Clone()
         {
@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour
             float xAxis = Input.GetAxis("Mouse X");
             float yAxis = Input.GetAxis("Mouse Y");
 
-            Vector3 spherical = Utility.TranslateCertesianToSpherical(offset);
+            Vector3 spherical = Utility.TranslateOrthogonalToSpherical(offset);
             if (radious - Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity > zoomLimits)
                 radious -= Input.GetAxis("Mouse ScrollWheel") * zoomSensitivity;
             spherical.x = radious;
@@ -66,7 +66,7 @@ public class CameraController : MonoBehaviour
                 if (hitdis < radious) spherical.x = hitdis;
             }
 
-            offset = Utility.TranslateSphericalToCertesian(spherical);
+            offset = Utility.TranslateSphericalToOrthogonal(spherical);
         }
     }
 
@@ -83,22 +83,22 @@ public class CameraController : MonoBehaviour
     }
 
     [ExecuteInEditMode]
-    public void CameraMove(int index, float time, bool isTesting, Action<BazierCurve3D.Curve, CameraController> preProcess, Action postProcess)
+    public void CameraMove(int index, float time, bool isTesting, Action<BezierCurve3D.Curve, CameraController> preProcess, Action postProcess)
     {
         if (time > 0 && Mathf.Abs(index) < movingCurves.Length)
         {
-            Action<BazierCurve3D.Curve, CameraController> t_pre = preProcess;
+            Action<BezierCurve3D.Curve, CameraController> t_pre = preProcess;
             if (t_pre == null)
                 t_pre = (curve, controller) => { };
             currentCo = StartCoroutine(CameraMoveCo(movingCurves[index], time, isTesting, t_pre, null));
         }
     }
 
-    public void CameraMove(string name, float time, bool isTesting, Action<BazierCurve3D.Curve, CameraController> preProcess, Action postProcess)
+    public void CameraMove(string name, float time, bool isTesting, Action<BezierCurve3D.Curve, CameraController> preProcess, Action postProcess)
     {
         if (time > 0)
         {
-            Action<BazierCurve3D.Curve, CameraController> t_pre = preProcess;
+            Action<BezierCurve3D.Curve, CameraController> t_pre = preProcess;
             if (t_pre == null)
                 t_pre = (curve, controller) => { };
             for (int i = 0; i < movingCurves.Length; i++)
@@ -112,13 +112,13 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    IEnumerator CameraMoveCo(CameraMoveCurve moveCurve, float time, bool isTesting, Action<BazierCurve3D.Curve,CameraController> preProcess, Action postProcess)
+    IEnumerator CameraMoveCo(CameraMoveCurve moveCurve, float time, bool isTesting, Action<BezierCurve3D.Curve,CameraController> preProcess, Action postProcess)
     {
         updateEditor = false;
         float currentTime = 0f;
-        BazierCurve3D.Curve curve = new BazierCurve3D.Curve();
-        BazierCurve3D.BazierPoint[] points = new BazierCurve3D.BazierPoint[moveCurve.curve.points.Length + 1];
-        points[0] = new BazierCurve3D.BazierPoint(new Vector3(transform.position.x, transform.position.y, transform.position.z),
+        BezierCurve3D.Curve curve = new BezierCurve3D.Curve();
+        BezierCurve3D.BezierPoint[] points = new BezierCurve3D.BezierPoint[moveCurve.curve.points.Length + 1];
+        points[0] = new BezierCurve3D.BezierPoint(new Vector3(transform.position.x, transform.position.y, transform.position.z),
                                                     new Vector3(transform.position.x, transform.position.y, transform.position.z),
                                                     new Vector3(transform.position.x, transform.position.y, transform.position.z));
         for (int i = 0; i < moveCurve.curve.points.Length; i++)
@@ -132,7 +132,7 @@ public class CameraController : MonoBehaviour
 
         while (currentTime < time)
         {
-            transform.position = BazierCurve3D.GetCurves(currentTime / time, curve);
+            transform.position = BezierCurve3D.GetCurves(currentTime / time, curve);
             if (moveCurve.stareTarget && trackingObj != null)
             {
                 transform.LookAt(trackingObj.transform.position + trackingObj.characterTrackingPoint);

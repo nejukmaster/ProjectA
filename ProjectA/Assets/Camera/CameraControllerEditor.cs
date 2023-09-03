@@ -7,8 +7,8 @@ using UnityEngine;
 [CustomEditor(typeof(CameraController))]
 public class CameraControllerEditor : Editor
 {
-    BazierCurve3D.Curve drawingCurve;
-    BazierCurve3D.BazierPoint zeroPoint;
+    BezierCurve3D.Curve drawingCurve;
+    BezierCurve3D.BezierPoint zeroPoint;
     float time = 0;
 
     public override void OnInspectorGUI()
@@ -36,7 +36,7 @@ public class CameraControllerEditor : Editor
             if (controller.updateEditor)
             {
                 drawingCurve = controller.movingCurves[controller.movingCurves.Length - 1].curve.Clone() + controller.transform.position;
-                zeroPoint = new BazierCurve3D.BazierPoint();
+                zeroPoint = new BezierCurve3D.BezierPoint();
                 zeroPoint.point = Handles.FreeMoveHandle(controller.transform.position, 0.2f, Vector3.zero, Handles.CylinderHandleCap);
                 zeroPoint.preTangent = Handles.FreeMoveHandle(controller.transform.position, 0.1f, Vector3.zero, Handles.CylinderHandleCap);
             }
@@ -71,7 +71,7 @@ public class CameraControllerEditor : Editor
                     Handles.DrawBezier(drawingCurve.points[i].point, drawingCurve.points[i + 1].point, drawingCurve.points[i].preTangent, drawingCurve.points[i + 1].postTangent, Color.gray, null, 10f);
                 }
             }
-            BazierCurve3D.Curve resultCurve = drawingCurve.Clone();
+            BezierCurve3D.Curve resultCurve = drawingCurve.Clone();
             for (int i = 0; i < drawingCurve.points.Length; i++)
             {
                 resultCurve.points[i] -= controller.transform.position;
