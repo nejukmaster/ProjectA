@@ -4,6 +4,8 @@ The Camera Controller is a script that controls the movement of the camera durin
 > Rotating around the character & Tracking character
 >
 > Camera Walk
+>
+> Custom Editor
 
 ### Rotating around the character
 In Open World games, the camera has to move freely than the other games. Therefore, I made a camera that rotates around the character in a circle according to the movement of the mouse.
@@ -80,5 +82,7 @@ public void SetTrackingObj(PlayerController player)
   tracking = true;  //start tracking
 }
 ```
-
+And this is the camera movement video.
+[![Video Label](http://img.youtube.com/vi/g6W0aXs5C28/0.jpg)](https://youtu.be/g6W0aXs5C28)
 ### Camera Walk
+Camera Walk consists of 3D Bazier. Bazier Curve is a curve defined by two or more points and is widely used in vector graphics. Using this Bezier curve, the camera's transit point will be stored, and each transit point will be interpolated into a tertiary Bezier curve to form a camera walk.
