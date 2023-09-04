@@ -134,3 +134,61 @@ public class BezierPoint
   }
 }
 ```
+_Curve Class_
+```c#
+[System.Serializable]
+public class Curve
+{
+  public static Curve operator +(Curve a, Vector3 b) => PlusOperate(a,b);
+  public static Curve operator -(Curve a, Vector3 b) => PlusOperate(a, -b);
+
+  public static Curve PlusOperate(Curve a, Vector3 b)
+  {
+    Curve r = a.Clone();
+    for(int i = 0; i < r.points.Length; i ++)
+    {
+      r.points[i] += b;
+    }
+    return r;
+  }
+
+  public BezierPoint[] points;
+
+  public Curve Clone()
+  {
+    Curve curve = new Curve();
+    curve.points = new BezierPoint[points.Length];
+    for (int i = 0; i < points.Length; i++)
+    {
+      curve.points[i] = points[i].Clone();
+    }
+    return curve;
+  }
+}
+```
+Now, given the position t in Curve, we create a GetCurve function that returns the point P above the Bezier Curve.
+_GetCurve Function_
+```c#
+//input t is a value of 0~1
+public static Vector3 GetCurves(float t, Curve curve)
+{
+  //If Curve is blank, return zero vector.
+  if (curve.points.Length <= 0)
+    return Vector3.zero;
+  else
+  {
+    float _t = t * (float)(curve.points.Length - 1);  //mapping t 0~1 to 0~number of curve's points
+    BezierPoint postPoint = curve.points[(int)_t];  //using _t, get bezier point right in front of current position.
+    BezierPoint prePoint = curve.points[(int)_t+1];  //ustin _t, get bezier point next of current position.
+
+    //calculate cubic bezier curve
+    Vector3 p1 = Vector3.Lerp(postPoint.point, postPoint.preTangent, _t - Mathf.Floor(_t));
+    Vector3 p2 = Vector3.Lerp(postPoint.preTangent, prePoint.postTangent, _t - Mathf.Floor(_t));
+    Vector3 p3 = Vector3.Lerp(prePoint.postTangent, prePoint.point, _t - Mathf.Floor(_t));
+    Vector3 p4 = Vector3.Lerp(p1, p2, _t - Mathf.Floor(_t));
+    Vector3 p5 = Vector3.Lerp(p2, p3, _t - Mathf.Floor(_t));
+
+    return Vector3.Lerp(p4, p5, _t - Mathf.Floor(_t));
+  }
+}
+```
