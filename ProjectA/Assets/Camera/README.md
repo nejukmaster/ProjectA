@@ -196,12 +196,13 @@ And Then, On the Camera Controller, write a code that moves the camera along the
 
 _CameraController.cs_
 ```c#
+//Set it to Serializable for modification in Inspector.
 [System.Serializable]
 public class CameraMoveCurve
 {
-    public string name;
-    public bool stareTarget;
-    public BezierCurve3D.Curve curve;
+    public string name;  //name of this curve
+    public bool stareTarget;  //Whether to look at the character during this curve
+    public BezierCurve3D.Curve curve;  //Curve data
 
     public CameraMoveCurve Clone()
     {
@@ -213,7 +214,7 @@ public class CameraMoveCurve
     }
 }
 
-public CameraMoveCurve[] movingCurves;
+public CameraMoveCurve[] movingCurves;  //Array to store the curve you created
 
 ...
 [ExecuteInEditMode]
@@ -229,10 +230,16 @@ public void CameraMove(int index, float time, bool isTesting, Action<BezierCurve
 }
 
 ...
+/*  Coroutine to move the camera along the curve.
+    moveCurve  :   A curve to move the camera 
+    time       :   Time to take a curve(seconds)
+    isTesting  :   Whether this movement is a test. If true, return the camera to its original position after the movement.
+    preProcess :   Method for Preprocessing. Before moving, It can change the properties of the Camera Controller, or apply preprocessing to the temporary curve.
+    postProcess:   Method for Postprocessing. It runs after the movement is finished.  */
 IEnumerator CameraMoveCo(CameraMoveCurve moveCurve, float time, bool isTesting, Action<BezierCurve3D.Curve,CameraController> preProcess, Action postProcess)
 {
-  updateEditor = false;
-  float currentTime = 0f;
+  updateEditor = false;  //Aborts the update of the Custom Editor on the camera controller. This will be explained later.
+  float currentTime = 0f;  //Variable to store the time corutin has progressed
   BezierCurve3D.Curve curve = new BezierCurve3D.Curve();
   BezierCurve3D.BezierPoint[] points = new BezierCurve3D.BezierPoint[moveCurve.curve.points.Length + 1];
   points[0] = new BezierCurve3D.BezierPoint(new Vector3(transform.position.x, transform.position.y, transform.position.z),
