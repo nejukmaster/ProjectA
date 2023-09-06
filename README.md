@@ -11,7 +11,7 @@ Online-Open World with Unity
 
 >  4.[CameraController](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Camera)
 
->  5.[Outlining at Character]
+>  5.[Outlining at Character](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Postprocessing/CharacterOuline)
 
 >  4.Multi-Play with Unity Netcode
 
