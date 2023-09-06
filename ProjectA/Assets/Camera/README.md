@@ -281,6 +281,7 @@ IEnumerator CameraMoveCo(CameraMoveCurve moveCurve, float time, bool isTesting, 
 }
 ```
 Then we can get the following results.
+
 (최종본 영상)
 
 ### Camera Controller Custon Editor.
@@ -292,4 +293,26 @@ using UnityEditor;
 [CustomEditor(typeof(CameraController))]
 public class CameraControllerEditor : Editor
 {}
+```
+Then declare the variables and override the On Inspector GUI to add the required UI.
+```c#
+
+...
+BezierCurve3D.Curve drawingCurve;
+BezierCurve3D.BezierPoint zeroPoint;
+float time = 0;  //Saves how seconds the curve test will take.
+
+public override void OnInspectorGUI()  //Set up the GUI within the Inspector.
+{
+    base.OnInspectorGUI();  //Run the OnInspectorGUI of the parent object. Without this, all Inspector GUI supported by existing Unity will disappear.
+    CameraController controller = target as CameraController;  //Import the targeted script into the Camera Controller.
+    GUILayout.Space(20);  //It gives 20 margins on inspector.
+    GUILayout.TextArea(time + "");  //Show how seconds the curve test will take.
+    time = GUILayout.HorizontalSlider(time,0f,10f);  //Create a horizontal slider to adjust the time.
+    GUILayout.Space(10);
+    if (GUILayout.Button("Test Curves"))  //Add a button and check if it is pressed.
+    {
+        controller.CameraMove(controller.movingCurves.Length - 1, time, true, null, null);  //Run Camera Curve without preprocessing or postprocessing.
+    }
+}
 ```
