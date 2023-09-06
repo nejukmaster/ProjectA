@@ -284,4 +284,9 @@ Then we can get the following results.
 (최종본 영상)
 
 ### Camera Controller Custon Editor.
-Finally, we're going to create a Unity Custom Editor for easy editing of the curves in the camera walk. The Custom Editor I want is an editor which displays each BezierPoint on the screen, and drags it to modify the curve.
+Finally, we're going to create a Unity Custom Editor for easy editing of the curves in the camera walk. The Custom Editor I want is an editor which displays each BezierPoint on the screen, and drags it to modify the curve. To do this, we first create a script to inherit UnityEditor.Editor.
+```c#
+[CustomEditor(typeof(CameraController))]
+public class CameraControllerEditor : Editor
+{}
+```
