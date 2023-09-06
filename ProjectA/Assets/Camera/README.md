@@ -384,4 +384,4 @@ private void OnSceneGUI()
 ```
 With the Unity Custom Editor built in this way, we can modify and apply the camera walk more intuitively.
 
-(커브 제작및 테스트 영상)
+[![Video Label](http://img.youtube.com/vi/gKEHt0coLOE/0.jpg)](https://youtu.be/gKEHt0coLOE)
