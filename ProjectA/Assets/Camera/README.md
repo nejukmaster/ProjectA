@@ -381,11 +381,7 @@ private void OnSceneGUI()
         }
     }
 }
-
-Vector3 UpdateCameraPos()
-{
-    CameraController controller = target as CameraController;
-    if (controller.updateEditor) return controller.transform.position;
-    else return Vector3.zero;
-}
 ```
+With the Unity Custom Editor built in this way, we can modify and apply the camera walk more intuitively.
+
+(커브 제작및 테스트 영상)
