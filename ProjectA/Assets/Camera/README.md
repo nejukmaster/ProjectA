@@ -280,3 +280,8 @@ IEnumerator CameraMoveCo(CameraMoveCurve moveCurve, float time, bool isTesting, 
   updateEditor = true;
 }
 ```
+Then we can get the following results.
+(최종본 영상)
+
+### Camera Controller Custon Editor.
+Finally, we're going to create a Unity Custom Editor for easy editing of the curves in the camera walk. The Custom Editor I want is an editor which displays each BezierPoint on the screen, and drags it to modify the curve.
