@@ -240,42 +240,40 @@ IEnumerator CameraMoveCo(CameraMoveCurve moveCurve, float time, bool isTesting, 
 {
   updateEditor = false;  //Aborts the update of the Custom Editor on the camera controller. This will be explained later.
   float currentTime = 0f;  //Variable to store the time corutin has progressed
-  BezierCurve3D.Curve curve = new BezierCurve3D.Curve();
-  BezierCurve3D.BezierPoint[] points = new BezierCurve3D.BezierPoint[moveCurve.curve.points.Length + 1];
+  BezierCurve3D.Curve curve = new BezierCurve3D.Curve();  //create temporary curve to move camera
+  BezierCurve3D.BezierPoint[] points = new BezierCurve3D.BezierPoint[moveCurve.curve.points.Length + 1];  //temporary cruve's number of points is +1 of original.
   points[0] = new BezierCurve3D.BezierPoint(new Vector3(transform.position.x, transform.position.y, transform.position.z),
                                               new Vector3(transform.position.x, transform.position.y, transform.position.z),
-                                              new Vector3(transform.position.x, transform.position.y, transform.position.z));
+                                              new Vector3(transform.position.x, transform.position.y, transform.position.z));  //set start point to Camera's position.
   for (int i = 0; i < moveCurve.curve.points.Length; i++)
   {
-      points[i + 1] = moveCurve.curve.points[i].Clone();
-      points[i + 1] += transform.position;
+      points[i + 1] = moveCurve.curve.points[i].Clone();  //Copy and fill BezierPoint in the remaining part.
+      points[i + 1] += transform.position;  //The CameraMoveCurve is stored as a relative coordinate for the starting point, so we should turn it into a world coordinate.
   }
-  curve.points = points;
+  curve.points = points;  //apply points to temporary curve
 
-  preProcess(curve, this);
+  preProcess(curve, this);  //Run preprocessing method
 
-  while (currentTime < time)
+  while (currentTime < time)  //Run only if progress time is less than time
   {
-      transform.position = BezierCurve3D.GetCurves(currentTime / time, curve);
-      if (moveCurve.stareTarget && trackingObj != null)
+      transform.position = BezierCurve3D.GetCurves(currentTime / time, curve);  //Pass the progress with a factor so that the curve progresses over "time" seconds.
+      if (moveCurve.stareTarget && trackingObj != null)  //if CameraMoveCurve's stareTarget property is true, the camera look "target" During the curve
       {
           transform.LookAt(trackingObj.transform.position + trackingObj.characterTrackingPoint);
       }
-      currentTime += Time.deltaTime;
-      yield return null;
+      currentTime += Time.deltaTime;  //Update currentTime
+      yield return null;  //Because Coroutine is consist of IEnumerator, so we should pass return as yield
   }
-  //if (!isTesting)
-  //    transform.position = moveCurve.curve.points[moveCurve.curve.points.Length - 1].point;
-  if(isTesting)
+  if(isTesting)  //If isTesting is true, back Camera position to start point.
   {
       transform.position = curve.points[0].point;
   }
-  if (moveCurve.stareTarget && trackingObj != null)
+  if (moveCurve.stareTarget && trackingObj != null)  //when the coroutine is over, if stareTarget is true, set the camera rotation to look at the target 
   {
       transform.LookAt(trackingObj.transform.position + trackingObj.characterTrackingPoint);
   }
 
-  if (postProcess != null)
+  if (postProcess != null)  //postProcess method is not null, run it.
   {
       postProcess();
   }
