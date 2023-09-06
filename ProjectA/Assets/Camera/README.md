@@ -316,3 +316,76 @@ public override void OnInspectorGUI()  //Set up the GUI within the Inspector.
     }
 }
 ```
+And write Scene Screen UI at OnSceneGUI function.
+```c#
+private void OnSceneGUI()
+{
+    CameraController controller = target as CameraController;
+
+    Handles.color = Color.magenta;  //If you set the color to magenta, the color of the UI drawn is drawn as magenta.
+    if (controller.movingCurves.Length > 0)  //Do not run if there is no CameraMoveCurve registered with the Camera Controller.
+    {
+        EditorGUI.BeginChangeCheck();  //Create a code block up to EndCheck to see if this code has changed the GUI.
+        if (controller.updateEditor)  //Update the curve only if the editorUpdate on the Camera Controller is true. If false, the curve used will not be updated, so the previous display information will be displayed.
+        {
+            drawingCurve = controller.movingCurves[controller.movingCurves.Length - 1].curve.Clone() + controller.transform.position;  //the last curve in the list is target of modifying.
+            zeroPoint = new BezierCurve3D.BezierPoint();  //Start Point Settings
+            zeroPoint.point = Handles.FreeMoveHandle(controller.transform.position, 0.2f, Vector3.zero, Handles.CylinderHandleCap);  //Create a freeMoveHandle as 0.2 size at "point" of the starting point
+            zeroPoint.preTangent = Handles.FreeMoveHandle(controller.transform.position, 0.1f, Vector3.zero, Handles.CylinderHandleCap);  //Create a freeMoveHandle as 0.1 size at preTangent of the starting point
+            //FreeMoveHandle dosent be created at postTangent of the starting point, Because starting point's postTangent dosent be used for drawing bezier curve.
+        }
+
+        for (int i = 0; i < drawingCurve.points.Length; i++)  //Repeat for all BezierPoints in the curve
+        {
+            Handles.color = Color.green;  //Set color to green to draw postTangent's FreeMoveHandle.
+            drawingCurve.points[i].postTangent = Handles.FreeMoveHandle(drawingCurve.points[i].postTangent, .1f, Vector3.zero, Handles.CylinderHandleCap);
+            if (i != drawingCurve.points.Length - 1)  //if If this BezierPoint is not the last of the curve
+            {
+                Handles.color = Color.magenta;  //Set color to magenta to draw point's FreeMoveHandle.
+                drawingCurve.points[i].point = Handles.FreeMoveHandle(drawingCurve.points[i].point, .2f, Vector3.zero, Handles.CylinderHandleCap);
+                Handles.color = Color.red;  //Set color to red to draw preTangent's FreeMoveHandle.
+                drawingCurve.points[i].preTangent = Handles.FreeMoveHandle(drawingCurve.points[i].preTangent, .1f, Vector3.zero, Handles.CylinderHandleCap);
+            }
+            else  //Run at the last one
+            {
+                Handles.color = Color.magenta;
+                drawingCurve.points[i].point = Handles.FreeMoveHandle(drawingCurve.points[i].point, .2f, Vector3.zero, Handles.CylinderHandleCap);
+                drawingCurve.points[i].preTangent = drawingCurve.points[i].point;
+                //last one doesn't draw postTangent's FreeMoveHandle, Because it also doesn't be used for drawing bezier curve.
+            }
+            //Draw a line connecting each point of one BezierPoint.
+            Handles.color = Color.white;  
+            Handles.DrawLine(drawingCurve.points[i].postTangent, drawingCurve.points[i].point);
+            Handles.DrawLine(drawingCurve.points[i].preTangent, drawingCurve.points[i].point);
+        }
+
+        if (drawingCurve.points.Length > 0)  //If there is a BezierPoint of curve
+        {
+            //DrawBezier(start point, end point, start tangent, end tangent, color, texture, width) is draw cubic Bezier with points, texture, and color as width.
+            Handles.DrawBezier(zeroPoint.point, drawingCurve.points[0].point, zeroPoint.preTangent, drawingCurve.points[0].postTangent, Color.gray, null, 10f);  
+            for (int i = 0; i < drawingCurve.points.Length - 1; i++)
+            {
+                Handles.DrawBezier(drawingCurve.points[i].point, drawingCurve.points[i + 1].point, drawingCurve.points[i].preTangent, drawingCurve.points[i + 1].postTangent, Color.gray, null, 10f);
+            }
+        }
+        BezierCurve3D.Curve resultCurve = drawingCurve.Clone();  //Variable to return modified Curve to Editor
+        for (int i = 0; i < drawingCurve.points.Length; i++)
+        {
+            resultCurve.points[i] -= controller.transform.position;  //Turns the coordinates of the points into relative coordinates.
+        }
+        if (EditorGUI.EndChangeCheck())
+        {
+            Undo.RecordObject(controller, "Camera Curve Changed");
+            if(controller.updateEditor)  //Apply changes only if updateEditor is true
+                controller.movingCurves[controller.movingCurves.Length - 1].curve = resultCurve;
+        }
+    }
+}
+
+Vector3 UpdateCameraPos()
+{
+    CameraController controller = target as CameraController;
+    if (controller.updateEditor) return controller.transform.position;
+    else return Vector3.zero;
+}
+```
