@@ -15,3 +15,6 @@ And set frame and wieghts the mesh so the frame allows the mesh to move.
 And import model in Unity.
 ![Alt text](/ExplainImgs/MobMaking7.png)
 ![Alt text](/ExplainImgs/MobMaking8.png)
+### SlimeController
+Then create a controller that moves the slime. Before writing the script, add the NavMesh Agent component to the slime object.
+![Alt text](/ExplainImgs/MobMaking9.png)
