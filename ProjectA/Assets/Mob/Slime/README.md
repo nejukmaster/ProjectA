@@ -18,3 +18,11 @@ And import model in Unity.
 ### SlimeController
 Then create a controller that moves the slime. Before writing the script, add the NavMesh Agent component to the slime object.
 ![Alt text](/ExplainImgs/MobMaking9.png)
+The NavMesh Agent is an AI system provided by Unity that is useful for implementing movements such as moving toward a goal or avoiding obstacles on a baked NavMesh. 
+
+Then We create a Slime Controller script that inherits the Mob Controller.
+```c#
+public class SlimeController : MobController
+{
+}
+```
