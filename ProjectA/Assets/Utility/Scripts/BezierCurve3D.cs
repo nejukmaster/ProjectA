@@ -79,7 +79,7 @@ public class BezierCurve3D
         {
             float _t = t * (float)(curve.points.Length - 1);
             BezierPoint postPoint = curve.points[(int)_t];
-            BezierPoint prePoint = curve.points[(int)(_t + 1f)];
+            BezierPoint prePoint = curve.points[(int)_t+1];
 
             Vector3 p1 = Vector3.Lerp(postPoint.point, postPoint.preTangent, _t - Mathf.Floor(_t));
             Vector3 p2 = Vector3.Lerp(postPoint.preTangent, prePoint.postTangent, _t - Mathf.Floor(_t));

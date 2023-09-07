@@ -85,7 +85,7 @@ public class CameraController : MonoBehaviour
     [ExecuteInEditMode]
     public void CameraMove(int index, float time, bool isTesting, Action<BezierCurve3D.Curve, CameraController> preProcess, Action postProcess)
     {
-        if (time > 0 && Mathf.Abs(index) < movingCurves.Length)
+        if (time > 0 && index > 0 && index < movingCurves.Length)
         {
             Action<BezierCurve3D.Curve, CameraController> t_pre = preProcess;
             if (t_pre == null)

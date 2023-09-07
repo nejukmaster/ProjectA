@@ -1074,7 +1074,7 @@ MonoBehaviour:
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
-  m_StopNaN: 0
+  m_StopNaN: 1
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
@@ -1123,9 +1123,12 @@ MonoBehaviour:
     stareTarget: 1
     curve:
       points:
-      - point: {x: -0.41653442, y: -0.111888885, z: -1.5288391}
-        postTangent: {x: 0.23329163, y: -0.16698074, z: -3.2866821}
-        preTangent: {x: -0.41653442, y: -0.111888885, z: -1.5288391}
+      - point: {x: 0.62176514, y: 0.55465317, z: -1.7124329}
+        postTangent: {x: 0.37042236, y: 1.3447952, z: -2.302124}
+        preTangent: {x: -0.009719849, y: 1.4355011, z: -3.9762878}
+      - point: {x: -0.055252075, y: 0.85064316, z: -4.8780518}
+        postTangent: {x: 0.769577, y: 1.5624619, z: -4.9845276}
+        preTangent: {x: -0.055252075, y: 0.85064316, z: -4.8780518}
   updateEditor: 1
   zoomLimits: 16.63
 --- !u!1 &337266052
