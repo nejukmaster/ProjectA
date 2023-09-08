@@ -16,7 +16,6 @@ public class MobSpawner : MonoBehaviour
   public Vector3[] m_SpawnPoints;
 
   [SerializeField] GameObject[] m_Prefab;
-  private const int max_prefab = 5;
 
   public void SpawnMob(int mob_index, int spawnPoint_index)
   {
