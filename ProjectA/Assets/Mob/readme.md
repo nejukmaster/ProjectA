@@ -13,14 +13,15 @@ MobSpawner takes the single tone of this NetworkObjectPool and implements Monste
 public class MobSpawner : MonoBehaviour
 {
 
-  public Vector3[] m_SpawnPoints;
+  public Vector3[] m_SpawnPoints;  //Array to store the mob's sponge points
 
-  [SerializeField] GameObject[] m_Prefab;
+  [SerializeField] GameObject[] m_Prefab;  //Mob Prefab Array
 
   public void SpawnMob(int mob_index, int spawnPoint_index)
   {
-      NetworkObject obj = NetworkObjectPool.Singleton.GetNetworkObject(m_Prefab[mob_index], m_SpawnPoints[spawnPoint_index],Quaternion.identity);
-      if(!obj.IsSpawned) obj.Spawn();
+      NetworkObject obj = NetworkObjectPool.Singleton.GetNetworkObject(m_Prefab[mob_index], m_SpawnPoints[spawnPoint_index],Quaternion.identity);  //GetNetworkObject gets the mob of that prefab from the Pool.
+      if(!obj.IsSpawned) obj.Spawn();  //Sponsor Mob. NetworkObjectPool causes registered NetworkObjects to be pulled out of the ObjectPool if sponged.
   }
 }
 ```
+
