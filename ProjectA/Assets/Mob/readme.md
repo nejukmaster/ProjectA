@@ -7,3 +7,4 @@ In this part, we will build monsters system that will be placed in the open worl
 > Mob Controller
 
 ### Mob Spawner
+MobSpawner scripts to handle monsters' spawn use NetworkObjectPool. 
