@@ -14,5 +14,3 @@ Online-Open World with Unity
 >  5.[Outlining at Character in URP](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Postprocessing/CharacterOuline)
 
 >  6.[Mob](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Mob)
-
->  7.Optimizing(scripts and shader)
