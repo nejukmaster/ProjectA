@@ -24,4 +24,45 @@ public class MobSpawner : MonoBehaviour
   }
 }
 ```
+And create Spawner's Custom Editor to facilitate SpawnPoint setup.
+```c#
+[CustomEditor(typeof(MobSpawner))]
+public class MobSpawnerEditor : Editor
+{
 
+  public override void OnInspectorGUI()
+  {
+      base.OnInspectorGUI();
+
+      MobSpawner spawner = (MobSpawner)target;
+
+      string mob_index = GUILayout.TextField("Index of Mob");
+      string spawnpoint_index = GUILayout.TextField("Index of Spawn Point");
+      if (GUILayout.Button("Test Spawn"))
+      {
+          spawner.SpawnMob(0, 0);
+      }
+  }
+  private void OnSceneGUI()
+  {
+      Texture spawnPointTexture = Resources.Load("Mob/StageSpawnPoint") as Texture;
+      MobSpawner spawner = (MobSpawner)target;
+
+      EditorGUI.BeginChangeCheck();
+      Handles.color = Color.magenta;
+      Vector3[] newPos = new Vector3[spawner.m_SpawnPoints.Length];
+      for (int i = 0; i < newPos.Length; i++) {
+          newPos[i] = Handles.PositionHandle(spawner.m_SpawnPoints[i], Quaternion.identity);
+          Handles.Label(newPos[i], spawnPointTexture);
+      }
+      if (EditorGUI.EndChangeCheck())
+      {
+          Undo.RecordObject(spawner, "Changed Spawner GUI");
+          for (int i = 0; i < newPos.Length; i++)
+          {
+              spawner.m_SpawnPoints[i] = newPos[i];
+          }
+      }
+  }
+}
+```
