@@ -15,8 +15,4 @@ Online-Open World with Unity
 
 >  6.[Mob](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Mob)
 
->  4.Multi-Play with Unity Netcode
-
->  5.Character Moving, Skill...etc which the basical function at Open World game
-
->  6.Optimizing(scripts and shader)
+>  7.Optimizing(scripts and shader)
