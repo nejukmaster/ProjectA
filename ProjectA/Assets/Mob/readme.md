@@ -67,4 +67,45 @@ public class MobSpawnerEditor : Editor
 ![Alt text](/ExplainImgs/MobSpawnerSceneView.png)
 
 ### Mob Controller
-MobController sets the specification for the movement of monsters that we will create in the future.
+MobController sets the specification for the movement of monsters that we will create.
+```c#
+public class MobController : NetworkBehaviour
+{
+  public GameObject target;
+  protected MobStatus status;
+  protected Animator animator;
+  protected NavMeshAgent agent;
+
+  public override void OnNetworkSpawn()  //Initialize.
+  {
+      base.OnNetworkSpawn();
+      agent = GetComponent<NavMeshAgent>();
+      animator = GetComponent<Animator>();
+      status = GetComponent<MobStatus>();
+  }
+
+  private void Update()
+  {
+      if (IsServer)  //The processing of the movement is carried out at the server side.
+      {
+          Move();
+      }
+  }
+
+  protected virtual void Move()  //protected allows access only to classes that inherit this class.
+  {
+
+  }
+
+  public virtual void Damaged(float damage)
+  {
+
+  }
+
+  [ServerRpc]
+  public void DamagedServerRpc(float damage)  //Server RPC to handle damage
+  {
+      Damaged(damage);
+  }
+}
+```
