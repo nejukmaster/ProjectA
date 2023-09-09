@@ -13,6 +13,8 @@ Online-Open World with Unity
 
 >  5.[Outlining at Character in URP](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Postprocessing/CharacterOuline)
 
+>  6.[Mob]
+
 >  4.Multi-Play with Unity Netcode
 
 >  5.Character Moving, Skill...etc which the basical function at Open World game
