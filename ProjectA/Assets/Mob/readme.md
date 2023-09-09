@@ -109,3 +109,4 @@ public class MobController : NetworkBehaviour
   }
 }
 ```
+When you create a physical mob, you inherit this class to configure the controller.
