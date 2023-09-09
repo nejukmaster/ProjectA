@@ -34,33 +34,31 @@ public class MobSpawnerEditor : Editor
   {
       base.OnInspectorGUI();
 
-      MobSpawner spawner = (MobSpawner)target;
+      MobSpawner spawner = (MobSpawner)target;  //get target of this editor as MobSpawner
 
-      string mob_index = GUILayout.TextField("Index of Mob");
-      string spawnpoint_index = GUILayout.TextField("Index of Spawn Point");
-      if (GUILayout.Button("Test Spawn"))
+      if (GUILayout.Button("Test Spawn"))  //add test button
       {
           spawner.SpawnMob(0, 0);
       }
   }
   private void OnSceneGUI()
   {
-      Texture spawnPointTexture = Resources.Load("Mob/StageSpawnPoint") as Texture;
+      Texture spawnPointTexture = Resources.Load("StageSpawnPoint") as Texture;  //Gets the texture to display the spawn point.
       MobSpawner spawner = (MobSpawner)target;
 
       EditorGUI.BeginChangeCheck();
       Handles.color = Color.magenta;
-      Vector3[] newPos = new Vector3[spawner.m_SpawnPoints.Length];
+      Vector3[] newPos = new Vector3[spawner.m_SpawnPoints.Length];  //Create an Array to Update Spawn Points
       for (int i = 0; i < newPos.Length; i++) {
-          newPos[i] = Handles.PositionHandle(spawner.m_SpawnPoints[i], Quaternion.identity);
-          Handles.Label(newPos[i], spawnPointTexture);
+          newPos[i] = Handles.PositionHandle(spawner.m_SpawnPoints[i], Quaternion.identity);  //Create a PositionHandle.
+          Handles.Label(newPos[i], spawnPointTexture);  //Create Label.
       }
       if (EditorGUI.EndChangeCheck())
       {
           Undo.RecordObject(spawner, "Changed Spawner GUI");
           for (int i = 0; i < newPos.Length; i++)
           {
-              spawner.m_SpawnPoints[i] = newPos[i];
+              spawner.m_SpawnPoints[i] = newPos[i];  //SpawnPoint Update
           }
       }
   }
