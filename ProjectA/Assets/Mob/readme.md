@@ -64,3 +64,7 @@ public class MobSpawnerEditor : Editor
   }
 }
 ```
+![Alt text](/ExplainImgs/MobSpawnerSceneView.png)
+
+### Mob Controller
+MobController sets the specification for the movement of monsters that we will create in the future.
