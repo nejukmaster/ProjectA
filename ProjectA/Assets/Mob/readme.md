@@ -1,6 +1,6 @@
 Mob System
 =====
-In this part, we will build monsters system that will be placed in the open world field. Features to be implemented are as follows.
+In this part, we will build monsters system that will be placed in the open world field. Features to be implemented are as follows. You can see the production process of Mob [here].
 
 > Mob Spawning
 >
