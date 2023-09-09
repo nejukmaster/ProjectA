@@ -14,17 +14,6 @@ public class MobSpawner : MonoBehaviour
     [SerializeField] GameObject[] m_Prefab;
     private const int max_prefab = 5;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SpawnMob(int mob_index, int spawnPoint_index)
     {
         NetworkObject obj = NetworkObjectPool.Singleton.GetNetworkObject(m_Prefab[mob_index], m_SpawnPoints[spawnPoint_index],Quaternion.identity);
@@ -43,8 +32,6 @@ public class MobSpawnerEditor : Editor
 
         MobSpawner spawner = (MobSpawner)target;
 
-        string mob_index = GUILayout.TextField("Index of Mob");
-        string spawnpoint_index = GUILayout.TextField("Index of Spawn Point");
         if (GUILayout.Button("Test Spawn"))
         {
             spawner.SpawnMob(0, 0);
@@ -52,7 +39,7 @@ public class MobSpawnerEditor : Editor
     }
     private void OnSceneGUI()
     {
-        Texture spawnPointTexture = Resources.Load("Mob/StageSpawnPoint") as Texture;
+        Texture spawnPointTexture = Resources.Load("StageSpawnPoint") as Texture;
         MobSpawner spawner = (MobSpawner)target;
 
         EditorGUI.BeginChangeCheck();
