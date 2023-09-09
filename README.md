@@ -13,7 +13,7 @@ Online-Open World with Unity
 
 >  5.[Outlining at Character in URP](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Postprocessing/CharacterOuline)
 
->  6.[Mob]
+>  6.[Mob](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Mob)
 
 >  4.Multi-Play with Unity Netcode
 
