@@ -237,6 +237,7 @@ public class PlayerController : NetworkBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(PlayerController))]
 public class PlayerControllerEditor : Editor
 {
@@ -253,3 +254,4 @@ public class PlayerControllerEditor : Editor
         }
     }
 }
+#endif

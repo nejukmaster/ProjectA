@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEditor;
-using UnityEditor.SceneManagement;
-using System;
 
 public class MobSpawner : MonoBehaviour
 {
@@ -19,8 +15,14 @@ public class MobSpawner : MonoBehaviour
         NetworkObject obj = NetworkObjectPool.Singleton.GetNetworkObject(m_Prefab[mob_index], m_SpawnPoints[spawnPoint_index],Quaternion.identity);
         if(!obj.IsSpawned) obj.Spawn();
     }
+
+    public void TestSpawn()
+    {
+        SpawnMob(0, 0);
+    }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(MobSpawner))]
 public class MobSpawnerEditor : Editor
 {
@@ -59,4 +61,5 @@ public class MobSpawnerEditor : Editor
         }
     }
 }
+#endif
 

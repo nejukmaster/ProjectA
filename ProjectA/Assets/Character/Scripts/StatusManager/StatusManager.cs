@@ -103,13 +103,3 @@ public class StatusManager : NetworkBehaviour
         }
     }
 }
-
-[CustomEditor(typeof(StatusManager))]
-public class StatusManagerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-    }
-}
-
