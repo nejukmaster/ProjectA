@@ -1,6 +1,6 @@
 Camera Controller
 =================
-The Camera Controller is a script that controls the movement of the camera during the game. The main functions of this script are as follows.
+The Camera Controller Script controls the movement of the camera during the game. The main functions of this script are as follows.
 > Rotating around the character & Tracking character
 >
 > Camera Walk
@@ -38,7 +38,7 @@ void Update()
 {
   if (tracking)//Run only when tracking is enabled
   {
-    this.transform.position = (trackingObj.transform.position + trackingObj.characterTrackingPoint) + offset; //Set location to track. offset is the relative position of the camera relative to the character.
+    this.transform.position = (trackingObj.transform.position + trackingObj.characterTrackingPoint) + offset; //Set location to follow. offset is the relative position of the camera from the character.
     this.transform.LookAt(trackingObj.transform.position + trackingObj.characterTrackingPoint);
     float xAxis = Input.GetAxis("Mouse X");  //Horizontal axis movement of the mouse
     float yAxis = Input.GetAxis("Mouse Y");  //the vertical axis movement of the mouse
@@ -51,7 +51,7 @@ void Update()
     spherical.y += yAxis * Time.deltaTime * mouseSensitivity;   //Φ+ΔΦ value set
     spherical.z -= xAxis * Time.deltaTime * mouseSensitivity;   //θ+Δθ value set
 
-    /*  Use raycast to check for shielding between the camera and the character  */
+    /*  Use raycast to check for obstacles between the camera and the character  */
     Ray ray = new Ray((trackingObj.transform.position + trackingObj.characterTrackingPoint), transform.position - (trackingObj.transform.position + trackingObj.characterTrackingPoint));
     RaycastHit hit;
     Physics.Raycast(ray, out hit);
@@ -217,7 +217,7 @@ public class CameraMoveCurve
 public CameraMoveCurve[] movingCurves;  //Array to store the curve you created
 
 ...
-[ExecuteInEditMode]
+[ExecuteInEditMode]  //The method with the [ExecuteInEditMode] attribute also works in the editor.
 public void CameraMove(int index, float time, bool isTesting, Action<BezierCurve3D.Curve, CameraController> preProcess, Action postProcess)
 {
     if (time > 0 && index > 0 && index < movingCurves.Length)
@@ -233,7 +233,7 @@ public void CameraMove(int index, float time, bool isTesting, Action<BezierCurve
 /*  Coroutine to move the camera along the curve.
     moveCurve  :   A curve to move the camera 
     time       :   Time to take a curve(seconds)
-    isTesting  :   Whether this movement is a test. If true, return the camera to its original position after the movement.
+    isTesting  :   Whether this movement is a test. If this is true, return the camera to its original position after the movement.
     preProcess :   Method for Preprocessing. Before moving, It can change the properties of the Camera Controller, or apply preprocessing to the temporary curve.
     postProcess:   Method for Postprocessing. It runs after the movement is finished.  */
 IEnumerator CameraMoveCo(CameraMoveCurve moveCurve, float time, bool isTesting, Action<BezierCurve3D.Curve,CameraController> preProcess, Action postProcess)
