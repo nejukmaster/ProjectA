@@ -9,7 +9,7 @@ Character Shader Part
 
 ### Skin Shader With Diffuse Wraping
 
-To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and normal Dot view value. For this, I made a Diffuse Ramp which maps normal Dot light value at xAxis and normal dot view value at yAxis. So that, the fragment is illuminated by standard Lambert, and the closer the Main Camera looks, the brighter the fragment becomes.
+To get Illustrative Shadow, I used Diffuse Wrapping with normal Dot light and normal Dot view value. For this, I made a Diffuse Ramp which maps normal Dot light value at xAxis and normal dot view value at yAxis. So, the fragment is illuminated by standard Lambert, and the closer the Main Camera looks, the brighter the fragment becomes.
 
 ![Alt text](/ExplainImgs/SkinDiffuseRamp.png)
 
