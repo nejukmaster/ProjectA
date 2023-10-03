@@ -1,6 +1,6 @@
 Mob System
 =====
-In this part, we will build monsters system that will be placed in the open world field. Features to be implemented are as follows. You can see the production process of Mob [here](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Mob/Slime).
+In this part, we will build monster system that will be placed in the open world field. Features to be implemented are as follows. You can see the production process of Mob [here](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Mob/Slime).
 
 > Mob Spawning
 >
