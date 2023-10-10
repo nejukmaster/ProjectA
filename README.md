@@ -3,6 +3,8 @@ Online-Open World with Unity
 
 #### This project is my experimental project, aims to build functions which are following.
 
+Click the link to go to each page.
+
 >  1.[Illustrative Character Shader in URP](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Character/Shader)
 >
 >  2.[Charactor Controller With Netcode](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Character/Scripts/Controller)
@@ -14,8 +16,6 @@ Online-Open World with Unity
 >  5.[Outlining at Character in URP](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Postprocessing/CharacterOuline)
 >
 >  6.[Mob](https://github.com/nejukmaster/ProjectA/tree/main/ProjectA/Assets/Mob)
-
-Click the link to go to each page.
 
 -------------------------------------------
 ### Execute Demo
